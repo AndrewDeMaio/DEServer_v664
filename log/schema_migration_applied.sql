@@ -1300,3 +1300,36 @@ UPDATE DARKEDEN.Ousters o JOIN DARKEDEN.Slayer s ON s.Name = o.Name SET o.CharID
 -- revert: ALTER TABLE DARKEDEN.Slayer  DROP COLUMN CharID;
 -- revert: ALTER TABLE DARKEDEN.Vampire DROP COLUMN CharID;
 -- revert: ALTER TABLE DARKEDEN.Ousters DROP COLUMN CharID;
+
+-- =====================================================================
+-- 2026-08-26  CharID migration, Phase 2: OwnerCharID alongside OwnerID.
+--
+-- Additive only. OwnerID remains authoritative and nothing reads the new
+-- column yet, so this is reversible by dropping the columns.
+--
+-- Applied to 184 of the 190 OwnerID tables. Excluded because their OwnerID is
+-- NOT a character name:
+--   Script          NPC names (verified: 그루버, 요한, 크리스)
+--   ZoneInfo/_bak   zone data (column is spelled OwnerId)
+--   ItemTraceLog    audit -- a name is the right thing to record
+--   MoneyTraceLog   audit
+--   MofusLog        audit
+--
+-- The target list came from ItemLoaderManager, not from data shape: its three
+-- race overloads name 101 item classes loaded per character, and every one has
+-- a matching <Class>Object table.
+--
+-- Result: 113 of 11,545 rows carry a CharID. The rest legitimately do not --
+-- 11,155 are dropped instances in STORAGE_ZONE(5)/STORAGE_CORPSE(8) with no
+-- character owner, and the remainder are orphans of characters deleted before
+-- this port. Verified zero rows whose OwnerID matches a live character were
+-- left unlinked.
+-- =====================================================================
+-- for each of the 184 tables:
+--   ALTER TABLE <tbl> ADD COLUMN OwnerCharID INT UNSIGNED NOT NULL DEFAULT 0;
+--   UPDATE <tbl> t JOIN Slayer s ON s.Name = t.OwnerID SET t.OwnerCharID = s.CharID;
+--
+-- revert (generates the DROPs for every table that has the column):
+--   SELECT CONCAT('ALTER TABLE `',TABLE_NAME,'` DROP COLUMN OwnerCharID;')
+--     FROM information_schema.COLUMNS
+--    WHERE TABLE_SCHEMA='DARKEDEN' AND COLUMN_NAME='OwnerCharID';

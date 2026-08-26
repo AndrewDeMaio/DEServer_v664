@@ -5,7 +5,7 @@
 -- fresh instance boots with all item/monster/NPC/zone/script data
 -- intact and simply needs accounts registered again.
 --
--- Generated 2026-08-26T15:23:47Z
+-- Generated 2026-08-26T16:48:09Z
 -- ============================================================
 
 CREATE DATABASE IF NOT EXISTS DARKEDEN
@@ -14,7 +14,7 @@ USE DARKEDEN;
 
 -- MySQL dump 10.13  Distrib 8.0.42, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: DARKEDEN2
+-- Host: 127.0.0.1    Database: DARKEDEN
 -- ------------------------------------------------------
 -- Server version	8.0.42-0ubuntu0.20.04.1
 
@@ -53,6 +53,7 @@ CREATE TABLE `ARObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_ARObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -94,6 +95,7 @@ CREATE TABLE `BeltObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_BeltObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -122,6 +124,7 @@ CREATE TABLE `BladeObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_BladeObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -148,6 +151,7 @@ CREATE TABLE `BloodBibleObject` (
   `EnchantLevel` smallint NOT NULL DEFAULT '0',
   `Status` int NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_BloodBibleObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -164,6 +168,7 @@ CREATE TABLE `BloodBibleSignObject` (
   `ItemID` bigint unsigned NOT NULL AUTO_INCREMENT,
   `ItemType` tinyint unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_OwnerID` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -187,6 +192,7 @@ CREATE TABLE `BombMaterialObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '1',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `BombMaterialObject_m1` (`OwnerID`),
   KEY `IDX_OwnerID` (`OwnerID`)
@@ -211,6 +217,7 @@ CREATE TABLE `BombObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '1',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `BombObject_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -238,6 +245,7 @@ CREATE TABLE `BraceletObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_BraceletObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -299,6 +307,7 @@ CREATE TABLE `CallNPCCardObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '1',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `BombMaterialObject_m1` (`OwnerID`),
   KEY `IDX_OwnerID` (`OwnerID`)
@@ -341,6 +350,7 @@ CREATE TABLE `CarryingReceiverObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -366,6 +376,7 @@ CREATE TABLE `CastleSymbolObject` (
   `EnchantLevel` smallint unsigned NOT NULL DEFAULT '0',
   `Status` int NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_CastleSymbolObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -403,6 +414,7 @@ CREATE TABLE `CheckMoneyObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Amount` int unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_MoneyObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -431,6 +443,7 @@ CREATE TABLE `CoatObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_CoatObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -456,6 +469,7 @@ CREATE TABLE `CodeSheetObject` (
   `Durability` bigint unsigned NOT NULL DEFAULT '0',
   `EnchantLevel` bigint NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_RESURRECT_ITEM` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -479,6 +493,7 @@ CREATE TABLE `CommonQuestItemObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '1',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `BombMaterialObject_m1` (`OwnerID`),
   KEY `IDX_OwnerID` (`OwnerID`)
@@ -502,6 +517,7 @@ CREATE TABLE `ComposMeiObject` (
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_ComposMeiObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -529,6 +545,7 @@ CREATE TABLE `ContractOfBloodObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_BeltObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -592,6 +609,7 @@ CREATE TABLE `CoreZapObject` (
   `Grade` smallint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `EnchantLevel` bigint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `CoreZapObject_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -618,6 +636,7 @@ CREATE TABLE `CoupleRingObject` (
   `Name` varchar(10) DEFAULT '',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `PartnerItemID` bigint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `CoupleRingObject_m1` (`OwnerID`),
   KEY `IDX_PartnerItemID` (`PartnerItemID`)
@@ -691,6 +710,7 @@ CREATE TABLE `CrossObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_CrossObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -718,6 +738,7 @@ CREATE TABLE `CueOfAdamObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_BeltObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -761,6 +782,7 @@ CREATE TABLE `DermisObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -783,6 +805,7 @@ CREATE TABLE `DyePotionObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_DyePotionObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -806,6 +829,7 @@ CREATE TABLE `ETCObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '1',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_ETCObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -822,6 +846,7 @@ CREATE TABLE `EffectEXP` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
   `DayTime` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `IDX_EffectBloodDrain` (`OwnerID`) USING BTREE
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -844,6 +869,7 @@ CREATE TABLE `EffectItemObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_RESURRECT_ITEM` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -871,6 +897,7 @@ CREATE TABLE `EtherealChainObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_BeltObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -893,6 +920,7 @@ CREATE TABLE `EventBallObject` (
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_ComposMeiObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -916,6 +944,7 @@ CREATE TABLE `EventETCObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `EventETCObject_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -938,6 +967,7 @@ CREATE TABLE `EventGiftBoxObject` (
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `EventGiftBoxObject_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -991,6 +1021,7 @@ CREATE TABLE `EventItemObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_OwnerID` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1033,6 +1064,7 @@ CREATE TABLE `EventStarObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `EventStarObject_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1056,6 +1088,7 @@ CREATE TABLE `EventTreeObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `EventTreeObject_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1083,6 +1116,7 @@ CREATE TABLE `FasciaObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1097,6 +1131,7 @@ DROP TABLE IF EXISTS `FlagSet`;
 CREATE TABLE `FlagSet` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `FlagData` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1141,6 +1176,7 @@ CREATE TABLE `GQuestItemObject` (
   `ItemID` bigint unsigned NOT NULL AUTO_INCREMENT,
   `ItemType` tinyint unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_OwnerID` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1158,6 +1194,7 @@ CREATE TABLE `GQuestSave` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `Time` datetime NOT NULL DEFAULT '2003-01-01 01:01:01',
   `Status` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`QuestID`,`OwnerID`),
   KEY `IDX_OWNER` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1199,6 +1236,7 @@ CREATE TABLE `GloveObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_GloveObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1284,6 +1322,7 @@ CREATE TABLE `HelmObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_HelmObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1306,6 +1345,7 @@ CREATE TABLE `HolyWaterObject` (
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '1',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_HolyWaterObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1353,6 +1393,7 @@ CREATE TABLE `KeyObject` (
   `Target` int unsigned NOT NULL DEFAULT '0',
   `BikeBodyColor` smallint unsigned NOT NULL DEFAULT '0',
   `BikeEffectColor` smallint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_KeyObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1375,6 +1416,7 @@ CREATE TABLE `LarvaObject` (
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_LarvaObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1396,6 +1438,7 @@ CREATE TABLE `LearningItemObject` (
   `StorageID` bigint unsigned NOT NULL DEFAULT '0',
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_LearningItemObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1507,6 +1550,7 @@ CREATE TABLE `LuckyBagObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_LuckyBagObject` (`OwnerID`),
   KEY `IDX_LuckyBagObject2` (`Storage`)
@@ -1536,6 +1580,7 @@ CREATE TABLE `MaceObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_MaceObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1559,6 +1604,7 @@ CREATE TABLE `MagazineObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '1',
   `nBullets` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_MagazineObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1609,6 +1655,7 @@ CREATE TABLE `MineObject` (
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `NUM` tinyint unsigned NOT NULL DEFAULT '1',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `MineObject_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1637,6 +1684,7 @@ CREATE TABLE `MittenObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `MittenObject_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1660,6 +1708,7 @@ CREATE TABLE `MixingItemObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_OwnerID` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1699,6 +1748,7 @@ CREATE TABLE `MoneyObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Amount` int unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_MoneyObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1754,6 +1804,7 @@ CREATE TABLE `MoonCardObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_MoonCardObject` (`OwnerID`),
   KEY `IDX_MoonCardObject2` (`Storage`)
@@ -1780,6 +1831,7 @@ CREATE TABLE `MotorcycleObject` (
   `Durability` smallint unsigned NOT NULL DEFAULT '0',
   `BodyColor` smallint unsigned NOT NULL DEFAULT '0',
   `EffectColor` smallint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_MotorcycleObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1822,6 +1874,7 @@ CREATE TABLE `NecklaceObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_NecklaceObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1841,6 +1894,7 @@ CREATE TABLE `NicknameBook` (
   `NickIndex` smallint NOT NULL DEFAULT '0',
   `Nickname` varchar(22) NOT NULL DEFAULT '',
   `Time` datetime NOT NULL DEFAULT '2004-06-01 14:00:00',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`nID`,`OwnerID`),
   KEY `IDX_OwnerID` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1922,6 +1976,8 @@ CREATE TABLE `Ousters` (
   `GambleAccumulation` int NOT NULL DEFAULT '0',
   `GambleTryCount` int NOT NULL DEFAULT '0',
   `ShopColor` int NOT NULL DEFAULT '0',
+  `deleteNum` int unsigned NOT NULL DEFAULT '0',
+  `CharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`Name`),
   KEY `IDX_Ousters1` (`PlayerID`),
   KEY `IDX_Ousters2` (`Slot`),
@@ -1951,6 +2007,7 @@ CREATE TABLE `OustersArmsbandObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_OustersArmsbandObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1978,6 +2035,7 @@ CREATE TABLE `OustersBootsObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_OustersBootsObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2005,6 +2063,7 @@ CREATE TABLE `OustersChakramObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_OustersChakramObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2032,6 +2091,7 @@ CREATE TABLE `OustersCircletObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_OustersCircletObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2059,6 +2119,7 @@ CREATE TABLE `OustersCoatObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_OustersCoatObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2086,6 +2147,7 @@ CREATE TABLE `OustersHarmonicPendentObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `PartnerItemID` bigint unsigned NOT NULL DEFAULT '0',
   `ThirdOptionType` varchar(30) DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_OwnerID` (`OwnerID`),
   KEY `IDX_PartnerItemID` (`PartnerItemID`)
@@ -2114,6 +2176,7 @@ CREATE TABLE `OustersPendentObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_OustersPendentObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2141,6 +2204,7 @@ CREATE TABLE `OustersRingObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_OustersRingObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2160,6 +2224,7 @@ CREATE TABLE `OustersSkillSave` (
   `Delay` smallint unsigned NOT NULL DEFAULT '0',
   `CastingTime` int unsigned NOT NULL DEFAULT '0',
   `NextTime` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `IDX_OustersSkillSave` (`OwnerID`,`SkillType`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -2186,6 +2251,7 @@ CREATE TABLE `OustersStoneObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_OustersStoneObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2210,6 +2276,7 @@ CREATE TABLE `OustersSummonItemObject` (
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Charge` smallint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `OwnerID_IDX` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2233,6 +2300,7 @@ CREATE TABLE `OustersTunningItemObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '1',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `BombMaterialObject_m1` (`OwnerID`),
   KEY `IDX_OwnerID` (`OwnerID`)
@@ -2259,6 +2327,7 @@ CREATE TABLE `OustersWingItemObject` (
   `Durability` smallint unsigned NOT NULL DEFAULT '0',
   `BodyColor` smallint unsigned NOT NULL DEFAULT '0',
   `EffectColor` smallint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_MotorcycleObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2286,6 +2355,7 @@ CREATE TABLE `OustersWristletObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_OustersWristletObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2367,6 +2437,7 @@ CREATE TABLE `PersonaObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `PersonaObject_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2390,6 +2461,7 @@ CREATE TABLE `PetEnchantItemObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_PetEnchantItemObject` (`OwnerID`),
   KEY `IDX_PetEnchantItemObject2` (`Storage`)
@@ -2414,6 +2486,7 @@ CREATE TABLE `PetFoodObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_PetFoodObject` (`OwnerID`),
   KEY `IDX_PetFoodObject2` (`Storage`)
@@ -2456,6 +2529,7 @@ CREATE TABLE `PetItemObject` (
   `MixOptionType` int NOT NULL DEFAULT '0',
   `OptionType` varchar(10) NOT NULL DEFAULT '0',
   `PetOption2` int NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_OwnerID` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2491,6 +2565,7 @@ CREATE TABLE `PetItemObject1` (
   `LastFeedTime` datetime NOT NULL DEFAULT '2003-11-16 01:01:01',
   `CanAttack` tinyint unsigned NOT NULL DEFAULT '0',
   `Nickname` varchar(22) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_OwnerID` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2706,6 +2781,7 @@ CREATE TABLE `PotionObject` (
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_PotionObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2728,6 +2804,7 @@ CREATE TABLE `PupaObject` (
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_PupaObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2750,6 +2827,7 @@ CREATE TABLE `QuestItemObject` (
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `QuestItemObject_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2787,6 +2865,7 @@ DROP TABLE IF EXISTS `RankBonusData`;
 CREATE TABLE `RankBonusData` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `Type` int NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `IDX_RankBonusData` (`OwnerID`,`Type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -2810,6 +2889,7 @@ CREATE TABLE `RelicObject` (
   `OptionType` tinyint unsigned NOT NULL DEFAULT '0',
   `Durability` smallint unsigned NOT NULL DEFAULT '0',
   `EnchantLevel` smallint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_RingObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2833,6 +2913,7 @@ CREATE TABLE `ResurrectItemObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_RESURRECT_ITEM` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2860,6 +2941,7 @@ CREATE TABLE `RingObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_RingObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2889,6 +2971,7 @@ CREATE TABLE `SGObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_SGObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2918,6 +3001,7 @@ CREATE TABLE `SMGObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_SMGObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2941,6 +3025,7 @@ CREATE TABLE `SMSItemObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_RESURRECT_ITEM` (`OwnerID`),
   KEY `IDX_RESURRECT_ITEM_2` (`Storage`)
@@ -2971,6 +3056,7 @@ CREATE TABLE `SRObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_SRObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2993,6 +3079,7 @@ CREATE TABLE `SerumObject` (
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '1',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_SerumObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3020,6 +3107,7 @@ CREATE TABLE `ShieldObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_ShieldObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3047,6 +3135,7 @@ CREATE TABLE `ShoesObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_ShoesObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3075,6 +3164,7 @@ CREATE TABLE `ShoulderArmorObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `ShoulderArmorObject_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3097,6 +3187,7 @@ CREATE TABLE `SkillBookObject` (
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_ComposMeiObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3117,6 +3208,7 @@ CREATE TABLE `SkillSave` (
   `Delay` bigint unsigned NOT NULL DEFAULT '0',
   `CastingTime` int unsigned NOT NULL DEFAULT '0',
   `NextTime` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `IDX_SkillSave` (`OwnerID`,`SkillType`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -3138,6 +3230,7 @@ CREATE TABLE `SkullObject` (
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '1',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_SkullObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3240,11 +3333,14 @@ CREATE TABLE `Slayer` (
   `GambleAccumulation` int NOT NULL DEFAULT '0',
   `GambleTryCount` int NOT NULL DEFAULT '0',
   `ShopColor` int NOT NULL DEFAULT '0',
+  `deleteNum` int unsigned NOT NULL DEFAULT '0',
+  `CharID` int unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`Name`),
+  UNIQUE KEY `CharID` (`CharID`),
   KEY `IDX_Slayer1` (`PlayerID`),
   KEY `IDX_Slayer2` (`Slot`),
   KEY `Slayer_m1` (`GuildID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3264,6 +3360,7 @@ CREATE TABLE `SlayerPortalItemObject` (
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Charge` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `SlayerProtalItemObject_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3287,6 +3384,7 @@ CREATE TABLE `SlayerTunningItemObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '1',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `BombMaterialObject_m1` (`OwnerID`),
   KEY `IDX_OwnerID` (`OwnerID`)
@@ -3329,6 +3427,7 @@ CREATE TABLE `SubInventoryObject` (
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -3354,6 +3453,7 @@ CREATE TABLE `SweeperObject` (
   `EnchantLevel` smallint unsigned NOT NULL DEFAULT '0',
   `Status` int NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_SweeperObject` (`OwnerID`),
   KEY `IDX_SweeperObject2` (`Storage`)
@@ -3383,6 +3483,7 @@ CREATE TABLE `SwordObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_SwordObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3417,6 +3518,7 @@ CREATE TABLE `TimeLimitItems` (
   `LimitDateTime` datetime NOT NULL DEFAULT '2003-04-04 12:00:00',
   `Status` tinyint NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '1',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `TimeLimitItems_m1` (`OwnerID`),
   KEY `TimeLimitItems_m2` (`ItemClass`,`ItemID`)
@@ -3504,6 +3606,7 @@ CREATE TABLE `TrapItemObject` (
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `OwnerID_IDX` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3531,6 +3634,7 @@ CREATE TABLE `TrouserObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_TrouserObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3635,6 +3739,8 @@ CREATE TABLE `Vampire` (
   `GambleAccumulation` int NOT NULL DEFAULT '0',
   `GambleTryCount` int NOT NULL DEFAULT '0',
   `ShopColor` int NOT NULL DEFAULT '0',
+  `deleteNum` int unsigned NOT NULL DEFAULT '0',
+  `CharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`Name`),
   KEY `IDX_Vampire1` (`PlayerID`),
   KEY `IDX_Vampire2` (`Slot`),
@@ -3664,6 +3770,7 @@ CREATE TABLE `VampireAmuletObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `VampireAmuletObject_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3691,6 +3798,7 @@ CREATE TABLE `VampireBraceletObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_VampireBraceletObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3718,6 +3826,7 @@ CREATE TABLE `VampireCoatObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_VampireCoatObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3745,6 +3854,7 @@ CREATE TABLE `VampireCoupleRingObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `PartnerItemID` bigint unsigned NOT NULL DEFAULT '0',
   `ThirdOptionType` varchar(30) DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_OwnerID` (`OwnerID`),
   KEY `IDX_PartnerItemID` (`PartnerItemID`)
@@ -3768,6 +3878,7 @@ CREATE TABLE `VampireETCObject` (
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '1',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_VampireETCObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3795,6 +3906,7 @@ CREATE TABLE `VampireEarringObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   UNIQUE KEY `VampireEarringObject_u1` (`ItemID`),
   KEY `VampireEarringObject_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3822,6 +3934,7 @@ CREATE TABLE `VampireNecklaceObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_VampireNecklaceObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3847,6 +3960,7 @@ CREATE TABLE `VampirePortalItemObject` (
   `TargetZID` int unsigned NOT NULL DEFAULT '0',
   `TargetX` int unsigned NOT NULL DEFAULT '0',
   `TargetY` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `VampirePortalItemObject_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3874,6 +3988,7 @@ CREATE TABLE `VampireRingObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_VampireRingObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3892,6 +4007,7 @@ CREATE TABLE `VampireSkillSave` (
   `Delay` bigint unsigned NOT NULL DEFAULT '0',
   `CastingTime` int unsigned NOT NULL DEFAULT '0',
   `NextTime` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `IDX_VampireSkillSave` (`OwnerID`,`SkillType`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -3914,6 +4030,7 @@ CREATE TABLE `VampireTunningItemObject` (
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '1',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `BombMaterialObject_m1` (`OwnerID`),
   KEY `IDX_OwnerID` (`OwnerID`)
@@ -3942,6 +4059,7 @@ CREATE TABLE `VampireWeaponObject` (
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
   `Grade` smallint unsigned NOT NULL DEFAULT '6',
   `ThirdOptionType` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `VampireWeaponObject_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3967,6 +4085,7 @@ CREATE TABLE `VampireWingItemObject` (
   `Durability` smallint unsigned NOT NULL DEFAULT '0',
   `BodyColor` smallint unsigned NOT NULL DEFAULT '0',
   `EffectColor` smallint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_MotorcycleObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3989,6 +4108,7 @@ CREATE TABLE `WarItemObject` (
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `ItemFlag` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_WarItemObject` (`OwnerID`),
   KEY `IDX_WarItemObject2` (`Storage`)
@@ -4012,6 +4132,7 @@ CREATE TABLE `WaterObject` (
   `X` tinyint unsigned NOT NULL DEFAULT '0',
   `Y` tinyint unsigned NOT NULL DEFAULT '0',
   `Num` tinyint unsigned NOT NULL DEFAULT '1',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ItemID`),
   KEY `IDX_WaterObject` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -4050,7 +4171,8 @@ CREATE TABLE `WeekItemListObject` (
   `OwnerID` varchar(255) NOT NULL DEFAULT '',
   `PlayerID` varchar(255) NOT NULL DEFAULT '',
   `RecvDate` int NOT NULL DEFAULT '0',
-  `Week` int NOT NULL DEFAULT '0'
+  `Week` int NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -4382,7 +4504,8 @@ DROP TABLE IF EXISTS `BlitzEvent`;
 CREATE TABLE `BlitzEvent` (
   `BlitzCount` int NOT NULL DEFAULT '0',
   `BlitzRemainCount` int NOT NULL DEFAULT '0',
-  `OwnerID` varchar(255) NOT NULL DEFAULT ''
+  `OwnerID` varchar(255) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -4534,7 +4657,8 @@ CREATE TABLE `CallNPCCardInfo` (
   `NPCID` int NOT NULL DEFAULT '0',
   `ScriptType` int NOT NULL DEFAULT '0',
   `OwnerID` varchar(255) NOT NULL DEFAULT '',
-  `Storage` int NOT NULL DEFAULT '0'
+  `Storage` int NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -4550,6 +4674,7 @@ CREATE TABLE `CanEnterGDRLair` (
   `YearTime` int unsigned NOT NULL DEFAULT '0',
   `DayTime` int unsigned NOT NULL DEFAULT '0',
   `EnemyName` varchar(30) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `CanEnterGDRLair_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -4869,7 +4994,8 @@ DROP TABLE IF EXISTS `ContributeRewardCount`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ContributeRewardCount` (
   `RewardCount` int NOT NULL DEFAULT '0',
-  `OwnerID` varchar(255) NOT NULL DEFAULT ''
+  `OwnerID` varchar(255) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5028,7 +5154,8 @@ CREATE TABLE `CueOfAdamInfo` (
   `OptionClass` int NOT NULL DEFAULT '0',
   `SetOption` varchar(255) NOT NULL DEFAULT '',
   `OwnerID` varchar(255) NOT NULL DEFAULT '',
-  `Storage` int NOT NULL DEFAULT '0'
+  `Storage` int NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5243,6 +5370,7 @@ CREATE TABLE `EffectAccuraForceScroll` (
   `Name` varchar(10) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectBehemothForceScroll_m1` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5258,6 +5386,7 @@ CREATE TABLE `EffectAccuraForceScroll2` (
   `Name` varchar(10) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectBehemothForceScroll_m1` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5272,7 +5401,8 @@ DROP TABLE IF EXISTS `EffectAcidTouch`;
 CREATE TABLE `EffectAcidTouch` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
-  `DayTime` int unsigned NOT NULL DEFAULT '0'
+  `DayTime` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5287,6 +5417,7 @@ CREATE TABLE `EffectAftermath` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
   `DayTime` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `IDX_EffectAftermath` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5302,6 +5433,7 @@ CREATE TABLE `EffectBehemothForceScroll` (
   `Name` varchar(10) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectBehemothForceScroll_m1` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5317,6 +5449,7 @@ CREATE TABLE `EffectBehemothForceScroll2` (
   `Name` varchar(10) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectBehemothForceScroll_m1` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5333,6 +5466,7 @@ CREATE TABLE `EffectBloodDrain` (
   `YearTime` int unsigned NOT NULL DEFAULT '0',
   `DayTime` int unsigned NOT NULL DEFAULT '0',
   `Level` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `IDX_EffectBloodDrain` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5351,7 +5485,8 @@ CREATE TABLE `EffectBonusExp` (
   `Name` varchar(255) NOT NULL DEFAULT '',
   `OwnerID` varchar(255) NOT NULL DEFAULT '',
   `Race` varchar(255) NOT NULL DEFAULT '',
-  `YearTime` int NOT NULL DEFAULT '0'
+  `YearTime` int NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5395,6 +5530,7 @@ DROP TABLE IF EXISTS `EffectCarnelianForceScroll`;
 CREATE TABLE `EffectCarnelianForceScroll` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectCarnelianForceScroll_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5409,6 +5545,7 @@ DROP TABLE IF EXISTS `EffectCarnelianForceScroll2`;
 CREATE TABLE `EffectCarnelianForceScroll2` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectCarnelianForceScroll_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5423,7 +5560,8 @@ DROP TABLE IF EXISTS `EffectChannelMicroPhone`;
 CREATE TABLE `EffectChannelMicroPhone` (
   `BonusRate` varchar(255) DEFAULT NULL,
   `RemainTime` varchar(255) DEFAULT NULL,
-  `OwnerID` varchar(255) NOT NULL DEFAULT ''
+  `OwnerID` varchar(255) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5437,7 +5575,8 @@ DROP TABLE IF EXISTS `EffectChaoticExp`;
 CREATE TABLE `EffectChaoticExp` (
   `BonusRate` varchar(255) DEFAULT NULL,
   `RemainTime` varchar(255) DEFAULT NULL,
-  `OwnerID` varchar(255) NOT NULL DEFAULT ''
+  `OwnerID` varchar(255) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5451,7 +5590,8 @@ DROP TABLE IF EXISTS `EffectDetectHidden`;
 CREATE TABLE `EffectDetectHidden` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
-  `DayTime` int unsigned NOT NULL DEFAULT '0'
+  `DayTime` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5466,6 +5606,7 @@ CREATE TABLE `EffectExtremeForceScroll` (
   `Name` varchar(10) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectBehemothForceScroll_m1` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5481,6 +5622,7 @@ CREATE TABLE `EffectExtremeForceScroll2` (
   `Name` varchar(10) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectBehemothForceScroll_m1` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5498,6 +5640,7 @@ CREATE TABLE `EffectFlare` (
   `DayTime` int unsigned NOT NULL DEFAULT '0',
   `Level` int unsigned NOT NULL DEFAULT '0',
   `OldSight` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `IDX_EffectFlare` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5527,7 +5670,8 @@ CREATE TABLE `EffectGentisDungeon` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
   `DayTime` int unsigned NOT NULL DEFAULT '0',
-  `Name` varchar(10) NOT NULL DEFAULT ''
+  `Name` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5542,6 +5686,7 @@ CREATE TABLE `EffectGreyfellForceScroll` (
   `Name` varchar(10) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectBehemothForceScroll_m1` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5557,6 +5702,7 @@ CREATE TABLE `EffectGreyfellForceScroll2` (
   `Name` varchar(10) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectBehemothForceScroll_m1` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5571,6 +5717,7 @@ DROP TABLE IF EXISTS `EffectHoodlumStigma`;
 CREATE TABLE `EffectHoodlumStigma` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectCarnelianForceScroll_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5637,6 +5784,7 @@ CREATE TABLE `EffectKillAftermath` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
   `DayTime` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5652,6 +5800,7 @@ CREATE TABLE `EffectLifeForceScroll` (
   `Name` varchar(10) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectBehemothForceScroll_m1` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5667,6 +5816,7 @@ CREATE TABLE `EffectLifeForceScroll2` (
   `Name` varchar(10) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectBehemothForceScroll_m1` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5682,7 +5832,8 @@ CREATE TABLE `EffectLight` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
   `DayTime` int unsigned NOT NULL DEFAULT '0',
-  `OldSight` tinyint unsigned NOT NULL DEFAULT '0'
+  `OldSight` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5697,6 +5848,7 @@ CREATE TABLE `EffectMirForceScroll` (
   `Name` varchar(10) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectBehemothForceScroll_m1` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5712,6 +5864,7 @@ CREATE TABLE `EffectMirForceScroll2` (
   `Name` varchar(10) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectBehemothForceScroll_m1` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5727,6 +5880,7 @@ CREATE TABLE `EffectMute` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
   `DayTime` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectMute_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5742,7 +5896,8 @@ CREATE TABLE `EffectMysteryPotion` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
   `DayTime` int unsigned NOT NULL DEFAULT '0',
-  `Name` varchar(10) NOT NULL DEFAULT ''
+  `Name` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5757,6 +5912,7 @@ CREATE TABLE `EffectOdinForceScroll` (
   `Name` varchar(10) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectBehemothForceScroll_m1` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5772,6 +5928,7 @@ CREATE TABLE `EffectOdinForceScroll2` (
   `Name` varchar(10) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectBehemothForceScroll_m1` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5805,7 +5962,8 @@ DROP TABLE IF EXISTS `EffectParalysis`;
 CREATE TABLE `EffectParalysis` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
-  `DayTime` int unsigned NOT NULL DEFAULT '0'
+  `DayTime` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5837,7 +5995,8 @@ CREATE TABLE `EffectPoison` (
   `DayTime` int unsigned NOT NULL DEFAULT '0',
   `Level` tinyint unsigned NOT NULL DEFAULT '0',
   `Point` tinyint unsigned NOT NULL DEFAULT '0',
-  `Delay` smallint unsigned NOT NULL DEFAULT '0'
+  `Delay` smallint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5851,7 +6010,8 @@ DROP TABLE IF EXISTS `EffectPoisonousHands`;
 CREATE TABLE `EffectPoisonousHands` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
-  `DayTime` int unsigned NOT NULL DEFAULT '0'
+  `DayTime` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5865,7 +6025,8 @@ DROP TABLE IF EXISTS `EffectPremiumService`;
 CREATE TABLE `EffectPremiumService` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
-  `DayTime` int unsigned NOT NULL DEFAULT '0'
+  `DayTime` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5880,7 +6041,8 @@ CREATE TABLE `EffectPromotionAngelFlutter` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
   `DayTime` int unsigned NOT NULL DEFAULT '0',
-  `Name` varchar(10) NOT NULL DEFAULT ''
+  `Name` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5895,7 +6057,8 @@ CREATE TABLE `EffectPromotionBatWing` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
   `DayTime` int unsigned NOT NULL DEFAULT '0',
-  `Name` varchar(10) NOT NULL DEFAULT ''
+  `Name` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5910,7 +6073,8 @@ CREATE TABLE `EffectPromotionButterflyWing` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
   `DayTime` int unsigned NOT NULL DEFAULT '0',
-  `Name` varchar(10) NOT NULL DEFAULT ''
+  `Name` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5925,7 +6089,8 @@ CREATE TABLE `EffectProtectionFromParalysis` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
   `DayTime` int unsigned NOT NULL DEFAULT '0',
-  `SkillLevel` tinyint unsigned NOT NULL DEFAULT '0'
+  `SkillLevel` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5940,7 +6105,8 @@ CREATE TABLE `EffectProtectionFromPoison` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
   `DayTime` int unsigned NOT NULL DEFAULT '0',
-  `SkillLevel` tinyint unsigned NOT NULL DEFAULT '0'
+  `SkillLevel` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5955,7 +6121,8 @@ CREATE TABLE `EffectRankBonusExpBlue` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
   `DayTime` int unsigned NOT NULL DEFAULT '0',
-  `Name` varchar(10) NOT NULL DEFAULT ''
+  `Name` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5970,7 +6137,8 @@ CREATE TABLE `EffectRankBonusExpRed` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
   `DayTime` int unsigned NOT NULL DEFAULT '0',
-  `Name` varchar(10) NOT NULL DEFAULT ''
+  `Name` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5985,6 +6153,7 @@ CREATE TABLE `EffectRestore` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `YearTime` int unsigned NOT NULL DEFAULT '0',
   `DayTime` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectRestore_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5999,6 +6168,7 @@ DROP TABLE IF EXISTS `EffectSafeForceScroll`;
 CREATE TABLE `EffectSafeForceScroll` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectSafeForceScroll_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -6013,6 +6183,7 @@ DROP TABLE IF EXISTS `EffectSafeForceScroll2`;
 CREATE TABLE `EffectSafeForceScroll2` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectSafeForceScroll_m1` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -6028,6 +6199,7 @@ CREATE TABLE `EffectSoviusForceScroll` (
   `Name` varchar(10) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectBehemothForceScroll_m1` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -6043,6 +6215,7 @@ CREATE TABLE `EffectSoviusForceScroll2` (
   `Name` varchar(10) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectBehemothForceScroll_m1` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -6072,6 +6245,7 @@ CREATE TABLE `EffectTituosForceScroll` (
   `Name` varchar(10) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectBehemothForceScroll_m1` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -6087,6 +6261,7 @@ CREATE TABLE `EffectTituosForceScroll2` (
   `Name` varchar(10) NOT NULL DEFAULT '',
   `RemainTime` int unsigned NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `EffectBehemothForceScroll_m1` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -6104,6 +6279,7 @@ CREATE TABLE `EffectYellowPoisonToCreature` (
   `DayTime` int unsigned NOT NULL DEFAULT '0',
   `Level` int unsigned NOT NULL DEFAULT '0',
   `OldSight` tinyint unsigned NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `IDX_EffectYellowPoisionToCreature` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -6213,6 +6389,7 @@ CREATE TABLE `EnemyErase` (
   `YearTime` int unsigned NOT NULL DEFAULT '0',
   `DayTime` int unsigned NOT NULL DEFAULT '0',
   `EnemyName` varchar(10) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   KEY `IDX_EnemyErase` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -6517,7 +6694,8 @@ CREATE TABLE `EventLevelUp` (
   `PlayerID` varchar(255) NOT NULL DEFAULT '',
   `RecvItemDate` varchar(255) NOT NULL DEFAULT '',
   `RecvPremiumItemDate` varchar(255) NOT NULL DEFAULT '',
-  `s` int NOT NULL DEFAULT '0'
+  `s` int NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -6617,6 +6795,7 @@ CREATE TABLE `EventQuestAdvance` (
   `QuestLevel` int NOT NULL DEFAULT '0',
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `Status` tinyint NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`OwnerID`,`QuestLevel`),
   KEY `EventQuestAdvance_Owner` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -7511,7 +7690,8 @@ CREATE TABLE `ItemList` (
   `ItemType` int NOT NULL DEFAULT '0',
   `OptionType` varchar(255) NOT NULL DEFAULT '',
   `GiveFlag` int NOT NULL DEFAULT '0',
-  `OwnerID` varchar(255) NOT NULL DEFAULT ''
+  `OwnerID` varchar(255) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -7899,7 +8079,8 @@ DROP TABLE IF EXISTS `MapleEvent`;
 CREATE TABLE `MapleEvent` (
   `MapleCount` int NOT NULL DEFAULT '0',
   `MapleRemainCount` int NOT NULL DEFAULT '0',
-  `OwnerID` varchar(255) NOT NULL DEFAULT ''
+  `OwnerID` varchar(255) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -8120,6 +8301,7 @@ DROP TABLE IF EXISTS `MofusPowerPoint`;
 CREATE TABLE `MofusPowerPoint` (
   `OwnerID` varchar(32) NOT NULL DEFAULT '',
   `Point` int NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -8391,6 +8573,7 @@ CREATE TABLE `OlympicStat` (
   `Type` tinyint NOT NULL DEFAULT '0',
   `Day` date NOT NULL DEFAULT '2004-07-30',
   `count` int NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`PlayerID`,`OwnerID`,`Type`,`Day`),
   KEY `NAME_IDX` (`OwnerID`),
   KEY `ID_IDX` (`PlayerID`)
@@ -8781,7 +8964,8 @@ CREATE TABLE `OustersTunningItemInfo` (
   `Ratio` int NOT NULL DEFAULT '0',
   `ReqAbility` varchar(255) NOT NULL DEFAULT '',
   `OwnerID` varchar(255) NOT NULL DEFAULT '',
-  `Storage` int NOT NULL DEFAULT '0'
+  `Storage` int NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -8802,7 +8986,8 @@ CREATE TABLE `OustersWingItemInfo` (
   `DefaultBodyColor` int NOT NULL DEFAULT '0',
   `DefaultEffectColor` int NOT NULL DEFAULT '0',
   `OwnerID` varchar(255) NOT NULL DEFAULT '',
-  `Storage` int NOT NULL DEFAULT '0'
+  `Storage` int NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -9598,6 +9783,7 @@ CREATE TABLE `SMSAddressBook` (
   `CustomName` varchar(40) NOT NULL DEFAULT '',
   `Number` varchar(11) NOT NULL DEFAULT '',
   `Time` datetime NOT NULL DEFAULT '2004-06-01 14:00:00',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`eID`,`OwnerID`),
   KEY `IDX_OwnerID` (`OwnerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -9884,7 +10070,8 @@ CREATE TABLE `SimpleQuest` (
   `Reward` varchar(255) NOT NULL DEFAULT '',
   `Penalty` varchar(255) NOT NULL DEFAULT '',
   `DayTime` varchar(255) DEFAULT NULL,
-  `OwnerID` varchar(255) NOT NULL DEFAULT ''
+  `OwnerID` varchar(255) NOT NULL DEFAULT '',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -9954,7 +10141,8 @@ CREATE TABLE `SkillBookInfo` (
   `Race` int NOT NULL DEFAULT '0',
   `NeedAttribute` varchar(255) NOT NULL DEFAULT '',
   `OwnerID` varchar(255) NOT NULL DEFAULT '',
-  `Storage` int NOT NULL DEFAULT '0'
+  `Storage` int NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -10065,7 +10253,8 @@ CREATE TABLE `SlayerTunningItemInfo` (
   `Ratio` int NOT NULL DEFAULT '0',
   `ReqAbility` varchar(255) NOT NULL DEFAULT '',
   `OwnerID` varchar(255) NOT NULL DEFAULT '',
-  `Storage` int NOT NULL DEFAULT '0'
+  `Storage` int NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -10768,7 +10957,8 @@ CREATE TABLE `VampireTunningItemInfo` (
   `Ratio` int NOT NULL DEFAULT '0',
   `ReqAbility` varchar(255) NOT NULL DEFAULT '',
   `OwnerID` varchar(255) NOT NULL DEFAULT '',
-  `Storage` int NOT NULL DEFAULT '0'
+  `Storage` int NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -10826,7 +11016,8 @@ CREATE TABLE `VampireWingItemInfo` (
   `DefaultEffectColor` int NOT NULL DEFAULT '0',
   `ReqAbility` varchar(255) NOT NULL DEFAULT '',
   `OwnerID` varchar(255) NOT NULL DEFAULT '',
-  `Storage` int NOT NULL DEFAULT '0'
+  `Storage` int NOT NULL DEFAULT '0',
+  `OwnerCharID` int unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -11107,10 +11298,10 @@ CREATE TABLE `news` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-08-26 11:23:50
+-- Dump completed on 2026-08-26 12:48:11
 -- MySQL dump 10.13  Distrib 8.0.42, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: DARKEDEN2
+-- Host: 127.0.0.1    Database: DARKEDEN
 -- ------------------------------------------------------
 -- Server version	8.0.42-0ubuntu0.20.04.1
 
@@ -14326,4 +14517,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-08-26 11:23:51
+-- Dump completed on 2026-08-26 12:48:12
