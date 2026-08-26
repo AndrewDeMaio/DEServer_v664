@@ -152,6 +152,24 @@ void DatabaseManager::init ()
 			string wpassword = pResult->getString(5);
 			uint port = pResult->getInt(6);
 
+			// These columns are OPTIONAL OVERRIDES: blank means "same server as the
+			// one in the config". They used to be mandatory, which pinned the database
+			// name in two places at once -- DB_DB in the .conf AND a row here. Pointing
+			// the config at a different database therefore split the server in half:
+			// accounts went to the new one (getConnection("DARKEDEN") -> default),
+			// while characters still went to the old one (getConnection(WorldID) -> the
+			// connection built below).
+			//
+			// Leaving them blank also keeps the DB password out of this table, and out
+			// of any dump taken from it. A real multi-world setup can still fill them
+			// in per world.
+			if (whost.empty())     whost     = g_pConfig->getProperty("DB_HOST");
+			if (wdb.empty())       wdb       = g_pConfig->getProperty("DB_DB");
+			if (wuser.empty())     wuser     = g_pConfig->getProperty("DB_USER");
+			if (wpassword.empty()) wpassword = g_pConfig->getProperty("DB_PASSWORD");
+			if (port == 0 && g_pConfig->hasKey("DB_PORT"))
+				port = g_pConfig->getPropertyInt("DB_PORT");
+
 			cout << "Connectiong: " 
 				<< "WorldID=" << (int)WorldID
 				<< ", HOST=" << whost.c_str()

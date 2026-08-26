@@ -1219,3 +1219,57 @@ ALTER TABLE `ZoneInfo_bak` MODIFY `OwnerId` varchar(32) ;
 -- revert: ALTER TABLE `WaterObject` MODIFY `OwnerID` varchar(10) NOT NULL DEFAULT '';
 -- revert: ALTER TABLE `ZoneInfo` MODIFY `OwnerId` varchar(20) ;
 -- revert: ALTER TABLE `ZoneInfo_bak` MODIFY `OwnerId` varchar(20) ;
+
+-- =====================================================================
+-- 2026-08-26: applied to DARKEDEN2 (the database the servers now use,
+-- via DB_DB in the .conf files; DARKEDEN is kept untouched as the old copy).
+-- =====================================================================
+
+-- Decouple WorldDBInfo from the database name and credentials.
+--
+-- Every server reads this table to build the connection that
+-- getConnection(WorldID) returns. Because the columns were mandatory, the
+-- database name was pinned in two places: DB_DB in the .conf AND a row here.
+-- Repointing the config therefore split the server in half -- accounts went to
+-- the new DB (getConnection("DARKEDEN") -> default connection) while character
+-- create/delete still went to the old one. Blank now means "use the config".
+--
+-- REQUIRES the matching DatabaseManager.cpp change; with an older binary a
+-- blank row yields Connection("","","","",0) and the world connection fails.
+UPDATE WorldDBInfo SET Host = '', DB = '', User = '', Password = '', Port = 0;
+-- revert: UPDATE WorldDBInfo SET Host='127.0.0.1', DB='DARKEDEN', User='elcastle', Password='elca005', Port=3306;
+
+-- Account devolo / test (user request). Same PASSWORD() equivalent as devola.
+INSERT INTO Player
+    (PlayerID, Password, Name, SSN, Event, Passwordwebsite, LogOn, Access, CurrentWorldID)
+VALUES
+    ('devolo', CONCAT('*', UPPER(SHA1(UNHEX(SHA1('test'))))), '', '', '', '', 'LOGOFF', 'ALLOW', 1);
+-- revert: DELETE FROM Player WHERE PlayerID = 'devolo';
+
+-- =====================================================================
+-- NOTE on the 2026-08-26 DARKEDEN2 block above: DARKEDEN2 and DARKEDEN3 were
+-- throwaway databases used to prove the schema script spins up a working
+-- server. Both have been dropped; DARKEDEN is the live database again.
+--   * the WorldDBInfo blanking HAS been applied to DARKEDEN (see below)
+--   * the devolo account INSERT does NOT apply -- DARKEDEN already had it
+-- =====================================================================
+
+-- 2026-08-26: WorldDBInfo decoupled in the live DARKEDEN database.
+-- Blank = "use the config" (DatabaseManager.cpp). Puts the database name in one
+-- place (DB_DB) and removes the plaintext DB password from the table.
+UPDATE DARKEDEN.WorldDBInfo SET Host='', DB='', User='', Password='', Port=0;
+-- revert: UPDATE DARKEDEN.WorldDBInfo SET Host='127.0.0.1', DB='DARKEDEN', User='elcastle', Password='elca005', Port=3306;
+
+-- 2026-08-26: deleteNum, for reusing the name of a soft-deleted character.
+-- When a name is reused, the dead holder is renamed to [D_<hex>]<Name> and this
+-- column stores the sequence number. It exists so the counter lives in a column
+-- rather than being parsed back out of the marker name with sscanf, which broke
+-- once the counter passed 0xFFF and the hex strings stopped being equal width.
+-- Safe to add: nothing does SELECT * on these tables, and every INSERT lists
+-- its columns explicitly.
+ALTER TABLE DARKEDEN.Slayer  ADD COLUMN deleteNum INT UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE DARKEDEN.Vampire ADD COLUMN deleteNum INT UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE DARKEDEN.Ousters ADD COLUMN deleteNum INT UNSIGNED NOT NULL DEFAULT 0;
+-- revert: ALTER TABLE DARKEDEN.Slayer  DROP COLUMN deleteNum;
+-- revert: ALTER TABLE DARKEDEN.Vampire DROP COLUMN deleteNum;
+-- revert: ALTER TABLE DARKEDEN.Ousters DROP COLUMN deleteNum;

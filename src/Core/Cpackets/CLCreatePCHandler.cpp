@@ -29,7 +29,7 @@
 bool isAvailableID(const char* pID);
 bool isAvailableCharName(const char* pID);
 #ifdef __LOGIN_SERVER__
-void freeInactiveCharName(Statement* pStmt, const string& name);
+bool freeInactiveCharName(Statement* pStmt, const string& name);
 #endif
 
 #ifdef __THAILAND_SERVER__
@@ -260,7 +260,12 @@ void CLCreatePCHandler::execute (CLCreatePC* pPacket , Player* pPlayer)
 		// The name is free of live characters. If soft-deleted ones still hold
 		// it, rename them (and everything keyed to them) out of the way now, so
 		// the new character does not inherit a dead character's items.
-		freeInactiveCharName(pStmt, pPacket->getName());
+		if (!freeInactiveCharName(pStmt, pPacket->getName()))
+		{
+			// Held by a recently deleted character; still inside the grace period.
+			lcCreatePCError.setErrorID(ALREADY_REGISTER_ID);
+			throw DuplicatedException("name still reserved by a recent deletion");
+		}
 		//*/
 		// 두 쿼리를 하나로. 2002. 7. 13 by sigi. 이거 안좋다. - -;
 		/*
@@ -728,9 +733,10 @@ void CLCreatePCHandler::execute (CLCreatePC* pPacket , Player* pPlayer)
 // only. With names capped at 10 characters and the columns at varchar(32),
 // there is room for 18 hex digits before the form could ever overflow.
 //////////////////////////////////////////////////////////////////////////////
-void
+bool
 freeInactiveCharName(Statement* pStmt, const string& name)
 {
+	// Is any soft-deleted character still holding this name?
 	Result* pResult = pStmt->executeQuery(
 		"SELECT Name FROM Slayer  WHERE Name='%s' AND Active='INACTIVE'"
 		" UNION ALL SELECT Name FROM Vampire WHERE Name='%s' AND Active='INACTIVE'"
@@ -739,45 +745,64 @@ freeInactiveCharName(Statement* pStmt, const string& name)
 
 	// Nobody dead is holding it -- the name was simply unused.
 	if (pResult->getRowCount() == 0)
-		return;
+		return true;
 
-	// Next suffix is the highest already used for this name, plus one -- one
-	// query instead of probing upward from 1.
+	// Grace period. Reusing a name and restoring a deleted character under its
+	// own name are mutually exclusive: once someone else takes it, the original
+	// cannot have it back. Holding the name for a while after deletion is what
+	// makes a restore window actually guaranteed rather than best-effort.
 	//
-	// The rows are compared in C++ rather than ordered in SQL on purpose: once
-	// the counter passes 0xFFF the hex strings stop being equal width, and
-	// string order no longer matches numeric order ('[D_1000]' sorts before
-	// '[D_FFF]'). Note '_' is a single-character wildcard in LIKE, so the one
-	// in the prefix has to be escaped.
-	pResult = pStmt->executeQuery(
-		"SELECT Name FROM Slayer  WHERE Name LIKE '[D\_%%]%s'"
-		" UNION ALL SELECT Name FROM Vampire WHERE Name LIKE '[D\_%%]%s'"
-		" UNION ALL SELECT Name FROM Ousters WHERE Name LIKE '[D\_%%]%s'",
-		name.c_str(), name.c_str(), name.c_str());
+	// 0 or absent disables it and names are reusable immediately.
+	int graceDays = 0;
 
-	unsigned int highest = 0;
+	if (g_pConfig->hasKey("NameReuseGraceDays"))
+		graceDays = g_pConfig->getPropertyInt("NameReuseGraceDays");
 
-	while (pResult->next())
+	if (graceDays > 0)
 	{
-		unsigned int used = 0;
+		// Compared in SQL so there is no date parsing on this side. DeleteChar
+		// records every deletion that goes through CLDeletePCHandler.
+		pResult = pStmt->executeQuery(
+			"SELECT COUNT(*) FROM DeleteChar"
+			" WHERE Name='%s' AND delDate > DATE_SUB(NOW(), INTERVAL %d DAY)",
+			name.c_str(), graceDays);
 
-		if (sscanf(pResult->getString(1), "[D_%X]", &used) == 1 && used > highest)
-			highest = used;
+		if (pResult->next() && pResult->getInt(1) > 0)
+		{
+			filelog("NameReuse.log", "denied [%s]: still inside the %d day grace period",
+				name.c_str(), graceDays);
+			return false;
+		}
 	}
 
+	// Next sequence number. One global counter across the three tables, read
+	// from the deleteNum column -- previously this parsed the hex back out of
+	// existing marker names, which broke once the counter passed 0xFFF and the
+	// strings stopped being equal width.
+	pResult = pStmt->executeQuery(
+		"SELECT GREATEST("
+		" IFNULL((SELECT MAX(deleteNum) FROM Slayer),0),"
+		" IFNULL((SELECT MAX(deleteNum) FROM Vampire),0),"
+		" IFNULL((SELECT MAX(deleteNum) FROM Ousters),0)) + 1");
+
+	unsigned int seq = 1;
+
+	if (pResult->next())
+		seq = (unsigned int)pResult->getInt(1);
+
 	char newName[64];
-	sprintf(newName, "[D_%03X]%s", highest + 1, name.c_str());
+	sprintf(newName, "[D_%03X]%s", seq, name.c_str());
 
 	// The character rows. INACTIVE only -- never rename a live character out
 	// from under its player.
-	pStmt->executeQuery("UPDATE Slayer  SET Name='%s' WHERE Name='%s' AND Active='INACTIVE'", newName, name.c_str());
-	pStmt->executeQuery("UPDATE Vampire SET Name='%s' WHERE Name='%s' AND Active='INACTIVE'", newName, name.c_str());
-	pStmt->executeQuery("UPDATE Ousters SET Name='%s' WHERE Name='%s' AND Active='INACTIVE'", newName, name.c_str());
+	pStmt->executeQuery("UPDATE Slayer  SET Name='%s', deleteNum=%u WHERE Name='%s' AND Active='INACTIVE'", newName, seq, name.c_str());
+	pStmt->executeQuery("UPDATE Vampire SET Name='%s', deleteNum=%u WHERE Name='%s' AND Active='INACTIVE'", newName, seq, name.c_str());
+	pStmt->executeQuery("UPDATE Ousters SET Name='%s', deleteNum=%u WHERE Name='%s' AND Active='INACTIVE'", newName, seq, name.c_str());
 
-	// Everything else keyed to the character by name. The table list is read
-	// from the schema rather than hardcoded: CLDeletePCHandler carries its own
-	// list of ~190 OwnerID tables, and a hardcoded copy silently rots as tables
-	// are added. Collect first -- the next query invalidates this Result.
+	// Everything that owns items/skills by name. The table list is read from
+	// the schema rather than hardcoded: CLDeletePCHandler keeps its own list of
+	// ~190 OwnerID tables and a hardcoded copy rots as tables are added.
+	// Collect first -- the next query invalidates this Result.
 	vector<string> tables;
 
 	pResult = pStmt->executeQuery(
@@ -791,8 +816,19 @@ freeInactiveCharName(Statement* pStmt, const string& name)
 		pStmt->executeQuery("UPDATE `%s` SET OwnerID='%s' WHERE OwnerID='%s'",
 			tables[i].c_str(), newName, name.c_str());
 
-	filelog("NameReuse.log", "freed [%s] -> [%s] across %u owner tables",
-		name.c_str(), newName, (uint)tables.size());
+	// These three key on the character name but have no OwnerID column, so the
+	// sweep above misses them. Without this a reused name inherits the dead
+	// character's guild membership, friend list and mail.
+	pStmt->executeQuery("UPDATE GuildMember SET Name='%s'       WHERE Name='%s'",       newName, name.c_str());
+	pStmt->executeQuery("UPDATE FriendList  SET Name='%s'       WHERE Name='%s'",       newName, name.c_str());
+	pStmt->executeQuery("UPDATE FriendList  SET FriendName='%s' WHERE FriendName='%s'", newName, name.c_str());
+	pStmt->executeQuery("UPDATE Messages    SET Sender='%s'     WHERE Sender='%s'",     newName, name.c_str());
+	pStmt->executeQuery("UPDATE Messages    SET Receiver='%s'   WHERE Receiver='%s'",   newName, name.c_str());
+
+	filelog("NameReuse.log", "freed [%s] -> [%s] (deleteNum %u) across %u owner tables",
+		name.c_str(), newName, seq, (uint)tables.size());
+
+	return true;
 }
 
 #endif // __LOGIN_SERVER__
