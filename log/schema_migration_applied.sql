@@ -1273,3 +1273,30 @@ ALTER TABLE DARKEDEN.Ousters ADD COLUMN deleteNum INT UNSIGNED NOT NULL DEFAULT 
 -- revert: ALTER TABLE DARKEDEN.Slayer  DROP COLUMN deleteNum;
 -- revert: ALTER TABLE DARKEDEN.Vampire DROP COLUMN deleteNum;
 -- revert: ALTER TABLE DARKEDEN.Ousters DROP COLUMN deleteNum;
+
+-- =====================================================================
+-- 2026-08-26  CharID migration, Phase 1: surrogate character identity.
+--
+-- Full backup taken first: ~/backups/darkeden_full_20260826.sql
+--   (4.6 MB, 522 CREATE TABLE, 257 INSERT, 4 triggers, "Dump completed")
+--
+-- Slayer is the universal registry: CLCreatePCHandler always writes a row
+-- there regardless of race, and it carries the Race column. Verified zero
+-- Vampire/Ousters rows exist without a matching Slayer row (14 registry rows
+-- = 6 SLAYER + 7 OUSTERS + 1 VAMPIRE).
+--
+-- So identity is issued ONCE by Slayer.CharID and COPIED to the race tables.
+-- Giving all three their own AUTO_INCREMENT would create three independent
+-- sequences, and OwnerCharID in the 190 item tables could not tell you which
+-- table's numbering it referred to.
+--
+-- Additive only: nothing reads CharID yet.
+-- =====================================================================
+ALTER TABLE DARKEDEN.Slayer  ADD COLUMN CharID INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE;
+ALTER TABLE DARKEDEN.Vampire ADD COLUMN CharID INT UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE DARKEDEN.Ousters ADD COLUMN CharID INT UNSIGNED NOT NULL DEFAULT 0;
+UPDATE DARKEDEN.Vampire v JOIN DARKEDEN.Slayer s ON s.Name = v.Name SET v.CharID = s.CharID;
+UPDATE DARKEDEN.Ousters o JOIN DARKEDEN.Slayer s ON s.Name = o.Name SET o.CharID = s.CharID;
+-- revert: ALTER TABLE DARKEDEN.Slayer  DROP COLUMN CharID;
+-- revert: ALTER TABLE DARKEDEN.Vampire DROP COLUMN CharID;
+-- revert: ALTER TABLE DARKEDEN.Ousters DROP COLUMN CharID;
