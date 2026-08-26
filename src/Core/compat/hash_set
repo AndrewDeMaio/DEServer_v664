@@ -1,0 +1,32 @@
+//////////////////////////////////////////////////////////////////////////////
+// Filename    : hash_set (compatibility shim)
+// Description : See compat/hash_map. Same story for std::hash_set.
+//////////////////////////////////////////////////////////////////////////////
+
+#ifndef __DE_COMPAT_HASH_SET__
+#define __DE_COMPAT_HASH_SET__
+
+#include <unordered_set>
+#include <functional>
+#include <memory>
+#include <string>
+
+namespace std
+{
+	template <class Key,
+			  class Hash  = std::hash<Key>,
+			  class Pred  = std::equal_to<Key>,
+			  class Alloc = std::allocator<Key> >
+	using hash_set = std::unordered_set<Key, Hash, Pred, Alloc>;
+
+	template <class Key,
+			  class Hash  = std::hash<Key>,
+			  class Pred  = std::equal_to<Key>,
+			  class Alloc = std::allocator<Key> >
+	using hash_multiset = std::unordered_multiset<Key, Hash, Pred, Alloc>;
+}
+
+using std::hash_set;
+using std::hash_multiset;
+
+#endif // __DE_COMPAT_HASH_SET__

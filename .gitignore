@@ -1,0 +1,47 @@
+# ---------------------------------------------------------------------------
+# Build output.
+#
+# Nothing below is source. The real build happens in the WSL ext4 copy
+# (~/DEServer, created by ~/desync.sh), and these are the stale 2023 32-bit
+# artifacts left in the source tree. lib/ alone is 3.8 GB of .a archives plus
+# leftover `ar` temp files, and the three bin/ binaries are another 1.4 GB --
+# well past GitHub's 100 MB per-file limit.
+# ---------------------------------------------------------------------------
+*.o
+*.a
+lib/
+
+# The stale 2023 server binaries. bin/ itself is kept: it holds start.sh,
+# start.local.sh, stop.local.sh and daemon.sh, which are source.
+bin/gameserver
+bin/loginserver
+bin/sharedserver
+
+# ---------------------------------------------------------------------------
+# Runtime logs.
+#
+# log/ stays in the repo on purpose -- it holds schema_migration_applied.sql,
+# which is the record of every DB change made during the port and is the only
+# way to reverse them. Only the rolling .log files are noise.
+# ---------------------------------------------------------------------------
+*.log
+
+# Build transcripts and stray compiler output: make.out, depall.out,
+# info/log.out (3 MB) and src/server/database/a.out, which is a binary.
+#
+# NOTE: *.txt is deliberately NOT ignored. It looks like noise but holds real
+# content -- src/ChangeLog.txt (269 KB of project history), monster.txt,
+# chief_monster.txt, the Query.txt SQL references and CPacketList.txt.
+*.out
+
+# ---------------------------------------------------------------------------
+# Editor and tooling leftovers
+# ---------------------------------------------------------------------------
+*.bak
+*.orig
+*.rej
+*~
+.vs/
+.vscode/
+Thumbs.db
+desktop.ini

@@ -1,0 +1,38 @@
+//////////////////////////////////////////////////////////////////////////////
+// Filename    : slist (compatibility shim)
+// Description :
+// SGI STL / STLport provided a singly linked list as <slist>. libstdc++ has
+// no such header, and std::forward_list is not a usable stand-in because the
+// code needs push_back() and size(), which forward_list does not have.
+//
+// So slist is a std::list plus the two SGI-only members the tree actually
+// calls. Tile.cpp is the only insert_after/erase_after caller and it always
+// guards `pos == end()` beforehand, so ++pos is well defined at every site.
+//////////////////////////////////////////////////////////////////////////////
+
+#ifndef __DE_COMPAT_SLIST__
+#define __DE_COMPAT_SLIST__
+
+#include <list>
+#include <memory>
+
+template <class T, class Alloc = std::allocator<T> >
+class slist : public std::list<T, Alloc>
+{
+public:
+	typedef std::list<T, Alloc>            base_type;
+	typedef typename base_type::iterator   iterator;
+
+	// SGI slist inserts *after* pos; std::list inserts *before* the iterator.
+	iterator insert_after(iterator pos, const T& value)
+	{
+		return base_type::insert(++pos, value);
+	}
+
+	iterator erase_after(iterator pos)
+	{
+		return base_type::erase(++pos);
+	}
+};
+
+#endif // __DE_COMPAT_SLIST__

@@ -1,0 +1,5 @@
+# This tree has mixed CRLF, LF and even CRCRLF line endings, and many source
+# files are EUC-KR encoded rather than UTF-8. Any end-of-line normalisation
+# would silently rewrite bytes -- so disable it everywhere and store files
+# exactly as they are on disk.
+* -text

@@ -1,0 +1,11 @@
+#!/bin/sh
+cd bin
+
+rm -rf *.out
+rm -rf core.*
+rm -rf *.log
+rm -rf *.txt
+cd ../log
+
+rm -rf *.log
+rm -rf *.txt

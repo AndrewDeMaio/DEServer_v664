@@ -1,0 +1,13 @@
+tbl	Name	PlayerID	Slot	Active
+Slayer	Attic	devola	SLOT2	ACTIVE
+Slayer	Shena	devola	SLOT1	ACTIVE
+Slayer	Shera	devola	SLOT3	ACTIVE
+Slayer	Caravice	devolo	SLOT2	ACTIVE
+Slayer	Snake	devolo	SLOT3	ACTIVE
+Slayer	Stylo	devolo	SLOT1	ACTIVE
+Vampire	Attic	devola	SLOT2	ACTIVE
+Vampire	Caravice	devolo	SLOT2	ACTIVE
+Vampire	Snake	devolo	SLOT3	ACTIVE
+Ousters	Shena	devola	SLOT1	ACTIVE
+Ousters	Shera	devola	SLOT3	ACTIVE
+Ousters	Stylo	devolo	SLOT1	ACTIVE

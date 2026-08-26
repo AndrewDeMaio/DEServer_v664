@@ -1,0 +1,1049 @@
+g++ -Wall -c -g -std=c++17 -D__LINUX__ -D_REENTRANT -D__GAME_SERVER__ -I.. -I../../../Core -I../.. -I../../database -I. HitRoll.cpp
+g++ -Wall -c -g -std=c++17 -D__LINUX__ -D_REENTRANT -D__GAME_SERVER__ -I.. -I../../../Core -I../.. -I../../database -I. SkillHandler.cpp
+g++ -Wall -c -g -std=c++17 -D__LINUX__ -D_REENTRANT -D__GAME_SERVER__ -I.. -I../../../Core -I../.. -I../../database -I. SkillHandlerManager.cpp
+g++ -Wall -c -g -std=c++17 -D__LINUX__ -D_REENTRANT -D__GAME_SERVER__ -I.. -I../../../Core -I../.. -I../../database -I. SlayerSkillSlot.cpp
+g++ -Wall -c -g -std=c++17 -D__LINUX__ -D_REENTRANT -D__GAME_SERVER__ -I.. -I../../../Core -I../.. -I../../database -I. VampireSkillSlot.cpp
+g++ -Wall -c -g -std=c++17 -D__LINUX__ -D_REENTRANT -D__GAME_SERVER__ -I.. -I../../../Core -I../.. -I../../database -I. OustersSkillSlot.cpp
+g++ -Wall -c -g -std=c++17 -D__LINUX__ -D_REENTRANT -D__GAME_SERVER__ -I.. -I../../../Core -I../.. -I../../database -I. SkillSlot.cpp
+g++ -Wall -c -g -std=c++17 -D__LINUX__ -D_REENTRANT -D__GAME_SERVER__ -I.. -I../../../Core -I../.. -I../../database -I. SkillFormula.cpp
+g++ -Wall -c -g -std=c++17 -D__LINUX__ -D_REENTRANT -D__GAME_SERVER__ -I.. -I../../../Core -I../.. -I../../database -I. SkillUtil.cpp
+g++ -Wall -c -g -std=c++17 -D__LINUX__ -D_REENTRANT -D__GAME_SERVER__ -I.. -I../../../Core -I../.. -I../../database -I. CastleSkillSlot.cpp
+g++ -Wall -c -g -std=c++17 -D__LINUX__ -D_REENTRANT -D__GAME_SERVER__ -I.. -I../../../Core -I../.. -I../../database -I. SimpleMeleeSkill.cpp
+g++ -Wall -c -g -std=c++17 -D__LINUX__ -D_REENTRANT -D__GAME_SERVER__ -I.. -I../../../Core -I../.. -I../../database -I. SimpleMissileSkill.cpp
+In file included from /usr/include/c++/9/backward/hash_map:60,
+                 from ../OptionInfo.h:15,
+                 from ../PlayerCreature.h:22,
+                 from ../Slayer.h:10,
+                 from ../SkillInfo.h:23,
+                 from HitRoll.cpp:8:
+/usr/include/c++/9/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+   32 | #warning \
+      |  ^~~~~~~
+In file included from /usr/include/c++/9/backward/hash_map:60,
+                 from ../OptionInfo.h:15,
+                 from ../PlayerCreature.h:22,
+                 from ../Slayer.h:10,
+                 from ../SkillInfo.h:23,
+                 from SkillHandler.h:11,
+                 from SkillHandler.cpp:7:
+/usr/include/c++/9/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+   32 | #warning \
+      |  ^~~~~~~
+In file included from ../Slayer.h:10,
+                 from ../SkillInfo.h:23,
+                 from HitRoll.cpp:8:
+../PlayerCreature.h:28:10: fatal error: slist: No such file or directory
+   28 | #include <slist>
+      |          ^~~~~~~
+compilation terminated.
+make: *** [Makefile:32: HitRoll.o] Error 1
+make: *** Waiting for unfinished jobs....
+In file included from ../Slayer.h:10,
+                 from ../SkillInfo.h:23,
+                 from SkillHandler.h:11,
+                 from SkillHandler.cpp:7:
+../PlayerCreature.h:28:10: fatal error: slist: No such file or directory
+   28 | #include <slist>
+      |          ^~~~~~~
+compilation terminated.
+make: *** [Makefile:32: SkillHandler.o] Error 1
+In file included from /usr/include/c++/9/backward/hash_map:60,
+                 from ../../DBExecuteManager.h:5,
+                 from SlayerSkillSlot.cpp:8:
+/usr/include/c++/9/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+   32 | #warning \
+      |  ^~~~~~~
+In file included from /usr/include/c++/9/backward/hash_map:60,
+                 from ../../DBExecuteManager.h:5,
+                 from SkillSlot.cpp:8:
+/usr/include/c++/9/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+   32 | #warning \
+      |  ^~~~~~~
+In file included from /usr/include/c++/9/backward/hash_map:60,
+                 from ../../DBExecuteManager.h:5,
+                 from VampireSkillSlot.cpp:8:
+/usr/include/c++/9/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+   32 | #warning \
+      |  ^~~~~~~
+In file included from /usr/include/c++/9/backward/hash_map:60,
+                 from ../../DBExecuteManager.h:5,
+                 from OustersSkillSlot.cpp:8:
+/usr/include/c++/9/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+   32 | #warning \
+      |  ^~~~~~~
+In file included from /usr/include/c++/9/backward/hash_map:60,
+                 from ../OptionInfo.h:15,
+                 from ../PlayerCreature.h:22,
+                 from ../Slayer.h:10,
+                 from ../SkillInfo.h:23,
+                 from SkillHandler.h:11,
+                 from SkillHandlerManager.h:21,
+                 from SkillHandlerManager.cpp:7:
+/usr/include/c++/9/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+   32 | #warning \
+      |  ^~~~~~~
+In file included from /usr/include/c++/9/backward/hash_map:60,
+                 from ../OptionInfo.h:15,
+                 from ../PlayerCreature.h:22,
+                 from ../Slayer.h:10,
+                 from ../SkillInfo.h:23,
+                 from SkillHandler.h:11,
+                 from SkillFormula.cpp:7:
+/usr/include/c++/9/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+   32 | #warning \
+      |  ^~~~~~~
+In file included from ../Slayer.h:10,
+                 from ../SkillInfo.h:23,
+                 from SkillHandler.h:11,
+                 from SkillHandlerManager.h:21,
+                 from SkillHandlerManager.cpp:7:
+../PlayerCreature.h:28:10: fatal error: slist: No such file or directory
+   28 | #include <slist>
+      |          ^~~~~~~
+compilation terminated.
+make: *** [Makefile:32: SkillHandlerManager.o] Error 1
+In file included from ../Slayer.h:10,
+                 from ../SkillInfo.h:23,
+                 from SkillHandler.h:11,
+                 from SkillFormula.cpp:7:
+../PlayerCreature.h:28:10: fatal error: slist: No such file or directory
+   28 | #include <slist>
+      |          ^~~~~~~
+compilation terminated.
+make: *** [Makefile:32: SkillFormula.o] Error 1
+In file included from /usr/include/c++/9/backward/hash_map:60,
+                 from ../OptionInfo.h:15,
+                 from ../PlayerCreature.h:22,
+                 from ../Slayer.h:10,
+                 from SkillUtil.h:11,
+                 from SkillUtil.cpp:7:
+/usr/include/c++/9/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+   32 | #warning \
+      |  ^~~~~~~
+In file included from /usr/include/c++/9/backward/hash_map:60,
+                 from ../OptionInfo.h:15,
+                 from ../PlayerCreature.h:22,
+                 from ../Slayer.h:10,
+                 from ../SkillInfo.h:23,
+                 from SkillHandler.h:11,
+                 from SimpleSkill.h:10,
+                 from SimpleMissileSkill.h:10,
+                 from SimpleMissileSkill.cpp:7:
+/usr/include/c++/9/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+   32 | #warning \
+      |  ^~~~~~~
+In file included from /usr/include/c++/9/backward/hash_map:60,
+                 from ../OptionInfo.h:15,
+                 from ../PlayerCreature.h:22,
+                 from ../Slayer.h:10,
+                 from ../SkillInfo.h:23,
+                 from SkillHandler.h:11,
+                 from SimpleSkill.h:10,
+                 from SimpleMeleeSkill.h:10,
+                 from SimpleMeleeSkill.cpp:7:
+/usr/include/c++/9/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+   32 | #warning \
+      |  ^~~~~~~
+In file included from ../Slayer.h:10,
+                 from SkillUtil.h:11,
+                 from SkillUtil.cpp:7:
+../PlayerCreature.h:28:10: fatal error: slist: No such file or directory
+   28 | #include <slist>
+      |          ^~~~~~~
+compilation terminated.
+make: *** [Makefile:32: SkillUtil.o] Error 1
+In file included from ../Slayer.h:10,
+                 from ../SkillInfo.h:23,
+                 from SkillHandler.h:11,
+                 from SimpleSkill.h:10,
+                 from SimpleMissileSkill.h:10,
+                 from SimpleMissileSkill.cpp:7:
+../PlayerCreature.h:28:10: fatal error: slist: No such file or directory
+   28 | #include <slist>
+      |          ^~~~~~~
+compilation terminated.
+In file included from ../Slayer.h:10,
+                 from ../SkillInfo.h:23,
+                 from SkillHandler.h:11,
+                 from SimpleSkill.h:10,
+                 from SimpleMeleeSkill.h:10,
+                 from SimpleMeleeSkill.cpp:7:
+../PlayerCreature.h:28:10: fatal error: slist: No such file or directory
+   28 | #include <slist>
+      |          ^~~~~~~
+make: *** [Makefile:32: SimpleMissileSkill.o] Error 1
+compilation terminated.
+make: *** [Makefile:32: SimpleMeleeSkill.o] Error 1
+In file included from ../../../Core/Types.h:49,
+                 from OustersSkillSlot.h:10,
+                 from OustersSkillSlot.cpp:7:
+../../../Core/Utility.h: In function â€˜void zerofill(void*, size_t)â€™:
+../../../Core/Utility.h:175:2: error: â€˜memsetâ€™ was not declared in this scope
+  175 |  memset(pointer, 0, size);
+      |  ^~~~~~
+../../../Core/Utility.h:12:1: note: â€˜memsetâ€™ is defined in header â€˜<cstring>â€™; did you forget to â€˜#include <cstring>â€™?
+   11 | #include "Types.h"
+  +++ |+#include <cstring>
+   12 | //#include "Assert.h"
+In file included from ../../../Core/Types.h:49,
+                 from SkillSlot.h:10,
+                 from SkillSlot.cpp:7:
+../../../Core/Utility.h: In function â€˜void zerofill(void*, size_t)â€™:
+../../../Core/Utility.h:175:2: error: â€˜memsetâ€™ was not declared in this scope
+  175 |  memset(pointer, 0, size);
+      |  ^~~~~~
+../../../Core/Utility.h:12:1: note: â€˜memsetâ€™ is defined in header â€˜<cstring>â€™; did you forget to â€˜#include <cstring>â€™?
+   11 | #include "Types.h"
+  +++ |+#include <cstring>
+   12 | //#include "Assert.h"
+In file included from ../../../Core/Types.h:49,
+                 from SlayerSkillSlot.h:10,
+                 from SlayerSkillSlot.cpp:7:
+../../../Core/Utility.h: In function â€˜void zerofill(void*, size_t)â€™:
+../../../Core/Utility.h:175:2: error: â€˜memsetâ€™ was not declared in this scope
+  175 |  memset(pointer, 0, size);
+      |  ^~~~~~
+../../../Core/Utility.h:12:1: note: â€˜memsetâ€™ is defined in header â€˜<cstring>â€™; did you forget to â€˜#include <cstring>â€™?
+   11 | #include "Types.h"
+  +++ |+#include <cstring>
+   12 | //#include "Assert.h"
+In file included from ../../../Core/Types.h:49,
+                 from VampireSkillSlot.h:10,
+                 from VampireSkillSlot.cpp:7:
+../../../Core/Utility.h: In function â€˜void zerofill(void*, size_t)â€™:
+../../../Core/Utility.h:175:2: error: â€˜memsetâ€™ was not declared in this scope
+  175 |  memset(pointer, 0, size);
+      |  ^~~~~~
+../../../Core/Utility.h:12:1: note: â€˜memsetâ€™ is defined in header â€˜<cstring>â€™; did you forget to â€˜#include <cstring>â€™?
+   11 | #include "Types.h"
+  +++ |+#include <cstring>
+   12 | //#include "Assert.h"
+In file included from ../../../Core/Types.h:49,
+                 from SlayerSkillSlot.h:10,
+                 from CastleSkillSlot.h:10,
+                 from CastleSkillSlot.cpp:1:
+../../../Core/Utility.h: In function â€˜void zerofill(void*, size_t)â€™:
+../../../Core/Utility.h:175:2: error: â€˜memsetâ€™ was not declared in this scope
+  175 |  memset(pointer, 0, size);
+      |  ^~~~~~
+../../../Core/Utility.h:12:1: note: â€˜memsetâ€™ is defined in header â€˜<cstring>â€™; did you forget to â€˜#include <cstring>â€™?
+   11 | #include "Types.h"
+  +++ |+#include <cstring>
+   12 | //#include "Assert.h"
+In file included from OustersSkillSlot.h:14,
+                 from OustersSkillSlot.cpp:7:
+SkillSlot.h: At global scope:
+SkillSlot.h:27:46: error: ISO C++17 does not allow dynamic exception specifications
+   27 |  virtual void create(const string & ownerID) throw(Error) = 0;
+      |                                              ^~~~~
+SkillSlot.h:28:44: error: ISO C++17 does not allow dynamic exception specifications
+   28 |  virtual void save(const string & ownerID) throw(Error) = 0;
+      |                                            ^~~~~
+SkillSlot.h:29:22: error: ISO C++17 does not allow dynamic exception specifications
+   29 |  virtual void save() throw(Error) = 0;
+      |                      ^~~~~
+SkillSlot.h:30:47: error: ISO C++17 does not allow dynamic exception specifications
+   30 |  virtual void destroy(const string & ownerID) throw(Error) {};
+      |                                               ^~~~~
+In file included from OustersSkillSlot.cpp:7:
+OustersSkillSlot.h:28:46: error: ISO C++17 does not allow dynamic exception specifications
+   28 |  virtual void create(const string & ownerID) throw(Error);
+      |                                              ^~~~~
+OustersSkillSlot.h:29:44: error: ISO C++17 does not allow dynamic exception specifications
+   29 |  virtual void save(const string & ownerID) throw(Error);
+      |                                            ^~~~~
+OustersSkillSlot.h:30:22: error: ISO C++17 does not allow dynamic exception specifications
+   30 |  virtual void save() throw(Error) { save(m_Name); }
+      |                      ^~~~~
+OustersSkillSlot.h:31:47: error: ISO C++17 does not allow dynamic exception specifications
+   31 |  virtual void destroy(const string & ownerID) throw(Error);
+      |                                               ^~~~~
+In file included from SkillSlot.cpp:7:
+SkillSlot.h: At global scope:
+SkillSlot.h:27:46: error: ISO C++17 does not allow dynamic exception specifications
+   27 |  virtual void create(const string & ownerID) throw(Error) = 0;
+      |                                              ^~~~~
+SkillSlot.h:28:44: error: ISO C++17 does not allow dynamic exception specifications
+   28 |  virtual void save(const string & ownerID) throw(Error) = 0;
+      |                                            ^~~~~
+SkillSlot.h:29:22: error: ISO C++17 does not allow dynamic exception specifications
+   29 |  virtual void save() throw(Error) = 0;
+      |                      ^~~~~
+SkillSlot.h:30:47: error: ISO C++17 does not allow dynamic exception specifications
+   30 |  virtual void destroy(const string & ownerID) throw(Error) {};
+      |                                               ^~~~~
+In file included from SlayerSkillSlot.h:14,
+                 from SlayerSkillSlot.cpp:7:
+SkillSlot.h: At global scope:
+SkillSlot.h:27:46: error: ISO C++17 does not allow dynamic exception specifications
+   27 |  virtual void create(const string & ownerID) throw(Error) = 0;
+      |                                              ^~~~~
+SkillSlot.h:28:44: error: ISO C++17 does not allow dynamic exception specifications
+   28 |  virtual void save(const string & ownerID) throw(Error) = 0;
+      |                                            ^~~~~
+SkillSlot.h:29:22: error: ISO C++17 does not allow dynamic exception specifications
+   29 |  virtual void save() throw(Error) = 0;
+      |                      ^~~~~
+SkillSlot.h:30:47: error: ISO C++17 does not allow dynamic exception specifications
+   30 |  virtual void destroy(const string & ownerID) throw(Error) {};
+      |                                               ^~~~~
+In file included from SlayerSkillSlot.cpp:7:
+SlayerSkillSlot.h:28:46: error: ISO C++17 does not allow dynamic exception specifications
+   28 |  virtual void create(const string & ownerID) throw(Error);
+      |                                              ^~~~~
+SlayerSkillSlot.h:29:44: error: ISO C++17 does not allow dynamic exception specifications
+   29 |  virtual void save(const string & ownerID) throw(Error);
+      |                                            ^~~~~
+SlayerSkillSlot.h:30:22: error: ISO C++17 does not allow dynamic exception specifications
+   30 |  virtual void save() throw(Error) { save(m_Name); }
+      |                      ^~~~~
+In file included from VampireSkillSlot.h:14,
+                 from VampireSkillSlot.cpp:7:
+SkillSlot.h: At global scope:
+SkillSlot.h:27:46: error: ISO C++17 does not allow dynamic exception specifications
+   27 |  virtual void create(const string & ownerID) throw(Error) = 0;
+      |                                              ^~~~~
+SkillSlot.h:28:44: error: ISO C++17 does not allow dynamic exception specifications
+   28 |  virtual void save(const string & ownerID) throw(Error) = 0;
+      |                                            ^~~~~
+SkillSlot.h:29:22: error: ISO C++17 does not allow dynamic exception specifications
+   29 |  virtual void save() throw(Error) = 0;
+      |                      ^~~~~
+SkillSlot.h:30:47: error: ISO C++17 does not allow dynamic exception specifications
+   30 |  virtual void destroy(const string & ownerID) throw(Error) {};
+      |                                               ^~~~~
+In file included from VampireSkillSlot.cpp:7:
+VampireSkillSlot.h:28:46: error: ISO C++17 does not allow dynamic exception specifications
+   28 |  virtual void create(const string & ownerID) throw(Error);
+      |                                              ^~~~~
+VampireSkillSlot.h:29:44: error: ISO C++17 does not allow dynamic exception specifications
+   29 |  virtual void save(const string & ownerID) throw(Error);
+      |                                            ^~~~~
+VampireSkillSlot.h:30:22: error: ISO C++17 does not allow dynamic exception specifications
+   30 |  virtual void save() throw(Error) { save(m_Name); }
+      |                      ^~~~~
+In file included from SlayerSkillSlot.h:14,
+                 from CastleSkillSlot.h:10,
+                 from CastleSkillSlot.cpp:1:
+SkillSlot.h: At global scope:
+SkillSlot.h:27:46: error: ISO C++17 does not allow dynamic exception specifications
+   27 |  virtual void create(const string & ownerID) throw(Error) = 0;
+      |                                              ^~~~~
+SkillSlot.h:28:44: error: ISO C++17 does not allow dynamic exception specifications
+   28 |  virtual void save(const string & ownerID) throw(Error) = 0;
+      |                                            ^~~~~
+SkillSlot.h:29:22: error: ISO C++17 does not allow dynamic exception specifications
+   29 |  virtual void save() throw(Error) = 0;
+      |                      ^~~~~
+SkillSlot.h:30:47: error: ISO C++17 does not allow dynamic exception specifications
+   30 |  virtual void destroy(const string & ownerID) throw(Error) {};
+      |                                               ^~~~~
+In file included from CastleSkillSlot.h:10,
+                 from CastleSkillSlot.cpp:1:
+SlayerSkillSlot.h:28:46: error: ISO C++17 does not allow dynamic exception specifications
+   28 |  virtual void create(const string & ownerID) throw(Error);
+      |                                              ^~~~~
+SlayerSkillSlot.h:29:44: error: ISO C++17 does not allow dynamic exception specifications
+   29 |  virtual void save(const string & ownerID) throw(Error);
+      |                                            ^~~~~
+SlayerSkillSlot.h:30:22: error: ISO C++17 does not allow dynamic exception specifications
+   30 |  virtual void save() throw(Error) { save(m_Name); }
+      |                      ^~~~~
+In file included from CastleSkillSlot.cpp:1:
+CastleSkillSlot.h:26:44: error: ISO C++17 does not allow dynamic exception specifications
+   26 |  virtual void save(const string & ownerID) throw(Error);
+      |                                            ^~~~~
+CastleSkillSlot.h:27:22: error: ISO C++17 does not allow dynamic exception specifications
+   27 |  virtual void save() throw(Error);
+      |                      ^~~~~
+CastleSkillSlot.h:29:46: error: ISO C++17 does not allow dynamic exception specifications
+   29 |  virtual void create(const string & ownerID) throw(Error);
+      |                                              ^~~~~
+CastleSkillSlot.cpp:4:51: error: ISO C++17 does not allow dynamic exception specifications
+    4 | void CastleSkillSlot::save(const string& ownerID) throw(Error) { }
+      |                                                   ^~~~~
+CastleSkillSlot.cpp:5:30: error: ISO C++17 does not allow dynamic exception specifications
+    5 | void CastleSkillSlot::save() throw(Error) { }
+      |                              ^~~~~
+CastleSkillSlot.cpp:6:53: error: ISO C++17 does not allow dynamic exception specifications
+    6 | void CastleSkillSlot::create(const string& ownerID) throw(Error) { }
+      |                                                     ^~~~~
+make: *** [Makefile:32: CastleSkillSlot.o] Error 1
+In file included from ../../Thread.h:87,
+                 from ../../DBExecuteManager.h:8,
+                 from SkillSlot.cpp:8:
+../../pthreadAPI.h:61:2: error: ISO C++17 does not allow dynamic exception specifications
+   61 |  throw ( Error );
+      |  ^~~~~
+../../pthreadAPI.h:73:2: error: ISO C++17 does not allow dynamic exception specifications
+   73 |  throw ( Error );
+      |  ^~~~~
+../../pthreadAPI.h:85:2: error: ISO C++17 does not allow dynamic exception specifications
+   85 | void pthreadAPI::pthread_attr_getschedparam_ex (const pthread_attr_t *attr, struct sched_param *param);
+      |  ^~~~~
+../../pthreadAPI.h:121:2: error: ISO C++17 does not allow dynamic exception specifications
+  121 | 
+      |  ^    
+../../pthreadAPI.h:133:2: error: ISO C++17 does not allow dynamic exception specifications
+  133 | 
+      |  ^    
+../../pthreadAPI.h:145:2: error: ISO C++17 does not allow dynamic exception specifications
+  145 | //
+      |  ^    
+../../pthreadAPI.h:157:2: error: ISO C++17 does not allow dynamic exception specifications
+  157 | //
+      |  ^    
+../../pthreadAPI.h:191:2: error: ISO C++17 does not allow dynamic exception specifications
+  191 |   throw ();
+      |  ^~~~~
+../../pthreadAPI.h:203:2: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:215:2: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:227:2: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:239:2: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:251:2: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:263:2: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:309:3: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:321:3: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:333:3: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:345:3: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:357:3: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:369:3: error: ISO C++17 does not allow dynamic exception specifications
+In file included from ../../DBExecuteManager.h:8,
+                 from SkillSlot.cpp:8:
+../../Thread.h:197:16: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:205:23: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:231:40: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:233:40: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:235:56: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:237:56: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:243:17: error: ISO C++17 does not allow dynamic exception specifications
+In file included from ../../CondVar.h:41,
+                 from ../../DBExecuteManager.h:9,
+                 from SkillSlot.cpp:8:
+../../Mutex.h:47:36: error: ISO C++17 does not allow dynamic exception specifications
+../../Mutex.h:49:20: error: ISO C++17 does not allow dynamic exception specifications
+../../Mutex.h:61:15: error: ISO C++17 does not allow dynamic exception specifications
+../../Mutex.h:63:17: error: ISO C++17 does not allow dynamic exception specifications
+../../Mutex.h:65:18: error: ISO C++17 does not allow dynamic exception specifications
+In file included from ../../Thread.h:87,
+                 from ../../DBExecuteManager.h:8,
+                 from OustersSkillSlot.cpp:8:
+../../pthreadAPI.h:61:2: error: ISO C++17 does not allow dynamic exception specifications
+   61 |  throw ( Error );
+      |  ^~~~~
+../../pthreadAPI.h:73:2: error: ISO C++17 does not allow dynamic exception specifications
+   73 |  throw ( Error );
+      |  ^~~~~
+../../pthreadAPI.h:85:2: error: ISO C++17 does not allow dynamic exception specifications
+   85 | void pthreadAPI::pthread_attr_getschedparam_ex (const pthread_attr_t *attr, struct sched_param *param);
+      |  ^~~~~
+../../pthreadAPI.h:121:2: error: ISO C++17 does not allow dynamic exception specifications
+  121 | 
+      |  ^    
+../../pthreadAPI.h:133:2: error: ISO C++17 does not allow dynamic exception specifications
+  133 | 
+      |  ^    
+../../pthreadAPI.h:145:2: error: ISO C++17 does not allow dynamic exception specifications
+  145 | //
+      |  ^    
+../../pthreadAPI.h:157:2: error: ISO C++17 does not allow dynamic exception specifications
+  157 | //
+      |  ^    
+In file included from ../../DBExecuteManager.h:9,
+                 from SkillSlot.cpp:8:
+../../CondVar.h:77:40: error: ISO C++17 does not allow dynamic exception specifications
+   77 |  // raw conditional-variable object
+      |                                        ^    
+../../pthreadAPI.h:191:2: error: ISO C++17 does not allow dynamic exception specifications
+  191 |   throw ();
+      |  ^~~~~
+../../CondVar.h:83:22: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:203:2: error: ISO C++17 does not allow dynamic exception specifications
+../../CondVar.h:101:17: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:215:2: error: ISO C++17 does not allow dynamic exception specifications
+../../CondVar.h:107:30: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:227:2: error: ISO C++17 does not allow dynamic exception specifications
+../../CondVar.h:125:3: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:239:2: error: ISO C++17 does not allow dynamic exception specifications
+../../CondVar.h:131:20: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:251:2: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:263:2: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:309:3: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:321:3: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:333:3: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:345:3: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:357:3: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:369:3: error: ISO C++17 does not allow dynamic exception specifications
+In file included from ../../DBExecuteManager.h:8,
+                 from OustersSkillSlot.cpp:8:
+../../Thread.h:197:16: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:205:23: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:231:40: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:233:40: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:235:56: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:237:56: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:243:17: error: ISO C++17 does not allow dynamic exception specifications
+In file included from ../../database/DatabaseManager.h:25,
+                 from ../../database/DB.h:21,
+                 from ../../DBExecuteManager.h:11,
+                 from SkillSlot.cpp:8:
+../../database/Connection.h:67:18: error: ISO C++17 does not allow dynamic exception specifications
+   67 |  // get database name
+      |                  ^~~~ 
+../../database/Connection.h:73:85: error: ISO C++17 does not allow dynamic exception specifications
+   73 |  // get user password
+      |                                                                                     ^    
+../../database/Connection.h:79:16: error: ISO C++17 does not allow dynamic exception specifications
+   79 |  // set connection's name
+      |                ^~~~~
+In file included from ../../CondVar.h:41,
+                 from ../../DBExecuteManager.h:9,
+                 from OustersSkillSlot.cpp:8:
+../../Mutex.h:47:36: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Connection.h:85:15: error: ISO C++17 does not allow dynamic exception specifications
+   85 | 
+      |               ^    
+../../Mutex.h:49:20: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Connection.h:91:84: error: ISO C++17 does not allow dynamic exception specifications
+   91 |  void unlock() throw(Error) { m_Mutex.unlock(); }
+      |                                                                                    ^    
+../../Mutex.h:61:15: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Connection.h:97:17: error: ISO C++17 does not allow dynamic exception specifications
+   97 | 
+      |                 ^    
+../../Mutex.h:63:17: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Connection.h:179:14: error: ISO C++17 does not allow dynamic exception specifications
+../../Mutex.h:65:18: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Connection.h:181:16: error: ISO C++17 does not allow dynamic exception specifications
+In file included from ../../DBExecuteManager.h:9,
+                 from OustersSkillSlot.cpp:8:
+../../CondVar.h:77:40: error: ISO C++17 does not allow dynamic exception specifications
+   77 |  // raw conditional-variable object
+      |                                        ^    
+../../CondVar.h:83:22: error: ISO C++17 does not allow dynamic exception specifications
+../../CondVar.h:101:17: error: ISO C++17 does not allow dynamic exception specifications
+../../CondVar.h:107:30: error: ISO C++17 does not allow dynamic exception specifications
+../../CondVar.h:125:3: error: ISO C++17 does not allow dynamic exception specifications
+In file included from ../../database/DB.h:21,
+                 from ../../DBExecuteManager.h:11,
+                 from SkillSlot.cpp:8:
+../../database/DatabaseManager.h:53:14: error: ISO C++17 does not allow dynamic exception specifications
+   53 |  // ¸ÞÀÎ DB ¼­¹ö¿¡ Äõ¸®´Â 0 ¹ø ÀÎÀÚ·Î ³Ñ±ä´Ù.
+      |              ^~~~~
+../../CondVar.h:131:20: error: ISO C++17 does not allow dynamic exception specifications
+../../database/DatabaseManager.h:55:56: error: ISO C++17 does not allow dynamic exception specifications
+   55 |  // È¤½Ã³ª ÇÏ´Â ¹ö±×ÀÇ ¿ì·Á°¡ ÀÖ±â ¶§¹®¿¡ Àý´ë ´Ù¸¥ Ä¿³Ø¼ÇÀº ¿­Áö ¾Êµµ·Ï
+      |                                                        ^~~~~
+../../database/DatabaseManager.h:57:60: error: ISO C++17 does not allow dynamic exception specifications
+   57 |  // ÀÏ¹Ý °ÔÀÓ ¼­¹ö¿¡¼­ÀÇ Äõ¸®´Â ¾²·¹µå º°·Î ³ª´µ¾îÁ® ÀÖ±â ¶§¹®¿¡
+      |                                                            ^~~~~
+../../database/DatabaseManager.h:59:64: error: ISO C++17 does not allow dynamic exception specifications
+   59 |  //--------------------------------------------------------------------
+      |                                                                ^~~~~
+../../database/DatabaseManager.h:65:46: error: ISO C++17 does not allow dynamic exception specifications
+   65 |  hash_map<int, Connection*> m_Connections;
+      |                                              ^    
+../../database/DatabaseManager.h:67:50: error: ISO C++17 does not allow dynamic exception specifications
+   67 |  // °¢ ¾²·¹µåº°·Î Á¸ÀçÇÏ´Â Distribute DB ¿¬°á
+      |                                                  ^    
+../../database/DatabaseManager.h:69:54: error: ISO C++17 does not allow dynamic exception specifications
+   69 | 
+      |                                                      ^    
+../../database/DatabaseManager.h:75:50: error: ISO C++17 does not allow dynamic exception specifications
+   75 | 
+      |                                                  ^    
+../../database/DatabaseManager.h:119:39: error: ISO C++17 does not allow dynamic exception specifications
+../../database/DatabaseManager.h:129:2: error: â€˜hash_mapâ€™ does not name a type
+../../database/DatabaseManager.h:135:2: error: â€˜hash_mapâ€™ does not name a type
+In file included from ../../database/DatabaseManager.h:25,
+                 from ../../database/DB.h:21,
+                 from ../../DBExecuteManager.h:11,
+                 from OustersSkillSlot.cpp:8:
+../../database/Connection.h:67:18: error: ISO C++17 does not allow dynamic exception specifications
+   67 |  // get database name
+      |                  ^~~~ 
+../../database/DatabaseManager.h:141:2: error: â€˜hash_mapâ€™ does not name a type
+../../database/Connection.h:73:85: error: ISO C++17 does not allow dynamic exception specifications
+   73 |  // get user password
+      |                                                                                     ^    
+../../database/Connection.h:79:16: error: ISO C++17 does not allow dynamic exception specifications
+   79 |  // set connection's name
+      |                ^~~~~
+../../database/Connection.h:85:15: error: ISO C++17 does not allow dynamic exception specifications
+   85 | 
+      |               ^    
+../../database/Connection.h:91:84: error: ISO C++17 does not allow dynamic exception specifications
+   91 |  void unlock() throw(Error) { m_Mutex.unlock(); }
+      |                                                                                    ^    
+../../database/Connection.h:97:17: error: ISO C++17 does not allow dynamic exception specifications
+   97 | 
+      |                 ^    
+../../database/Connection.h:179:14: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Connection.h:181:16: error: ISO C++17 does not allow dynamic exception specifications
+../../database/DatabaseManager.h:147:2: error: â€˜hash_mapâ€™ does not name a type
+In file included from ../../database/DB.h:21,
+                 from ../../DBExecuteManager.h:11,
+                 from OustersSkillSlot.cpp:8:
+../../database/DatabaseManager.h:53:14: error: ISO C++17 does not allow dynamic exception specifications
+   53 |  // ¸ÞÀÎ DB ¼­¹ö¿¡ Äõ¸®´Â 0 ¹ø ÀÎÀÚ·Î ³Ñ±ä´Ù.
+      |              ^~~~~
+In file included from ../../database/DB.h:25,
+                 from ../../DBExecuteManager.h:11,
+                 from SkillSlot.cpp:8:
+../../database/Statement.h:71:32: error: ISO C++17 does not allow dynamic exception specifications
+   71 |  // get insert id
+      |                                ^    
+../../database/DatabaseManager.h:55:56: error: ISO C++17 does not allow dynamic exception specifications
+   55 |  // È¤½Ã³ª ÇÏ´Â ¹ö±×ÀÇ ¿ì·Á°¡ ÀÖ±â ¶§¹®¿¡ Àý´ë ´Ù¸¥ Ä¿³Ø¼ÇÀº ¿­Áö ¾Êµµ·Ï
+      |                                                        ^~~~~
+../../database/Statement.h:87:29: error: ISO C++17 does not allow dynamic exception specifications
+   87 |  uint m_nAffectedRows;
+      |                             ^    
+../../database/DatabaseManager.h:57:60: error: ISO C++17 does not allow dynamic exception specifications
+   57 |  // ÀÏ¹Ý °ÔÀÓ ¼­¹ö¿¡¼­ÀÇ Äõ¸®´Â ¾²·¹µå º°·Î ³ª´µ¾îÁ® ÀÖ±â ¶§¹®¿¡
+      |                                                            ^~~~~
+../../database/Statement.h:93:36: error: ISO C++17 does not allow dynamic exception specifications
+../../database/DatabaseManager.h:59:64: error: ISO C++17 does not allow dynamic exception specifications
+   59 |  //--------------------------------------------------------------------
+      |                                                                ^~~~~
+../../database/Statement.h:95:52: error: ISO C++17 does not allow dynamic exception specifications
+../../database/DatabaseManager.h:65:46: error: ISO C++17 does not allow dynamic exception specifications
+   65 |  hash_map<int, Connection*> m_Connections;
+      |                                              ^    
+../../database/Statement.h:107:37: error: ISO C++17 does not allow dynamic exception specifications
+../../database/DatabaseManager.h:67:50: error: ISO C++17 does not allow dynamic exception specifications
+   67 |  // °¢ ¾²·¹µåº°·Î Á¸ÀçÇÏ´Â Distribute DB ¿¬°á
+      |                                                  ^    
+../../database/DatabaseManager.h:69:54: error: ISO C++17 does not allow dynamic exception specifications
+   69 | 
+      |                                                      ^    
+../../database/DatabaseManager.h:75:50: error: ISO C++17 does not allow dynamic exception specifications
+   75 | 
+      |                                                  ^    
+../../database/DatabaseManager.h:119:39: error: ISO C++17 does not allow dynamic exception specifications
+In file included from ../../database/DB.h:27,
+                 from ../../DBExecuteManager.h:11,
+                 from SkillSlot.cpp:8:
+../../database/Result.h:61:46: error: ISO C++17 does not allow dynamic exception specifications
+   61 | 
+      |                                              ^    
+../../database/Result.h:71:14: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:77:30: error: ISO C++17 does not allow dynamic exception specifications
+../../database/DatabaseManager.h:129:2: error: â€˜hash_mapâ€™ does not name a type
+../../database/Result.h:79:27: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:81:25: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:83:27: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:85:27: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:87:27: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:89:29: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:91:36: error: ISO C++17 does not allow dynamic exception specifications
+../../database/DatabaseManager.h:135:2: error: â€˜hash_mapâ€™ does not name a type
+../../database/DatabaseManager.h:141:2: error: â€˜hash_mapâ€™ does not name a type
+../../database/DatabaseManager.h:147:2: error: â€˜hash_mapâ€™ does not name a type
+In file included from ../../Thread.h:87,
+                 from ../../DBExecuteManager.h:8,
+                 from VampireSkillSlot.cpp:8:
+../../pthreadAPI.h:61:2: error: ISO C++17 does not allow dynamic exception specifications
+   61 |  throw ( Error );
+      |  ^~~~~
+../../pthreadAPI.h:73:2: error: ISO C++17 does not allow dynamic exception specifications
+   73 |  throw ( Error );
+      |  ^~~~~
+../../pthreadAPI.h:85:2: error: ISO C++17 does not allow dynamic exception specifications
+   85 | void pthreadAPI::pthread_attr_getschedparam_ex (const pthread_attr_t *attr, struct sched_param *param);
+      |  ^~~~~
+../../pthreadAPI.h:121:2: error: ISO C++17 does not allow dynamic exception specifications
+  121 | 
+      |  ^    
+../../pthreadAPI.h:133:2: error: ISO C++17 does not allow dynamic exception specifications
+  133 | 
+      |  ^    
+In file included from ../../database/DB.h:25,
+                 from ../../DBExecuteManager.h:11,
+                 from OustersSkillSlot.cpp:8:
+../../database/Statement.h:71:32: error: ISO C++17 does not allow dynamic exception specifications
+   71 |  // get insert id
+      |                                ^    
+In file included from ../../Thread.h:87,
+                 from ../../DBExecuteManager.h:8,
+                 from SlayerSkillSlot.cpp:8:
+../../pthreadAPI.h:61:2: error: ISO C++17 does not allow dynamic exception specifications
+   61 |  throw ( Error );
+      |  ^~~~~
+../../pthreadAPI.h:145:2: error: ISO C++17 does not allow dynamic exception specifications
+  145 | //
+      |  ^    
+../../database/Statement.h:87:29: error: ISO C++17 does not allow dynamic exception specifications
+   87 |  uint m_nAffectedRows;
+      |                             ^    
+../../pthreadAPI.h:73:2: error: ISO C++17 does not allow dynamic exception specifications
+   73 |  throw ( Error );
+      |  ^~~~~
+In file included from SkillSlot.cpp:8:
+../../DBExecuteManager.h:37:23: error: ISO C++17 does not allow dynamic exception specifications
+   37 |  virtual void stop () throw ( Error );
+      |                       ^~~~~
+../../pthreadAPI.h:157:2: error: ISO C++17 does not allow dynamic exception specifications
+  157 | //
+      |  ^    
+../../database/Statement.h:93:36: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:85:2: error: ISO C++17 does not allow dynamic exception specifications
+   85 | void pthreadAPI::pthread_attr_getschedparam_ex (const pthread_attr_t *attr, struct sched_param *param);
+      |  ^~~~~
+../../pthreadAPI.h:191:2: error: ISO C++17 does not allow dynamic exception specifications
+  191 |   throw ();
+      |  ^~~~~
+../../database/Statement.h:95:52: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:121:2: error: ISO C++17 does not allow dynamic exception specifications
+  121 | 
+      |  ^    
+../../pthreadAPI.h:203:2: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Statement.h:107:37: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:133:2: error: ISO C++17 does not allow dynamic exception specifications
+  133 | 
+      |  ^    
+../../pthreadAPI.h:215:2: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:145:2: error: ISO C++17 does not allow dynamic exception specifications
+  145 | //
+      |  ^    
+../../pthreadAPI.h:227:2: error: ISO C++17 does not allow dynamic exception specifications
+../../DBExecuteManager.h:53:9: error: â€˜hash_mapâ€™ does not name a type
+   53 | typedef hash_map<TDBExecuteUnitKey, int> TUnitAllocMap;
+      |         ^~~~~~~~
+../../pthreadAPI.h:157:2: error: ISO C++17 does not allow dynamic exception specifications
+  157 | //
+      |  ^    
+../../pthreadAPI.h:239:2: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:191:2: error: ISO C++17 does not allow dynamic exception specifications
+  191 |   throw ();
+      |  ^~~~~
+../../pthreadAPI.h:251:2: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:203:2: error: ISO C++17 does not allow dynamic exception specifications
+In file included from ../../database/DB.h:27,
+                 from ../../DBExecuteManager.h:11,
+                 from OustersSkillSlot.cpp:8:
+../../database/Result.h:61:46: error: ISO C++17 does not allow dynamic exception specifications
+   61 | 
+      |                                              ^    
+../../pthreadAPI.h:263:2: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:215:2: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:71:14: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:309:3: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:227:2: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:77:30: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:321:3: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:239:2: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:79:27: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:333:3: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:251:2: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:81:25: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:345:3: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:263:2: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:83:27: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:357:3: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:309:3: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:85:27: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:369:3: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:321:3: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:87:27: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:333:3: error: ISO C++17 does not allow dynamic exception specifications
+../../DBExecuteManager.h:70:2: error: â€˜TUnitAllocMapâ€™ does not name a type
+   70 |  TUnitAllocMap m_UnitAllocMap;
+      |  ^~~~~~~~~~~~~
+../../database/Result.h:89:29: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:345:3: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:91:36: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:357:3: error: ISO C++17 does not allow dynamic exception specifications
+In file included from ../../DBExecuteManager.h:8,
+                 from VampireSkillSlot.cpp:8:
+../../Thread.h:197:16: error: ISO C++17 does not allow dynamic exception specifications
+../../pthreadAPI.h:369:3: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:205:23: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:231:40: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:233:40: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:235:56: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:237:56: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:243:17: error: ISO C++17 does not allow dynamic exception specifications
+In file included from ../../DBExecuteManager.h:8,
+                 from SlayerSkillSlot.cpp:8:
+../../Thread.h:197:16: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:205:23: error: ISO C++17 does not allow dynamic exception specifications
+SkillSlot.cpp: In constructor â€˜SkillSlot::SkillSlot()â€™:
+SkillSlot.cpp:18:2: error: â€˜memsetâ€™ was not declared in this scope
+   18 |  memset(&m_BaseTime, 0x00, sizeof(m_BaseTime));
+      |  ^~~~~~
+../../Thread.h:231:40: error: ISO C++17 does not allow dynamic exception specifications
+SkillSlot.cpp:9:1: note: â€˜memsetâ€™ is defined in header â€˜<cstring>â€™; did you forget to â€˜#include <cstring>â€™?
+    8 | #include "DBExecuteManager.h"
+  +++ |+#include <cstring>
+    9 | 
+../../Thread.h:233:40: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:235:56: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:237:56: error: ISO C++17 does not allow dynamic exception specifications
+../../Thread.h:243:17: error: ISO C++17 does not allow dynamic exception specifications
+SkillSlot.cpp: In constructor â€˜SkillSlot::SkillSlot(SkillType_t, ulong, ulong)â€™:
+SkillSlot.cpp:30:2: error: â€˜memsetâ€™ was not declared in this scope
+   30 |  memset(&m_BaseTime, 0x00, sizeof(m_BaseTime));
+      |  ^~~~~~
+In file included from ../../CondVar.h:41,
+                 from ../../DBExecuteManager.h:9,
+                 from VampireSkillSlot.cpp:8:
+../../Mutex.h:47:36: error: ISO C++17 does not allow dynamic exception specifications
+SkillSlot.cpp:30:2: note: â€˜memsetâ€™ is defined in header â€˜<cstring>â€™; did you forget to â€˜#include <cstring>â€™?
+../../Mutex.h:49:20: error: ISO C++17 does not allow dynamic exception specifications
+SkillSlot.cpp: At global scope:
+SkillSlot.cpp:41:24: error: ISO C++17 does not allow dynamic exception specifications
+   41 | void SkillSlot::save() throw(Error)
+      |                        ^~~~~
+../../Mutex.h:61:15: error: ISO C++17 does not allow dynamic exception specifications
+In file included from OustersSkillSlot.cpp:8:
+../../DBExecuteManager.h:37:23: error: ISO C++17 does not allow dynamic exception specifications
+   37 |  virtual void stop () throw ( Error );
+      |                       ^~~~~
+../../Mutex.h:63:17: error: ISO C++17 does not allow dynamic exception specifications
+../../Mutex.h:65:18: error: ISO C++17 does not allow dynamic exception specifications
+In file included from ../../CondVar.h:41,
+                 from ../../DBExecuteManager.h:9,
+                 from SlayerSkillSlot.cpp:8:
+../../Mutex.h:47:36: error: ISO C++17 does not allow dynamic exception specifications
+../../Mutex.h:49:20: error: ISO C++17 does not allow dynamic exception specifications
+../../Mutex.h:61:15: error: ISO C++17 does not allow dynamic exception specifications
+../../Mutex.h:63:17: error: ISO C++17 does not allow dynamic exception specifications
+../../Mutex.h:65:18: error: ISO C++17 does not allow dynamic exception specifications
+../../DBExecuteManager.h:53:9: error: â€˜hash_mapâ€™ does not name a type
+   53 | typedef hash_map<TDBExecuteUnitKey, int> TUnitAllocMap;
+      |         ^~~~~~~~
+In file included from ../../DBExecuteManager.h:9,
+                 from VampireSkillSlot.cpp:8:
+../../CondVar.h:77:40: error: ISO C++17 does not allow dynamic exception specifications
+   77 |  // raw conditional-variable object
+      |                                        ^    
+../../CondVar.h:83:22: error: ISO C++17 does not allow dynamic exception specifications
+../../CondVar.h:101:17: error: ISO C++17 does not allow dynamic exception specifications
+../../CondVar.h:107:30: error: ISO C++17 does not allow dynamic exception specifications
+In file included from ../../DBExecuteManager.h:9,
+                 from SlayerSkillSlot.cpp:8:
+../../CondVar.h:77:40: error: ISO C++17 does not allow dynamic exception specifications
+   77 |  // raw conditional-variable object
+      |                                        ^    
+../../CondVar.h:125:3: error: ISO C++17 does not allow dynamic exception specifications
+../../CondVar.h:83:22: error: ISO C++17 does not allow dynamic exception specifications
+../../CondVar.h:131:20: error: ISO C++17 does not allow dynamic exception specifications
+../../CondVar.h:101:17: error: ISO C++17 does not allow dynamic exception specifications
+../../CondVar.h:107:30: error: ISO C++17 does not allow dynamic exception specifications
+../../CondVar.h:125:3: error: ISO C++17 does not allow dynamic exception specifications
+../../CondVar.h:131:20: error: ISO C++17 does not allow dynamic exception specifications
+../../DBExecuteManager.h:70:2: error: â€˜TUnitAllocMapâ€™ does not name a type
+   70 |  TUnitAllocMap m_UnitAllocMap;
+      |  ^~~~~~~~~~~~~
+In file included from ../../database/DatabaseManager.h:25,
+                 from ../../database/DB.h:21,
+                 from ../../DBExecuteManager.h:11,
+                 from VampireSkillSlot.cpp:8:
+../../database/Connection.h:67:18: error: ISO C++17 does not allow dynamic exception specifications
+   67 |  // get database name
+      |                  ^~~~ 
+In file included from ../../database/DatabaseManager.h:25,
+                 from ../../database/DB.h:21,
+                 from ../../DBExecuteManager.h:11,
+                 from SlayerSkillSlot.cpp:8:
+../../database/Connection.h:67:18: error: ISO C++17 does not allow dynamic exception specifications
+   67 |  // get database name
+      |                  ^~~~ 
+../../database/Connection.h:73:85: error: ISO C++17 does not allow dynamic exception specifications
+   73 |  // get user password
+      |                                                                                     ^    
+../../database/Connection.h:73:85: error: ISO C++17 does not allow dynamic exception specifications
+   73 |  // get user password
+      |                                                                                     ^    
+../../database/Connection.h:79:16: error: ISO C++17 does not allow dynamic exception specifications
+   79 |  // set connection's name
+      |                ^~~~~
+../../database/Connection.h:79:16: error: ISO C++17 does not allow dynamic exception specifications
+   79 |  // set connection's name
+      |                ^~~~~
+../../database/Connection.h:85:15: error: ISO C++17 does not allow dynamic exception specifications
+   85 | 
+      |               ^    
+../../database/Connection.h:85:15: error: ISO C++17 does not allow dynamic exception specifications
+   85 | 
+      |               ^    
+../../database/Connection.h:91:84: error: ISO C++17 does not allow dynamic exception specifications
+   91 |  void unlock() throw(Error) { m_Mutex.unlock(); }
+      |                                                                                    ^    
+OustersSkillSlot.cpp:30:2: error: ISO C++17 does not allow dynamic exception specifications
+   30 |  throw(Error)
+      |  ^~~~~
+../../database/Connection.h:91:84: error: ISO C++17 does not allow dynamic exception specifications
+   91 |  void unlock() throw(Error) { m_Mutex.unlock(); }
+      |                                                                                    ^    
+../../database/Connection.h:97:17: error: ISO C++17 does not allow dynamic exception specifications
+   97 | 
+      |                 ^    
+../../database/Connection.h:97:17: error: ISO C++17 does not allow dynamic exception specifications
+   97 | 
+      |                 ^    
+../../database/Connection.h:179:14: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Connection.h:179:14: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Connection.h:181:16: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Connection.h:181:16: error: ISO C++17 does not allow dynamic exception specifications
+OustersSkillSlot.cpp:50:2: error: ISO C++17 does not allow dynamic exception specifications
+   50 |  throw(Error)
+      |  ^~~~~
+In file included from ../../database/DB.h:21,
+                 from ../../DBExecuteManager.h:11,
+                 from VampireSkillSlot.cpp:8:
+../../database/DatabaseManager.h:53:14: error: ISO C++17 does not allow dynamic exception specifications
+   53 |  // ¸ÞÀÎ DB ¼­¹ö¿¡ Äõ¸®´Â 0 ¹ø ÀÎÀÚ·Î ³Ñ±ä´Ù.
+      |              ^~~~~
+In file included from ../../database/DB.h:21,
+                 from ../../DBExecuteManager.h:11,
+                 from SlayerSkillSlot.cpp:8:
+../../database/DatabaseManager.h:53:14: error: ISO C++17 does not allow dynamic exception specifications
+   53 |  // ¸ÞÀÎ DB ¼­¹ö¿¡ Äõ¸®´Â 0 ¹ø ÀÎÀÚ·Î ³Ñ±ä´Ù.
+      |              ^~~~~
+../../database/DatabaseManager.h:55:56: error: ISO C++17 does not allow dynamic exception specifications
+   55 |  // È¤½Ã³ª ÇÏ´Â ¹ö±×ÀÇ ¿ì·Á°¡ ÀÖ±â ¶§¹®¿¡ Àý´ë ´Ù¸¥ Ä¿³Ø¼ÇÀº ¿­Áö ¾Êµµ·Ï
+      |                                                        ^~~~~
+../../database/DatabaseManager.h:55:56: error: ISO C++17 does not allow dynamic exception specifications
+   55 |  // È¤½Ã³ª ÇÏ´Â ¹ö±×ÀÇ ¿ì·Á°¡ ÀÖ±â ¶§¹®¿¡ Àý´ë ´Ù¸¥ Ä¿³Ø¼ÇÀº ¿­Áö ¾Êµµ·Ï
+      |                                                        ^~~~~
+OustersSkillSlot.cpp:69:2: error: ISO C++17 does not allow dynamic exception specifications
+   69 |  throw(Error)
+      |  ^~~~~
+../../database/DatabaseManager.h:57:60: error: ISO C++17 does not allow dynamic exception specifications
+   57 |  // ÀÏ¹Ý °ÔÀÓ ¼­¹ö¿¡¼­ÀÇ Äõ¸®´Â ¾²·¹µå º°·Î ³ª´µ¾îÁ® ÀÖ±â ¶§¹®¿¡
+      |                                                            ^~~~~
+../../database/DatabaseManager.h:57:60: error: ISO C++17 does not allow dynamic exception specifications
+   57 |  // ÀÏ¹Ý °ÔÀÓ ¼­¹ö¿¡¼­ÀÇ Äõ¸®´Â ¾²·¹µå º°·Î ³ª´µ¾îÁ® ÀÖ±â ¶§¹®¿¡
+      |                                                            ^~~~~
+../../database/DatabaseManager.h:59:64: error: ISO C++17 does not allow dynamic exception specifications
+   59 |  //--------------------------------------------------------------------
+      |                                                                ^~~~~
+../../database/DatabaseManager.h:59:64: error: ISO C++17 does not allow dynamic exception specifications
+   59 |  //--------------------------------------------------------------------
+      |                                                                ^~~~~
+../../database/DatabaseManager.h:65:46: error: ISO C++17 does not allow dynamic exception specifications
+   65 |  hash_map<int, Connection*> m_Connections;
+      |                                              ^    
+../../database/DatabaseManager.h:65:46: error: ISO C++17 does not allow dynamic exception specifications
+   65 |  hash_map<int, Connection*> m_Connections;
+      |                                              ^    
+../../database/DatabaseManager.h:67:50: error: ISO C++17 does not allow dynamic exception specifications
+   67 |  // °¢ ¾²·¹µåº°·Î Á¸ÀçÇÏ´Â Distribute DB ¿¬°á
+      |                                                  ^    
+../../database/DatabaseManager.h:67:50: error: ISO C++17 does not allow dynamic exception specifications
+   67 |  // °¢ ¾²·¹µåº°·Î Á¸ÀçÇÏ´Â Distribute DB ¿¬°á
+      |                                                  ^    
+../../database/DatabaseManager.h:69:54: error: ISO C++17 does not allow dynamic exception specifications
+   69 | 
+      |                                                      ^    
+../../database/DatabaseManager.h:69:54: error: ISO C++17 does not allow dynamic exception specifications
+   69 | 
+      |                                                      ^    
+../../database/DatabaseManager.h:75:50: error: ISO C++17 does not allow dynamic exception specifications
+   75 | 
+      |                                                  ^    
+../../database/DatabaseManager.h:75:50: error: ISO C++17 does not allow dynamic exception specifications
+   75 | 
+      |                                                  ^    
+../../database/DatabaseManager.h:119:39: error: ISO C++17 does not allow dynamic exception specifications
+../../database/DatabaseManager.h:119:39: error: ISO C++17 does not allow dynamic exception specifications
+../../database/DatabaseManager.h:129:2: error: â€˜hash_mapâ€™ does not name a type
+../../database/DatabaseManager.h:129:2: error: â€˜hash_mapâ€™ does not name a type
+../../database/DatabaseManager.h:135:2: error: â€˜hash_mapâ€™ does not name a type
+../../database/DatabaseManager.h:141:2: error: â€˜hash_mapâ€™ does not name a type
+../../database/DatabaseManager.h:135:2: error: â€˜hash_mapâ€™ does not name a type
+../../database/DatabaseManager.h:147:2: error: â€˜hash_mapâ€™ does not name a type
+../../database/DatabaseManager.h:141:2: error: â€˜hash_mapâ€™ does not name a type
+In file included from ../../database/DB.h:25,
+                 from ../../DBExecuteManager.h:11,
+                 from VampireSkillSlot.cpp:8:
+../../database/Statement.h:71:32: error: ISO C++17 does not allow dynamic exception specifications
+   71 |  // get insert id
+      |                                ^    
+../../database/Statement.h:87:29: error: ISO C++17 does not allow dynamic exception specifications
+   87 |  uint m_nAffectedRows;
+      |                             ^    
+../../database/Statement.h:93:36: error: ISO C++17 does not allow dynamic exception specifications
+../../database/DatabaseManager.h:147:2: error: â€˜hash_mapâ€™ does not name a type
+../../database/Statement.h:95:52: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Statement.h:107:37: error: ISO C++17 does not allow dynamic exception specifications
+In file included from ../../database/DB.h:25,
+                 from ../../DBExecuteManager.h:11,
+                 from SlayerSkillSlot.cpp:8:
+../../database/Statement.h:71:32: error: ISO C++17 does not allow dynamic exception specifications
+   71 |  // get insert id
+      |                                ^    
+../../database/Statement.h:87:29: error: ISO C++17 does not allow dynamic exception specifications
+   87 |  uint m_nAffectedRows;
+      |                             ^    
+../../database/Statement.h:93:36: error: ISO C++17 does not allow dynamic exception specifications
+In file included from ../../database/DB.h:27,
+                 from ../../DBExecuteManager.h:11,
+                 from VampireSkillSlot.cpp:8:
+../../database/Result.h:61:46: error: ISO C++17 does not allow dynamic exception specifications
+   61 | 
+      |                                              ^    
+../../database/Statement.h:95:52: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:71:14: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Statement.h:107:37: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:77:30: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:79:27: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:81:25: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:83:27: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:85:27: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:87:27: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:89:29: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:91:36: error: ISO C++17 does not allow dynamic exception specifications
+In file included from ../../database/DB.h:27,
+                 from ../../DBExecuteManager.h:11,
+                 from SlayerSkillSlot.cpp:8:
+../../database/Result.h:61:46: error: ISO C++17 does not allow dynamic exception specifications
+   61 | 
+      |                                              ^    
+../../database/Result.h:71:14: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:77:30: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:79:27: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:81:25: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:83:27: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:85:27: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:87:27: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:89:29: error: ISO C++17 does not allow dynamic exception specifications
+../../database/Result.h:91:36: error: ISO C++17 does not allow dynamic exception specifications
+In file included from VampireSkillSlot.cpp:8:
+../../DBExecuteManager.h:37:23: error: ISO C++17 does not allow dynamic exception specifications
+   37 |  virtual void stop () throw ( Error );
+      |                       ^~~~~
+../../DBExecuteManager.h:53:9: error: â€˜hash_mapâ€™ does not name a type
+   53 | typedef hash_map<TDBExecuteUnitKey, int> TUnitAllocMap;
+      |         ^~~~~~~~
+In file included from SlayerSkillSlot.cpp:8:
+../../DBExecuteManager.h:37:23: error: ISO C++17 does not allow dynamic exception specifications
+   37 |  virtual void stop () throw ( Error );
+      |                       ^~~~~
+../../DBExecuteManager.h:53:9: error: â€˜hash_mapâ€™ does not name a type
+   53 | typedef hash_map<TDBExecuteUnitKey, int> TUnitAllocMap;
+      |         ^~~~~~~~
+../../DBExecuteManager.h:70:2: error: â€˜TUnitAllocMapâ€™ does not name a type
+   70 |  TUnitAllocMap m_UnitAllocMap;
+      |  ^~~~~~~~~~~~~
+../../DBExecuteManager.h:70:2: error: â€˜TUnitAllocMapâ€™ does not name a type
+   70 |  TUnitAllocMap m_UnitAllocMap;
+      |  ^~~~~~~~~~~~~
+VampireSkillSlot.cpp:30:2: error: ISO C++17 does not allow dynamic exception specifications
+   30 |  throw(Error)
+      |  ^~~~~
+SlayerSkillSlot.cpp:35:2: error: ISO C++17 does not allow dynamic exception specifications
+   35 |  throw(Error)
+      |  ^~~~~
+VampireSkillSlot.cpp:51:2: error: ISO C++17 does not allow dynamic exception specifications
+   51 |  throw(Error)
+      |  ^~~~~
+SlayerSkillSlot.cpp:59:2: error: ISO C++17 does not allow dynamic exception specifications
+   59 |  throw(Error)
+      |  ^~~~~
+make: *** [Makefile:32: SkillSlot.o] Error 1
+make: *** [Makefile:32: OustersSkillSlot.o] Error 1
+make: *** [Makefile:32: SlayerSkillSlot.o] Error 1
+make: *** [Makefile:32: VampireSkillSlot.o] Error 1

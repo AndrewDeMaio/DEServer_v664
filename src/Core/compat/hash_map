@@ -1,0 +1,43 @@
+//////////////////////////////////////////////////////////////////////////////
+// Filename    : hash_map (compatibility shim)
+// Description :
+// STLport provided std::hash_map / std::hash_multimap. libstdc++ does not:
+// it only ships the deprecated __gnu_cxx::hash_map in <backward/hash_map>.
+//
+// This header is found ahead of the system one because $(COREDIR)/compat is
+// passed with -I, so the ~900 existing `#include <hash_map>` sites keep
+// working untouched.
+//
+// Every instantiation in this tree is the plain two-parameter form and no
+// custom hash functor is ever passed, so aliasing onto std::unordered_map is
+// behaviour-preserving apart from iteration order.
+//////////////////////////////////////////////////////////////////////////////
+
+#ifndef __DE_COMPAT_HASH_MAP__
+#define __DE_COMPAT_HASH_MAP__
+
+#include <unordered_map>
+#include <functional>
+#include <memory>
+#include <string>
+#include <utility>
+
+namespace std
+{
+	template <class Key, class T,
+			  class Hash  = std::hash<Key>,
+			  class Pred  = std::equal_to<Key>,
+			  class Alloc = std::allocator<std::pair<const Key, T> > >
+	using hash_map = std::unordered_map<Key, T, Hash, Pred, Alloc>;
+
+	template <class Key, class T,
+			  class Hash  = std::hash<Key>,
+			  class Pred  = std::equal_to<Key>,
+			  class Alloc = std::allocator<std::pair<const Key, T> > >
+	using hash_multimap = std::unordered_multimap<Key, T, Hash, Pred, Alloc>;
+}
+
+using std::hash_map;
+using std::hash_multimap;
+
+#endif // __DE_COMPAT_HASH_MAP__

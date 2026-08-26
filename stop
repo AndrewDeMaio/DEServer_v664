@@ -1,0 +1,4 @@
+#!/bin/sh
+cd /home/darkeden/vs/bin
+
+./stop.sh

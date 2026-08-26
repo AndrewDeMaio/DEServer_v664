@@ -1,0 +1,38 @@
+//////////////////////////////////////////////////////////////////////////////
+// Filename    : NPCScript.h
+// Written by  : excel96
+// Description : 
+//////////////////////////////////////////////////////////////////////////////
+
+#ifndef __NPCSCRIPT_H__
+#define __NPCSCRIPT_H__
+
+#include "Types.h"
+
+const int MAX_SUBJECT = 10;
+const int MAX_CONTENT = 20;
+
+//////////////////////////////////////////////////////////////////////////////
+// NPC   
+// 
+// int TotalNumberOfScript; //  script 
+// {
+//   int ScriptID;
+//   int OwnerIDSize;
+//   string OwnerID;
+//   int TotalNumberOfSubject;
+//   {
+//     int SubjectSize;
+//     string Subject
+//   } // 
+//   int TotalNumberOfContent
+//   {
+//     int ContentSize;
+//     string Content;
+//   } // 
+// } // 
+//
+//////////////////////////////////////////////////////////////////////////////
+void createNPCScriptFile(const string& filename);
+
+#endif

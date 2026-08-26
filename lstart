@@ -1,0 +1,6 @@
+#!/bin/sh
+killall loginserver
+cd /home/darkeden/vs/bin
+
+sleep 3
+./login1 &
