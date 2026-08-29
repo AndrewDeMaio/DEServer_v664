@@ -281,6 +281,13 @@ public:
 	virtual void setXY(ZoneCoord_t x, ZoneCoord_t y) throw();
 
     virtual const string& getName() const throw() { return m_Name; }
+
+	// Surrogate identity, loaded once in PlayerCreature::load() from the Slayer
+	// registry. Prefer this over getName() for anything that identifies a
+	// character: the name is user-typed, reusable after deletion, and will
+	// become non-unique once the Name primary key is dropped.
+	CharID_t getCharID() const throw() { return m_CharID; }
+	void     setCharID(CharID_t id) throw() { m_CharID = id; }
 	virtual void setName(const string & name) throw() { m_Name = name; }
 
 	virtual Fame_t getFame() const throw() = 0;
@@ -406,6 +413,8 @@ protected:
 
 	// PC name
 	string m_Name;
+
+	CharID_t m_CharID;   // 0 until load() resolves it
 
 	Inventory*     m_pInventory;          // 인벤토리 포인터
 	InventorySlot* m_pExtraInventorySlot; // 마우스 포인터

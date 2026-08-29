@@ -559,6 +559,12 @@ const uint szBonus = sizeof(Bonus_t);
 typedef WORD SkillBonus_t;
 const uint szSkillBonus = sizeof(SkillBonus_t);
 
+// Surrogate character identity, issued by Slayer.CharID (the universal
+// registry). Introduced to replace Name as the key -- a user-typed string
+// makes a poor primary key. 0 means "not loaded / no character".
+typedef unsigned int CharID_t;
+const uint szCharID = sizeof(CharID_t);
+
 typedef DWORD Gold_t;
 const uint szGold = sizeof(Gold_t);
 

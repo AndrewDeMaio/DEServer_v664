@@ -2811,7 +2811,11 @@ void GamePlayer::saveSpeedHackLog(const string& strAbuseAction, bool bSendWarnin
 
 bool GamePlayer::verifyChat(DWORD dwPacketTimeStamp)
 {
-	if (m_pCreature->isGOD())
+	// GM accounts are exempt from the chat flood guard. Running a burst of
+	// operator commands is ordinary work, and tripping this applies an
+	// EffectMute that is written to the DB and survives relog. GOD was already
+	// exempt; DM and HELPER were not, which is what locked operators out.
+	if (!m_pCreature->isPLAYER())
 	{
 		return true;
 	}

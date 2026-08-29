@@ -319,12 +319,34 @@ void MotorcycleLoader::load(Creature* pCreature)
 	{
 		pStmt = g_pDatabaseManager->getConnection("DARKEDEN")->createStatement();
 
-		Result* pResult = pStmt->executeQuery( 
-			"SELECT ItemID, ObjectID, ItemType, Storage, StorageID, X, Y, OptionType, Durability "
+				// CharID migration: load by the surrogate key rather than the name.
+		// OwnerCharID is held in step with OwnerID by a BEFORE INSERT/UPDATE
+		// trigger, so it cannot drift while writers still set the name.
+		PlayerCreature* pMigPC = dynamic_cast<PlayerCreature*>(pCreature);
+		CharID_t migCharID = (pMigPC != NULL) ? pMigPC->getCharID() : 0;
+
+		Result* pResult = NULL;
+
+		if (migCharID == 0)
+		{
+			// Should not happen -- PlayerCreature::load() resolves the CharID before
+			// items load. Fall back to the name so an unresolved id can never
+			// silently empty an inventory, and leave a trace that it happened.
+			filelog("CharIDMigration.log", "MotorcycleObject: CharID unresolved for [%s], using name",
+				pCreature->getName().c_str());
+
+			pResult = pStmt->executeQuery( "SELECT ItemID, ObjectID, ItemType, Storage, StorageID, X, Y, OptionType, Durability "
 				" FROM MotorcycleObject "
 				" WHERE OwnerID = '%s' AND Storage IN(0, 1, 2, 3, 4, 9)",
-			pCreature->getName().c_str() 
-		);
+				pCreature->getName().c_str() );
+		}
+		else
+		{
+			pResult = pStmt->executeQuery( "SELECT ItemID, ObjectID, ItemType, Storage, StorageID, X, Y, OptionType, Durability "
+				" FROM MotorcycleObject "
+				" WHERE OwnerCharID = %u AND Storage IN(0, 1, 2, 3, 4, 9)",
+				(uint)migCharID );
+		}
 
 		while (pResult->next())
 		{

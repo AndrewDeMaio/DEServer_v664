@@ -518,8 +518,19 @@ void PetItemLoader::load(Creature* pCreature)
 				"OptionType, "	//1203 wlzzi - OptionTypeÃß°¡
 				"PetOption2, "	//1204 wlzzi
 				"MixOptionType "	//20090526 ksym555
-			"FROM PetItemObject WHERE OwnerID = '%s' AND Storage IN(0, 1, 2, 3, 4, 9, 13)",
-			pCreature->getName().c_str() );
+			"FROM PetItemObject WHERE OwnerCharID = %u AND Storage IN(0, 1, 2, 3, 4, 9, 13)",
+			(uint)((dynamic_cast<PlayerCreature*>(pCreature) != NULL)
+				? dynamic_cast<PlayerCreature*>(pCreature)->getCharID() : 0) );
+
+		// CharID migration, converted by hand: this call's SQL is split across
+		// adjacent literals with // comments between them, which the bulk
+		// transformer deliberately would not match rather than risk a regex that
+		// spans into surrounding code.
+		//
+		// No name fallback here: a pet item loading empty is visible and
+		// recoverable, and PlayerCreature::load() resolves the CharID before any
+		// item loads. If CharIDMigration.log ever names another loader, revisit
+		// this one too.
 
 
 		while (pResult->next())

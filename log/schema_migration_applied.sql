@@ -1237,7 +1237,9 @@ ALTER TABLE `ZoneInfo_bak` MODIFY `OwnerId` varchar(32) ;
 -- REQUIRES the matching DatabaseManager.cpp change; with an older binary a
 -- blank row yields Connection("","","","",0) and the world connection fails.
 UPDATE WorldDBInfo SET Host = '', DB = '', User = '', Password = '', Port = 0;
--- revert: UPDATE WorldDBInfo SET Host='127.0.0.1', DB='DARKEDEN', User='elcastle', Password='elca005', Port=3306;
+-- revert: restore the original WorldDBInfo row. Values are the DB_HOST /
+--         DB_DB / DB_USER / DB_PASSWORD already in conf/*.local.conf --
+--         deliberately not repeated here so this file carries no credential.
 
 -- Account devolo / test (user request). Same PASSWORD() equivalent as devola.
 INSERT INTO Player
@@ -1258,7 +1260,9 @@ VALUES
 -- Blank = "use the config" (DatabaseManager.cpp). Puts the database name in one
 -- place (DB_DB) and removes the plaintext DB password from the table.
 UPDATE DARKEDEN.WorldDBInfo SET Host='', DB='', User='', Password='', Port=0;
--- revert: UPDATE DARKEDEN.WorldDBInfo SET Host='127.0.0.1', DB='DARKEDEN', User='elcastle', Password='elca005', Port=3306;
+-- revert: restore the original WorldDBInfo row. Values are the DB_HOST /
+--         DB_DB / DB_USER / DB_PASSWORD already in conf/*.local.conf --
+--         deliberately not repeated here so this file carries no credential.
 
 -- 2026-08-26: deleteNum, for reusing the name of a soft-deleted character.
 -- When a name is reused, the dead holder is renamed to [D_<hex>]<Name> and this
@@ -1333,3 +1337,30 @@ UPDATE DARKEDEN.Ousters o JOIN DARKEDEN.Slayer s ON s.Name = o.Name SET o.CharID
 --   SELECT CONCAT('ALTER TABLE `',TABLE_NAME,'` DROP COLUMN OwnerCharID;')
 --     FROM information_schema.COLUMNS
 --    WHERE TABLE_SCHEMA='DARKEDEN' AND COLUMN_NAME='OwnerCharID';
+
+-- =====================================================================
+-- 2026-08-26  CharID migration, Phase 3 prerequisite: OwnerCharID sync
+--             triggers (368 = 184 tables x BEFORE INSERT + BEFORE UPDATE).
+--
+-- Why triggers rather than editing the writers: there are ~300 places that
+-- write an owner -- 102 per-class create() INSERTs plus 199 sites building an
+-- "OwnerID='<name>'" field string for tinysave(). Missing one detaches an item
+-- from its owner SILENTLY: no compile error, no runtime error, the item just
+-- stops loading. A trigger makes that class of mistake structurally impossible
+-- -- whichever code path writes OwnerID, the derived column follows.
+--
+-- Verified through the real write paths: INSERT (create) -> CharID set;
+-- UPDATE OwnerID (trade) -> follows; OwnerID='' (drop to zone) -> 0;
+-- pickup -> restored; unrelated UPDATE -> unchanged.
+--
+-- TRANSITIONAL. Drop them once writers set OwnerCharID directly.
+-- =====================================================================
+-- for each of the 184 tables, for ev in (INSERT, UPDATE):
+--   CREATE TRIGGER `trg_<tbl>_cid_<ins|upd>` BEFORE <ev> ON `<tbl>`
+--     FOR EACH ROW SET NEW.OwnerCharID =
+--       IFNULL((SELECT CharID FROM Slayer WHERE Name = NEW.OwnerID), 0);
+--
+-- revert (generates the DROPs):
+--   SELECT CONCAT('DROP TRIGGER IF EXISTS `',TRIGGER_NAME,'`;')
+--     FROM information_schema.TRIGGERS
+--    WHERE TRIGGER_SCHEMA='DARKEDEN' AND TRIGGER_NAME LIKE 'trg\_%\_cid\_%';

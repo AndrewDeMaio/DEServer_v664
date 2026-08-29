@@ -93,7 +93,7 @@ const int MAX_GOODS_INVENTORY_SIZE = 10;
 //////////////////////////////////////////////////////////////////////////////
 PlayerCreature::PlayerCreature(ObjectID_t OID, Player* pPlayer)
 	throw()
-: Creature(OID, pPlayer), m_pAdvancementClass( NULL )
+: Creature(OID, pPlayer), m_pAdvancementClass( NULL ), m_CharID( 0 )
 {
 	__BEGIN_TRY
 
@@ -320,6 +320,32 @@ bool PlayerCreature::load()
 	throw(InvalidProtocolException, Error)
 {
 	__BEGIN_TRY
+
+	// Resolve the surrogate identity once, here, for every race. Slayer is the
+	// universal registry -- CLCreatePCHandler always writes a row there whatever
+	// the race -- so one query covers Slayer, Vampire and Ousters alike, and the
+	// three large positional SELECTs in the subclasses stay untouched.
+	//
+	// Left at 0 if the lookup finds nothing, which callers must treat as
+	// "unknown character" rather than "character 0".
+	m_CharID = 0;
+
+	// Declared outside BEGIN_DB on purpose: END_DB expands to a catch block
+	// outside the try, and deletes the statement there.
+	Statement* pCharIDStmt = NULL;
+
+	BEGIN_DB
+	{
+		pCharIDStmt = g_pDatabaseManager->getConnection("DARKEDEN")->createStatement();
+		Result* pCharIDResult = pCharIDStmt->executeQuery(
+			"SELECT CharID FROM Slayer WHERE Name = '%s'", m_Name.c_str());
+
+		if (pCharIDResult->next())
+			m_CharID = (CharID_t)pCharIDResult->getInt(1);
+
+		SAFE_DELETE(pCharIDStmt);
+	}
+	END_DB(pCharIDStmt)
 
 	m_pSMSAddressBook->load();
 
