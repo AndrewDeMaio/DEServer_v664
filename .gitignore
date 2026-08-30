@@ -8,6 +8,7 @@ lib/
 bin/gameserver
 bin/loginserver
 bin/sharedserver
+bin/*.txt
 
 *.log
 *.out
