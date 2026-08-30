@@ -17,26 +17,29 @@ TEMPDIR   = $(VSHOME)/temp
 #----------------------------------------------------------------------
 # actions
 #----------------------------------------------------------------------
-all :
+all : lib
 	$(MAKE) -C Core
 	$(MAKE) -C server
 #	$(MAKE) -C util
 
-allgameserver :
+lib :
+	mkdir -p $(LIBDIR)
+
+allgameserver : lib
 	$(MAKE) -C Core allgameserver
 	$(MAKE) -C server allgameserver
 #	$(MAKE) -C util
 
-allloginserver :
+allloginserver : lib
 	$(MAKE) -C Core allloginserver
 	$(MAKE) -C server allloginserver
 #	$(MAKE) -C util
 
-allsharedserver :
+allsharedserver : lib
 	$(MAKE) -C Core allsharedserver
 	$(MAKE) -C server allsharedserver
 
-alltheoneserver :
+alltheoneserver : lib
 	$(MAKE) -C Core alltheoneserver
 	$(MAKE) -C server alltheoneserver
 

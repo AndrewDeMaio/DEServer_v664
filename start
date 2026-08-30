@@ -1,8 +1,0 @@
-#!/bin/sh
-killall gameserver
-killall sharedserver 
-killall loginserver
-
-cd /home/darkeden/vs/bin
-
-./start.sh

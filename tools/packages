@@ -1,0 +1,7 @@
+sudo apt install mysql-server -y
+sudo apt install build-essential
+sudo apt install git
+sudo apt install libmysqlclient-dev
+sudo apt install libxerces-c-dev
+sudo apt install freetds-dev
+sudo apt install lua5.1 liblua5.1-0-dev
