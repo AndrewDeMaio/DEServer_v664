@@ -3173,13 +3173,13 @@ void CGSayHandler::opfun(GamePlayer* pGamePlayer , string msg, int i)
 		}
 
 		GCSystemMessage gcSystemMessage;
-		gcSystemMessage.setMessage("지뢰를 설치했습니다.");
+		gcSystemMessage.setMessage("Land mine installed.");
 		pGamePlayer->sendPacket (&gcSystemMessage);
 	}
 	else
 	{
 		GCSystemMessage gcSystemMessage;
-		gcSystemMessage.setMessage("뭐꼬~!? 똑바로 모하나");
+		gcSystemMessage.setMessage("What're you doing!?!");
 		pGamePlayer->sendPacket (&gcSystemMessage);
 	}
 
@@ -5534,7 +5534,7 @@ void CGSayHandler::opcommand(GamePlayer* pGamePlayer , string msg, int i)
 		opcreate(pGamePlayer, createMessage, 0);
 		bSendPacket = false;
 	} */ 
-	else if ( command == "Firecraker" )
+	else if ( command == "Firecracker" )
 	{
 		Creature* pCreature = pGamePlayer->getCreature();
 		if ( pCreature != NULL )
@@ -5648,7 +5648,7 @@ void CGSayHandler::opcommand(GamePlayer* pGamePlayer , string msg, int i)
 		{
 			if ( pCreature->isSlayer() )
 			{
-				gcSystemMessage.setMessage("슬레이어는 능력치 초기화를 지원하지 않습니다.");
+				gcSystemMessage.setMessage("Slayer does not support ability/stat reset.");
 			}
 			else if ( pCreature->isVampire() )
 			{

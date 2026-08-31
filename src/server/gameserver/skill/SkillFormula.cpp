@@ -1893,7 +1893,7 @@ void BloodyBreaker::computeOutput(const SkillInput& input, SkillOutput& output)
 {
 	output.Damage = input.INTE/4 + input.STR/5 + input.DEX/5;
 	output.Delay = max(1, 3-input.DEX/50 ) * 10;
-	// ToHit Àº knockback È®·ü
+	// ToHit is the Knockback Probability
 	output.ToHit = 50;
 }
 

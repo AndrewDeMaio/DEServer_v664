@@ -297,6 +297,17 @@ void Connection::connect ()
 
 	//--------------------------------------------------
 
+	// 510 of the 512 tables in this schema are latin1_swedish_ci and hold raw
+	// CP949 bytes. Without an explicit charset the client library negotiates
+	// utf8mb4 (the MySQL 8 default), so every latin1 column is CONVERTED on
+	// read and each high byte becomes two. NPC 92 is 12 bytes in the table but
+	// arrived as 24, which overflowed the name-length limit in GCAddNPC and
+	// made the client drop the connection on sight of that NPC.
+	//
+	// latin1 makes the server read the bytes exactly as stored. The handful of
+	// utf8mb4 tables (Event*, LoginPayType, *_backup) carry no displayed text.
+	mysql_options( &m_Mysql, MYSQL_SET_CHARSET_NAME, "latin1" );
+
 	m_bConnected = ( mysql_real_connect( &m_Mysql, m_Host.c_str(), m_User.c_str(), m_Password.c_str(), m_Database.c_str(), m_Port , 0, 0 ) != NULL );
 
 	//cout << "Connection Calls~~~" << endl;

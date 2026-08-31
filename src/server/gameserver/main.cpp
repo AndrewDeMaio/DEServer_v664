@@ -2,7 +2,7 @@
 //
 // Filename    : main.cpp
 // Written By  : reiot@ewestsoft.com
-// Description : °ÔÀÓ ¼­¹ö¿ë ¸ÞÀÎ ÇÔ¼ö
+// Description : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -30,21 +30,57 @@ void handleMemoryError()
 	abort();
 }
 
+//----------------------------------------------------------------------------
+// Report WHAT was thrown, not just that something was.
+//
+// Previously this printed the banner and aborted, discarding the exception --
+// so a crash in the middle of gameplay left a log that said only "UNHANDLED
+// EXCEPTION OCCURED" with no type, no message and no clue where to look.
+//
+// Inside a terminate handler the in-flight exception is still active, so
+// rethrowing it lets us catch it by type and print its message. Several code
+// paths here throw a bare const char* (e.g. MonsterInfo.cpp), which no
+// catch(Error&) can ever see, so that case is handled explicitly.
+//----------------------------------------------------------------------------
+static string describeCurrentException()
+{
+	try
+	{
+		throw;
+	}
+	catch (Throwable& t)          { return string("Throwable: ") + t.toString(); }
+	catch (std::exception& e)     { return string("std::exception: ") + e.what(); }
+	catch (const char* s)         { return string("const char*: ") + (s ? s : "(null)"); }
+	catch (const string& s)       { return string("string: ") + s; }
+	catch (...)                   { return string("unknown exception type"); }
+}
+
 void handleUnhandledException()
 {
+	string what;
+	try { what = describeCurrentException(); }
+	catch (...) { what = "(failed to describe the exception)"; }
+
 	cerr << "==============================================================================" << endl;
 	cerr << "UNHANDLED EXCEPTION OCCURED" << endl;
+	cerr << what << endl;
 	cerr << "==============================================================================" << endl;
-	filelog("CriticalError.log", "UNHANDLED EXCEPTION OCCURED");
+	filelog("CriticalError.log", "UNHANDLED EXCEPTION OCCURED : %s", what.c_str());
 	abort();
 }
 
 void handleUnexpectedException()
 {
+	// Same treatment as the terminate handler: name the exception.
+	string what;
+	try { what = describeCurrentException(); }
+	catch (...) { what = "(failed to describe the exception)"; }
+
 	cerr << "==============================================================================" << endl;
 	cerr << "UNEXPECTED EXCEPTION OCCURED" << endl;
+	cerr << what << endl;
 	cerr << "==============================================================================" << endl;
-	filelog("CriticalError.log", "UNEXPECTED EXCEPTION OCCURED");
+	filelog("CriticalError.log", "UNEXPECTED EXCEPTION OCCURED : %s", what.c_str());
 	abort();
 }
 
@@ -75,7 +111,7 @@ int main (int argc , char* argv[])
 
 	filelog("serverStart.log", "GameServer Start");
 
-	// °¢Á¾ ÇÚµé·¯¸¦ ¼³Á¤ÇÑ´Ù. 
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Úµé·¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½. 
 	std::set_new_handler(handleMemoryError);
 	std::set_terminate(handleUnhandledException);
 	std::set_unexpected(handleUnexpectedException);
@@ -86,17 +122,17 @@ int main (int argc , char* argv[])
 	delete [] pPointer;
 	*/
 
-	// ÀûÀýÇÑ À§Ä¡¸¦ Ã£¾Æº¸ÀÚ.
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ Ã£ï¿½Æºï¿½ï¿½ï¿½.
 	srand(time(0));
 	cout << ">>> RANDOMIZATION INITIALIZATION SUCCESS..." << endl;
 
     if (argc < 3) 
 	{
-        //cout << "Usage : gameserver -f È¯°æÆÄÀÏ" << endl;
+        //cout << "Usage : gameserver -f È¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << endl;
         exit(1);
     }
 
-    // command-line parameter¸¦ string À¸·Î º¯È¯ÇÑ´Ù. ^^;
+    // command-line parameterï¿½ï¿½ string ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ñ´ï¿½. ^^;
     string* Argv;
         
     Argv = new string[argc];
@@ -105,18 +141,18 @@ int main (int argc , char* argv[])
 
 	cout << ">>> COMMAND-LINE PARAMETER READING SUCCESS..." << endl;
 
-    // È¯°æ ÆÄÀÏÀ» ÀÐ¾îµéÀÎ´Ù.
-    // ´Ü ½ÇÇà ÆÄÀÏÀº $VSHOME/bin¿¡, È¯°æ ÆÄÀÏÀº $VSHOME/conf ¿¡ Á¸ÀçÇØ¾ß ÇÑ´Ù.
-    // command line ¿¡¼­ È¯°æ ÆÄÀÏÀ» ÁöÁ¤ÇÒ ¼ö ÀÖµµ·Ï ÇÑ´Ù.
+    // È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½Î´ï¿½.
+    // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ $VSHOME/binï¿½ï¿½, È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ $VSHOME/conf ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½Ñ´ï¿½.
+    // command line ï¿½ï¿½ï¿½ï¿½ È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
 
     try 
 	{
         if (Argv[1] != "-f") 
 		{
-            throw Error("Usage : gameserver -f È¯°æÆÄÀÏ -t Å×½ºÆ®È¯°æÆÄÀÏ");
+            throw Error("Usage : gameserver -f È¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -t ï¿½×½ï¿½Æ®È¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
 
-        // Ã¹¹øÂ° ÆÄ¶ó¹ÌÅÍ°¡ -f ÀÏ °æ¿ì, µÎ¹øÂ° ÆÄ¶ó¹ÌÅÍ´Â È¯°æÆÄÀÏÀÇ À§Ä¡°¡ µÈ´Ù.
+        // Ã¹ï¿½ï¿½Â° ï¿½Ä¶ï¿½ï¿½ï¿½Í°ï¿½ -f ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½Î¹ï¿½Â° ï¿½Ä¶ï¿½ï¿½ï¿½Í´ï¿½ È¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½È´ï¿½.
         g_pConfig = new Properties();
         g_pConfig->load(Argv[2]);
     
@@ -138,11 +174,11 @@ int main (int argc , char* argv[])
         //cout << e.toString() << endl;
     }
 
-	// ·Î±× ¸Å´ÏÀú¸¦ »ý¼ºÇÏ°í ÃÊ±âÈ­ÇÑÈÄ È°¼ºÈ­½ÃÅ²´Ù.
-	// ·Î±× ¸Å´ÏÀú´Â °ÔÀÓ ¼­¹öÀÇ ÃÊ±âÈ­°úÁ¤¿¡¼­ ¹ß»ýÇÒ °¡´É¼ºÀÌ ÀÖ´Â ¿¡·¯±îÁöµµ
-	// °ËÃâÇØ³»¾ß ÇÏ¹Ç·Î °ÔÀÓ ¼­¹ö ³»ºÎ¿¡¼­ ÃÊ±âÈ­ÇØ¼­´Â ¾ÈµÈ´Ù.
-	// ¶ÇÇÑ ´Ù¸¥ °´Ã¼¸¦ »ý¼ºÇÏ°í ÃÊ±âÈ­ÇÏ±âÀü¿¡ ·Î±×¸Å´ÏÀú°¡ ¿ì¼±ÀûÀ¸·Î »ý¼º,
-	// ÃÊ±âÈ­µÇ¾î¾ß ÇÑ´Ù.
+	// ï¿½Î±ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ê±ï¿½È­ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½ï¿½Å²ï¿½ï¿½.
+	// ï¿½Î±ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½É¼ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ø³ï¿½ï¿½ï¿½ ï¿½Ï¹Ç·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½Ø¼ï¿½ï¿½ï¿½ ï¿½ÈµÈ´ï¿½.
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ê±ï¿½È­ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±×¸Å´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ì¼±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½,
+	// ï¿½Ê±ï¿½È­ï¿½Ç¾ï¿½ï¿½ ï¿½Ñ´ï¿½.
 	try 
 	{
 		string LogServerIP   = g_pConfig->getProperty("LogServerIP");
@@ -165,7 +201,7 @@ int main (int argc , char* argv[])
 	cout << ">>> LOGCLIENT INITIALZATION SUCCESS..." << endl;
 
 	//
-	// °ÔÀÓ ¼­¹ö °´Ã¼¸¦ »ý¼ºÇÏ°í ÃÊ±âÈ­ÇÑ ÈÄ È°¼ºÈ­½ÃÅ²´Ù.
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ê±ï¿½È­ï¿½ï¿½ ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½ï¿½Å²ï¿½ï¿½.
 	//
 	try 
 	{
@@ -174,31 +210,31 @@ int main (int argc , char* argv[])
 		rl.rlim_max = RLIM_INFINITY;
 		setrlimit(RLIMIT_CORE, &rl);
 
-		// °ÔÀÓ ¼­¹ö °´Ã¼¸¦ »ý¼ºÇÑ´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 		g_pGameServer = new GameServer();
 
 		cout << ">>> GAME SERVER INSTANCE CREATED..." << endl;
 
-		// °ÔÀÓ ¼­¹ö °´Ã¼¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½Ñ´ï¿½.
 		g_pGameServer->init();
 
 		cout << ">>> GAME SERVER INITIALIZATION SUCCESS..." << endl;
 
-		// °ÔÀÓ ¼­¹ö °´Ã¼¸¦ È°¼ºÈ­½ÃÅ²´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½ï¿½Å²ï¿½ï¿½.
 		g_pGameServer->start();
 	} 
 	catch (Throwable & e) 
 	{
-		// ·Î±×°¡ ÀÌ·ïÁö±â Àü¿¡ ¼­¹ö°¡ ³¡³¯ °æ¿ì¸¦ ´ëºñÇØ¼­
+		// ï¿½Î±×°ï¿½ ï¿½Ì·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ì¸¦ ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½
 		ofstream ofile("../log/instant.log",ios::out);
 		ofile << e.toString() << endl;
 		ofile.close();
 
-		// Ç¥ÁØ Ãâ·ÂÀ¸·Îµµ Ãâ·ÂÇØÁØ´Ù.
+		// Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 		cout << e.toString() << endl;
 
-		// °ÔÀÓ ¼­¹ö¸¦ Áß´Ü½ÃÅ²´Ù.
-		// ÀÌ ³»ºÎ¿¡¼­ ÇÏÀ§ ¸Å´ÏÀú ¿ª½Ã Áß´ÜµÇ¾î¾ß ÇÑ´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß´Ü½ï¿½Å²ï¿½ï¿½.
+		// ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß´ÜµÇ¾ï¿½ï¿½ ï¿½Ñ´ï¿½.
 		g_pGameServer->stop();
 	} 
 	catch (...) 

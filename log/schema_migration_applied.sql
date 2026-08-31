@@ -1364,3 +1364,194 @@ UPDATE DARKEDEN.Ousters o JOIN DARKEDEN.Slayer s ON s.Name = o.Name SET o.CharID
 --   SELECT CONCAT('DROP TRIGGER IF EXISTS `',TRIGGER_NAME,'`;')
 --     FROM information_schema.TRIGGERS
 --    WHERE TRIGGER_SCHEMA='DARKEDEN' AND TRIGGER_NAME LIKE 'trg\_%\_cid\_%';
+
+-- =====================================================================
+-- 2026-08-31  Menegroth dungeon, phase 1: the 18 ZoneInfo rows.
+--
+-- The dungeon system was already written, compiled in
+-- (__MENEGROTH_DOUNGEON_SYSTEM__, VersionType.h:30) and backed by all 18
+-- server maps in data/ -- but ZoneInfo had no rows for 1701-1718, so the
+-- zones were never instantiated and nothing could reach them.
+--
+-- Layout is fixed by MenegrothDoungeonManager::getDoungeonZoneToMove() and
+-- was confirmed independently against the zone id stored in each .smp
+-- header (they agree exactly):
+--     1701-1706 Slayer / 1707-1712 Vampire / 1713-1718 Ousters, floors 1-6.
+--
+-- Resurrect points reuse getAltarPosToMove()'s towns, which is where the
+-- server already sends a player who logs in while inside the dungeon:
+--     Slayer -> 12 (47,182)   Vampire -> 22 (217,230)   Ousters -> 81 (191,111)
+--
+-- MonsterList/EventMonsterList are intentionally EMPTY. Zones only in this
+-- pass; monsters, traps, items and the entrance statues are still to come.
+--
+-- Applied from: db/menegroth_zones.sql  (re-runnable, ON DUPLICATE KEY UPDATE)
+--
+-- revert:
+--   DELETE FROM `ZoneInfo` WHERE ZoneID BETWEEN 1701 AND 1718;
+-- =====================================================================
+--
+-- 2026-08-31  CORRECTION to the above. The first version gave all three race
+-- wings the same ShortName ('Menegroth 1F' x3), and the gameserver refused to
+-- boot: ZoneInfoManager::addZoneInfo keys BOTH FullName and ShortName into
+-- lookup maps for the *warp command and throws on a collision --
+--     "Duplicated Zone Short Name"  ->  UNHANDLED EXCEPTION, exit during
+--     ObjectManager::init(), before ZoneGroupManager ever ran.
+-- ShortName is now 'Menegroth<S|V|O><N>F' (space-free, since *warp takes it).
+-- Checked against all 150 pre-existing zones: no FullName or ShortName clash.
+-- Re-running db/menegroth_zones.sql fixes rows in place.
+
+-- =====================================================================
+-- 2026-08-31  Content imported from the ORIGINAL 664 dump (db/DARKEDEN.sql),
+-- which the user located. Our database is kept as-is (characters, CharID
+-- migration, 368 OwnerCharID triggers, InnoDB/utf8mb4); only missing rows and
+-- missing tables are added.
+--
+-- Why not adopt the original wholesale: it has no CharID/OwnerCharID column
+-- anywhere, no triggers, is MyISAM/utf8, carries another operator's test
+-- characters, AND is missing 6 columns plus 17 tables the v664 source needs
+-- (SystemAvailabilities alone is referenced in 72 files, and ZoneInfoManager
+-- calls getZoneOpenDegree() during startup). It is a content donor, not a base.
+--
+-- Mapped by COLUMN NAME, never position -- the original's SkillBalance begins
+-- with AvoidAttribute while ours holds it at index 29, so a positional copy
+-- would have shifted every column silently.
+--
+-- Applied from: db/original664_content.sql   (rows)
+--               db/original664_tables.sql    (11 tables)
+--
+--   SkillBalance               +107  (includes all 20 rare skills 419-438)
+--   SkillBookInfo              + 41  (the rare skill books)
+--   ZoneInfo                   + 18  REPLACE: the real Menegroth 1701-1718
+--                                    rows supersede the ones hand-authored
+--                                    earlier today; these carry MonsterList
+--   MonsterInfo                +144  (includes Cabracam bosses 1021-1026)
+--   CommonQuestItemInfo        + 53  (includes Menegroth seals, types 6-11)
+--   MenegrothDoungeonTrapInfo  +216  (trap positions per zone)
+--   NPC                        +140  (72 of them inside Menegroth 1701-1718)
+--   Script                     +260  (NPC dialogue)
+--   11 tables created: EventNewbie, GuildMasterChangeLog, HarmonicInfo,
+--     ItemUseLog, LilithSeriesLog, PetMixingLog, SpeedHackLog, WebMarketKey,
+--     WeekItemGive, WeekItemInfo, uds_msg  (MyISAM/utf8 -> InnoDB/utf8mb4)
+--
+-- 46 further tables in the original are the previous operator's residue
+-- (per-month donation tables, temp copies, Chinese-shop logs) and the v664
+-- source never names them, so they are deliberately NOT imported. Two more
+-- were excluded as verified grep false positives: `member` (the English word;
+-- 0 rows) and `NPC_1` (matched STRID_EVENT_NPC_1; an operator backup of NPC).
+--
+-- OwnerCharID on the imported rows is filled by the existing triggers.
+--
+-- revert:
+--   DELETE FROM `SkillBalance`   WHERE Type   BETWEEN 397 AND 505;
+--   DELETE FROM `SkillBookInfo`;
+--   DELETE FROM `ZoneInfo`       WHERE ZoneID BETWEEN 1701 AND 1718;
+--   DELETE FROM `MonsterInfo`    WHERE MType  > 850;
+--   DELETE FROM `CommonQuestItemInfo`;
+--   DELETE FROM `MenegrothDoungeonTrapInfo`;
+--   -- NPC/Script: no clean range; restore from the pre-import backup instead.
+--   DROP TABLE `EventNewbie`,`GuildMasterChangeLog`,`HarmonicInfo`,`ItemUseLog`,
+--     `LilithSeriesLog`,`PetMixingLog`,`SpeedHackLog`,`WebMarketKey`,
+--     `WeekItemGive`,`WeekItemInfo`,`uds_msg`;
+-- =====================================================================
+--
+-- 2026-08-31  Fix while importing: MySQL 5.0 allowed '0000-00-00' defaults,
+-- MySQL 8 rejects them under NO_ZERO_DATE --
+--     ERROR 1067 (42000) at line 41: Invalid default value for 'CoupleDate'
+-- Three columns affected (HarmonicInfo.CoupleDate, ItemUseLog.UseTime,
+-- WebMarketKey.IssueDate), all rewritten to NULL DEFAULT NULL rather than
+-- relaxing sql_mode: our schema contains no zero dates anywhere, and nothing
+-- reads these defaults (the server writes CoupleDate with now(), the log
+-- timestamps are always supplied, and HarmonicInfo is referenced only from
+-- commented-out code).
+--
+-- Also verified before importing: the incoming Menegroth ZoneInfo rows have no
+-- FullName/ShortName collision with our existing 150 zones. They are unique
+-- within the original dump's 196 zones, which does not imply uniqueness within
+-- ours -- and a collision aborts the gameserver at startup.
+--
+-- 2026-08-31  Follow-up: warping into Menegroth 1701 SEGFAULTED the gameserver.
+--     dmesg: "gameserver[...]: segfault at 50"
+--     addr2line -> DirectiveSet::canAttackAir() const, Directive.h:259
+--
+-- Cause: MonsterInfo.AIType points at DirectiveSet. The 144 imported monsters
+-- use AITypes 166-205, of which our DirectiveSet had only part -- 37 were
+-- missing. getDirectiveSet() returned NULL and the caller dereferences it with
+-- no NULL check, so the first Menegroth monster spawned killed the server.
+-- I imported MonsterInfo without the lookup table it depends on.
+--
+-- Fix: DirectiveSet added to db/original664_content.sql (+37 rows, ids 166-205,
+-- the existing 169 untouched). Re-running that file is safe and idempotent.
+--
+-- Audited the rest of the imported content for the same class of dangling
+-- reference rather than fixing one and hitting the next. Only other unresolved
+-- id is AIType 65535, which is a "no AI" sentinel on props (Auto Turret, Drum,
+-- Tripods); those monsters predate this import and have always been fine.
+-- All six Cabracam bosses (1021-1026) use AIType 181, which exists.
+--
+-- revert:  DELETE FROM `DirectiveSet` WHERE ID BETWEEN 166 AND 205;
+--
+-- 2026-08-31  Repair: the content file was run twice and three target tables
+-- had NO unique key, so INSERT IGNORE had nothing to ignore on and inserted
+-- every row again. My error -- I described the file as safe to re-run without
+-- checking that each table could actually enforce that.
+--
+--   SkillBookInfo               82 rows /  41 distinct ItemType
+--   MenegrothDoungeonTrapInfo  432 rows / 213 distinct positions
+--   NPC                        391 rows / 251 distinct (Name, ZoneID)
+--
+-- Caught at startup by an assertion rather than running corrupt:
+--   InfoClassManager.cpp:119  m_pItemInfos[getItemType()] == NULL
+--   <- SkillBookInfoManager::load()   (two books claiming one ItemType)
+--
+-- The six tables that DO have a unique key were unaffected and verified clean:
+-- SkillBalance 481/481, MonsterInfo 796/796, ZoneInfo 168/168, Script
+-- 1436/1436, DirectiveSet 206/206, CommonQuestItemInfo 53/53.
+--
+-- Applied from: db/fix_duplicate_import.sql -- de-duplicates in place (NOT
+-- drop/recreate: SkillBookInfo carries trg_SkillBookInfo_cid_ins/upd, and NPC
+-- holds 111 rows predating the import) and then adds the missing unique keys,
+-- which makes the content import idempotent from here on.
+--
+-- Note: the original dump itself holds 3 exact repeats in the trap table --
+-- type 1 at (16,66) in zones 1705/1711/1717, floor 5 of each wing -- so the
+-- deduped count is 213, not 216. Two identical traps on one tile are redundant.
+--
+-- revert:
+--   ALTER TABLE `SkillBookInfo`             DROP KEY `uk_SkillBookInfo`;
+--   ALTER TABLE `MenegrothDoungeonTrapInfo` DROP KEY `uk_MenegrothTrap`;
+--   ALTER TABLE `NPC`                       DROP KEY `uk_NPC`;
+--   (the removed duplicate rows were exact copies; nothing unique was lost)
+--
+-- 2026-08-31  Third crash, same shape: killing a Menegroth monster aborted the
+-- server with no message. Fixed main.cpp's terminate/unexpected handlers to
+-- rethrow-and-catch so the exception NAMES itself, and it named itself at once:
+--     UNHANDLED EXCEPTION OCCURED : const char*: Skull::Skull() : Invalid
+--     item type or optionType
+-- A bare const char* throw, which no catch(Error&) in the codebase can see --
+-- which is exactly why every earlier log showed only the banner.
+--
+-- Cause: MonsterInfo.SkullType indexes SkullInfo. Ours held 0-75; the imported
+-- monsters use up to 87 (BogletB in zone 1704 uses 79). Third missing lookup
+-- table after DirectiveSet.
+--
+-- So rather than wait for a fourth, swept EVERY table present in both dumps
+-- for "original has rows we lack": 58 of them. Our snapshot is substantially
+-- thinner than the real 664 database. Added the ones the imported content
+-- indexes into: SkullInfo +12, EventTreeInfo +48, AttrInfo +78, OptionInfo +41,
+-- ItemClass +104, UniqueItemInfo +11, WayPointInfo +76, GSStringPool +98.
+--
+-- CreatureSprite deliberately EXCLUDED although the original has 491 rows:
+-- our table is missing the original's `SpriteType` column entirely (8 cols vs
+-- 9), so a name-mapped copy would insert 491 rows stripped of the column that
+-- identifies them, into a table with no unique key. It is empty here and the
+-- client carries its own creaturesprite.inf.
+--
+-- Verified before emitting: 8 of the 9 new targets have a PRIMARY KEY, so
+-- INSERT IGNORE genuinely dedupes on re-run (the lesson from the duplicate
+-- import above). CreatureSprite was the only keyless one and is excluded.
+--
+-- revert:
+--   DELETE FROM `SkullInfo`      WHERE SkullType > 75;
+--   DELETE FROM `EventTreeInfo`  WHERE ItemType NOT IN (SELECT ...) -- see backup
+--   (simplest: restore db/pre_import_backup.sql)

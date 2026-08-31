@@ -488,10 +488,13 @@ void GamePlayer::processCommand (bool Option)
 		// �������� ó���� �� �Ѵ��� �г�Ƽ�� ó���ϵ��� �Ѵ�.
 		if (isPenaltyFlag(PENALTY_TYPE_KICKED))
 		{
-			filelog("GamePlayer.txt", "Penalty Kicked. Name[%s],Host[%s],Type[%d]", 
+			filelog("GamePlayer.txt", "Penalty Kicked. Name[%s],Host[%s],Type[%d] zone=%d pos=(%d,%d)", 
 												((getCreature()==NULL)?"NULL":getCreature()->getName().c_str()), 
 												((getSocket()==NULL)?"NULL":getSocket()->getHost().c_str()),
-												m_ItemRatioBonusPoint);
+												m_ItemRatioBonusPoint,
+												(getCreature()==NULL||getCreature()->getZone()==NULL)?-1:(int)getCreature()->getZone()->getZoneID(),
+												(getCreature()==NULL)?-1:(int)getCreature()->getX(),
+												(getCreature()==NULL)?-1:(int)getCreature()->getY());
 
 			throw DisconnectException("He is had penalty");
 		}
