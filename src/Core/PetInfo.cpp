@@ -35,12 +35,12 @@ PacketSize_t PetInfo::getSize() const
 	if ( m_PetType == PET_NONE ) return szPetType;
 	
 	PacketSize_t szPetInfo = szPetType + szMonsterType + szPetLevel + szPetExp + szPetHP + szPetAttr + szPetAttrLevel + szOptionType + szItemType + szBYTE + szBYTE + szBYTE + szBYTE + szObjectID + szBYTE + m_Nickname.size() + szint + szCEffectID;
-	szPetInfo += szint;
-	szPetInfo += szBYTE;
+	//szPetInfo += szint;				// ExpertPetChangerRemainSec -- __EXPERT_PET_CHANGER __OFF
+	szPetInfo += szBYTE;				// optionSize -- __NEW_PET_INCUBUS __ON, kept
 	szPetInfo += m_OptionType.size() * szOptionType;
-	szPetInfo += szOptionType;				//1204 wlzzi - PetOption2 추가
-	szPetInfo += szBYTE;					//20090108 wlzzi - 푸더기능 추가	
-	szPetInfo += szBYTE + m_MixOptionType.size() * szOptionType;
+	//szPetInfo += szOptionType;			// PetOption2  -- __PET_VISION_AMPLE __OFF				//1204 wlzzi - PetOption2 추가
+	//szPetInfo += szBYTE;				//20090108 wlzzi - 푸더기능 추가	
+	//szPetInfo += szBYTE + m_MixOptionType.size() * szOptionType;	// __PET_MIXINGFORGE __OFF
 	return szPetInfo;
 }
 
@@ -74,7 +74,7 @@ void PetInfo::read(SocketInputStream& iStream) throw(ProtocolException, Error)
 	iStream.read( m_PetAttrLevel );
 	iStream.read( m_PetOption );
 	//1204 wlzzi
-	iStream.read( m_PetOption2 );
+	//iStream.read( m_PetOption2 );			// __PET_VISION_AMPLE __OFF
 	// -
 	iStream.read( m_PetFoodType );
 
@@ -93,7 +93,7 @@ void PetInfo::read(SocketInputStream& iStream) throw(ProtocolException, Error)
 
 	iStream.read( m_MagicRemainSec );
 //	iStream.read( m_EnchantSkillType );
-	iStream.read( m_ExpertPetChangerRemainSec );	//1202 wlzzi 본 섭에 적용
+	//iStream.read( m_ExpertPetChangerRemainSec );	// __EXPERT_PET_CHANGER __OFF	//1202 wlzzi 본 섭에 적용
 	iStream.read( m_EnchantSkillType );
 
 //1203 wlzzi - OptionType 추가
@@ -106,17 +106,18 @@ void PetInfo::read(SocketInputStream& iStream) throw(ProtocolException, Error)
 		addOptionType( optionType );
 	}
 //-
-	iStream.read(m_Function_Petfood_Type);	//20090109 wlzzi 푸더기능추가	
+	//iStream.read(m_Function_Petfood_Type);		// __FUNCTION_PETFOOD __OFF	//20090109 wlzzi 푸더기능추가	
 	
 	//20090526 ksym555
-	BYTE MixoptionSize;
-	iStream.read( MixoptionSize );
-	for (int i=0; i<MixoptionSize; i++)
-	{
-		OptionType_t MixoptionType;
-		iStream.read( MixoptionType );
-		addMixOptionType( MixoptionType );
-	}
+	// __PET_MIXINGFORGE __OFF -- see write()
+	//BYTE MixoptionSize;
+	//iStream.read( MixoptionSize );
+	//for (int i=0; i<MixoptionSize; i++)
+	//{
+	//	OptionType_t MixoptionType;
+	//	iStream.read( MixoptionType );
+	//	addMixOptionType( MixoptionType );
+	//}
 	
 	__END_CATCH
 }
@@ -138,7 +139,8 @@ void PetInfo::write(SocketOutputStream& oStream) const throw(ProtocolException, 
 	oStream.write( m_PetAttrLevel );
 	oStream.write( m_PetOption );
 //1204 wlzzi
-	oStream.write( m_PetOption2 );
+	// Client compiles this out for __DESIGNED_INTERNATION; writing it desynced the pet payload.
+	//oStream.write( m_PetOption2 );			// __PET_VISION_AMPLE __OFF
 //	cout << "PetInfo::write - m_PetOption2 = " << (int)m_PetOption2 << endl;
 // -
 	oStream.write( m_PetFoodType );
@@ -157,7 +159,7 @@ void PetInfo::write(SocketOutputStream& oStream) const throw(ProtocolException, 
 	oStream.write( ItemObjectID );
 
 	oStream.write( m_MagicRemainSec );
-	oStream.write( m_ExpertPetChangerRemainSec );	//1202 wlzzi 본 섭에 적용
+	//oStream.write( m_ExpertPetChangerRemainSec );	// __EXPERT_PET_CHANGER __OFF	//1202 wlzzi 본 섭에 적용
 	oStream.write( m_EnchantSkillType );
 //081203 wlzzi - OptionType추가
 	BYTE optionSize = m_OptionType.size();
@@ -172,18 +174,19 @@ void PetInfo::write(SocketOutputStream& oStream) const throw(ProtocolException, 
 //		cout << "PetInfo::write - m_OptionType = " << (int)optionType << endl;
 	}
 //-	
-	oStream.write(m_Function_Petfood_Type);		//20090109 wlzzi 푸더기능 추가
+	//oStream.write(m_Function_Petfood_Type);		// __FUNCTION_PETFOOD __OFF		//20090109 wlzzi 푸더기능 추가
 	
 	//20090526 ksym555
-	BYTE MixoptionSize = m_MixOptionType.size();
-	oStream.write( MixoptionSize );
-		
-	list<OptionType_t>::const_iterator itr2 = m_MixOptionType.begin();
-	for (; itr2!=m_MixOptionType.end(); itr2++)
-	{
-		OptionType_t MixoptionType = *itr2;
-		oStream.write( MixoptionType );
-	}
+	// __PET_MIXINGFORGE is __OFF in the client, so it never reads these --
+	// the size accounting above is commented out to match.
+	//BYTE MixoptionSize = m_MixOptionType.size();
+	//oStream.write( MixoptionSize );
+	//list<OptionType_t>::const_iterator itr2 = m_MixOptionType.begin();
+	//for (; itr2!=m_MixOptionType.end(); itr2++)
+	//{
+	//	OptionType_t MixoptionType = *itr2;
+	//	oStream.write( MixoptionType );
+	//}
 		
 	__END_CATCH
 }

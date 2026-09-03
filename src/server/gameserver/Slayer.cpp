@@ -3445,8 +3445,8 @@ void Slayer::heartbeat(const Timeval& currentTime)
 
 	PlayerCreature::heartbeat( currentTime );
 
-	// 여기서 Prayer와 Meditation에 관련된 MP 리젠을 해준다.
-	// 하트비트 함수를 하나 따로 만들고, 실행시키는 것이 옳겠지만...
+	// Restores MP related to Prayer and Meditation
+	// Might be better to have a separate heartbeat function to execute this
 	Item* pWeapon = getWearItem(Slayer::WEAR_RIGHTHAND);
 	if (pWeapon != NULL)
 	{

@@ -2868,9 +2868,6 @@ void Ousters::heartbeat(const Timeval& currentTime)
 		if( pEnergeBurst != NULL )
 		{
 			bonus += max( 15, min( 5, 5 + (getLevel() / 200 ) * 10 ) );
-
-			//에너지 버스터는 .. MAXMP의 3배까지도 채워주는 막강 스킬!!
-			// 따라서, 최대MAXMP의 3배까지 가 newMP가 될 수 있다.
 			newMP = min ((int)getMP(ATTR_MAX)*3, oldMP + bonus);
 		}
 	

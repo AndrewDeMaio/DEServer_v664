@@ -1555,3 +1555,143 @@ UPDATE DARKEDEN.Ousters o JOIN DARKEDEN.Slayer s ON s.Name = o.Name SET o.CharID
 --   DELETE FROM `SkullInfo`      WHERE SkullType > 75;
 --   DELETE FROM `EventTreeInfo`  WHERE ItemType NOT IN (SELECT ...) -- see backup
 --   (simplest: restore db/pre_import_backup.sql)
+--
+-- 2026-09-01  OptionInfo import REVERTED -- it must not be merged at all.
+--   DuplicatedException : DupOptionLevel(OptionInfoSet): level=98,
+--   OptionType=205  <- OptionInfoManager::load()   (server would not boot)
+--
+-- OptionInfoSet::addOptionType (OptionInfo.cpp:420) requires (Class,
+-- OptionLevel) to be unique within an option class. I keyed the import on
+-- OptionType, the table's PRIMARY KEY, which does not imply that invariant --
+-- a PK-safe INSERT IGNORE can still break a uniqueness rule enforced only in
+-- C++. 10 of 41 rows collided.
+--
+-- The collisions show merging is wrong in principle, not merely unlucky: our
+-- rows already occupy those slots under DIFFERENT OptionType numbers --
+--   Class 23 Level 98  ours=183 theirs=205
+--   Class 22 Level 97  ours=179 theirs=209
+--   Class 21 Level 97  ours=175 theirs=213
+-- The two databases number the same options differently, so they are
+-- alternative encodings of one content set, not complementary halves. Ours is
+-- the encoding the rest of our data already agrees with.
+--
+-- Applied from: db/fix_optioninfo.sql (deletes OptionType 198-238, back to 196)
+-- OptionInfo also removed from the generator so it cannot be re-imported.
+--
+-- LESSON for the remaining bulk imports (AttrInfo, ItemClass, UniqueItemInfo,
+-- WayPointInfo, GSStringPool, EventTreeInfo): a primary key does not prove a
+-- table is safe to merge. Any secondary invariant enforced in code can still
+-- break. These are still in the import; if one of them fails, the terminate
+-- handler now names the exception, so it will identify itself in one restart.
+--
+-- 2026-09-01  UniqueItemInfo import reverted.
+--   Assertion Failed : UniqueItemManager.cpp:81  Assert(pItemInfo != NULL)
+-- init() walks every (ItemClass,ItemType) in UniqueItemInfo and asserts the
+-- item exists. The 11 imported rows name items present in the ORIGINAL's
+-- ItemInfo tables but not ours, so they dangle and abort startup.
+-- Applied from: db/fix_speculative_imports.sql  (49 -> 38 rows)
+--
+-- NEAR MISS worth recording: my first draft of that revert also covered
+-- ItemClass, AttrInfo, WayPointInfo, GSStringPool and EventTreeInfo, and the
+-- ItemClass part would have been DESTRUCTIVE. db/darkeden_schema_content.sql
+-- carries ItemClass as structure-only, so the generator saw "ours = 0 rows"
+-- and emitted a DELETE covering all 104 identities -- which would have removed
+-- the 91 rows that were ours all along. Live counts show the truth:
+-- 91 ours + 13 imported = 104.
+--
+-- RULE: compute a DELETE from the LIVE database, never from the snapshot file.
+-- The snapshot is structure-only for many tables and does not mirror the DB.
+--
+-- The other four are internally consistent and have broken nothing, so they
+-- stay: AttrInfo 143+78=221, WayPointInfo 115+76=191, GSStringPool 380+98=478,
+-- EventTreeInfo 42+48=90.
+--
+-- Standing lesson from OptionInfo + UniqueItemInfo: a PRIMARY KEY makes an
+-- INSERT safe, not MEANINGFUL. Both tables index into data we did not import.
+-- Import what a crash names, not what a diff offers.
+--
+-- 2026-09-01  EventStarInfo imported (+57 rows, 23 -> 80).
+--   UNHANDLED EXCEPTION : const char*: EventStar::EventStar() :
+--                         Invalid item type or optionType
+-- MonsterManager creates ITEM_CLASS_EVENT_STAR types 47/54/55/56/69/78 on a
+-- monster kill (MonsterManager.cpp:1705-1713, 2173, 2984, 3044); our
+-- EventStarInfo held only 0-22. Presents as "the server crashed while I wasn't
+-- doing anything" because it is a random drop roll.
+-- Applied from: db/fix_eventstarinfo.sql   revert: DELETE WHERE ItemType > 22
+--
+-- Kept as a SEPARATE file on purpose: db/original664_content.sql still contains
+-- the UniqueItemInfo INSERT, so re-running that whole file would reintroduce
+-- the rows just reverted and re-break startup. UniqueItemInfo has now also been
+-- removed from scratchpad/extract_content.py so a regeneration cannot re-add it.
+--
+-- 2026-09-01  PREEMPTIVE: item info rows for types the server already builds.
+--
+-- After EventStar, scanned the source for every
+--     createItem(Item::ITEM_CLASS_X, <literal type>, ...)
+-- and checked each literal against the LIVE table (not the snapshot). Our info
+-- tables are subsets of the original's, so any literal above our ceiling is a
+-- latent "Invalid item type or optionType" waiting on a drop roll.
+--
+-- The next one queued: MonsterManager.cpp:1701 creates EFFECT_ITEM type 47 in
+-- the SAME drop block as the EventStar types that just crashed us, and we had
+-- none of the 12 EffectItemInfo types the code uses.
+--
+-- Applied from: db/fix_item_infos.sql   (all keyed on ItemType, re-runnable)
+--   EffectItemInfo +11 (20,21,22,23,27,34,35,36,37,47,58)
+--   CommonQuestItemInfo +14   WarItemInfo +6   PetEnchantItemInfo +5
+--   EventGiftBoxInfo +5   MixingItemInfo +4   EventTreeInfo +3
+--   ContractOfBloodInfo/CueOfAdamInfo/EtherealChainInfo/PetItemInfo/
+--   QuestItemInfo/SubInventoryInfo +1 each
+--
+-- STILL UNFIXABLE BY IMPORT -- the original lacks these too, so they need a
+-- code guard if they ever fire:
+--   CommonQuestItemInfo 56,57      EffectItemInfo 86
+--   EventGiftBoxInfo 56,168        EventTreeInfo 90-99
+-- (EventTreeInfo 90-99 is the same family as the FALLENLEAVES loop already
+-- guarded in MonsterManager.cpp, so that guard likely covers it.)
+--
+-- revert: DELETE the listed ItemTypes per table.
+--
+-- 2026-09-01  CueOfAdamInfo completed (1 sparse row -> types 0-4).
+--   Assertion Failed : InfoClassManager.cpp:85  m_pItemInfos[0] != NULL
+--
+-- My db/fix_item_infos.sql imported only the types the SOURCE names literally.
+-- For CueOfAdamInfo that was type 4 alone, into a previously EMPTY table, so
+-- the info array was sized to 5 with slot 0 NULL -- and init() asserts slot 0
+-- exists whenever any rows loaded.
+--
+-- The mistake was importing a SPARSE subset into an empty table. Checked all 13
+-- tables in that file against the live DB: CueOfAdamInfo was the only one
+-- lacking a type 0 (ContractOfBlood/EtherealChain happened to need type 0
+-- anyway; the rest already had theirs).
+--
+-- RULE: when a target *Info table is empty, import the WHOLE table, not the
+-- specific types the code names. Cherry-picking is only safe when slot 0 is
+-- already populated.
+--
+-- Applied from: db/fix_cueofadam.sql
+-- revert: DELETE FROM `CueOfAdamInfo` WHERE ItemType <> 4;
+--
+-- 2026-09-01  CueOfAdamInfo de-duplicated + UNIQUE KEY added.
+--   Assertion Failed : InfoClassManager.cpp:119
+--     addItemInfo()  m_pItemInfos[getItemType()] == NULL
+--     <- CueOfAdamInfoManager::load()
+-- Table read 0,1,2,3,4,4 -- my previous fix inserted 0-4 with INSERT IGNORE,
+-- but this table has no unique key, so the existing type 4 went in twice.
+--
+-- THIRD occurrence of this same trap in one import (SkillBookInfo /
+-- MenegrothDoungeonTrapInfo / NPC earlier, now this). Of the 13 tables in
+-- db/fix_item_infos.sql, CueOfAdamInfo is the ONLY one without a unique key --
+-- which is exactly why it is the only one that duplicated.
+--
+-- Applied from: db/fix_cueofadam_dupe.sql (dedupes, then ADD UNIQUE KEY)
+--
+-- STANDING RULE, now learned three times: before calling any import file
+-- "safe to re-run", verify every target table has a unique key --
+--   SELECT t.TABLE_NAME FROM information_schema.TABLES t
+--   LEFT JOIN information_schema.STATISTICS s ON s.TABLE_SCHEMA=t.TABLE_SCHEMA
+--        AND s.TABLE_NAME=t.TABLE_NAME AND s.NON_UNIQUE=0
+--   WHERE t.TABLE_SCHEMA='DARKEDEN' AND t.TABLE_NAME IN (...)
+--   GROUP BY t.TABLE_NAME HAVING MAX(s.INDEX_NAME) IS NULL;
+--
+-- revert: ALTER TABLE `CueOfAdamInfo` DROP KEY `uk_CueOfAdamInfo`;
