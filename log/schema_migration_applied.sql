@@ -1728,3 +1728,30 @@ UPDATE DARKEDEN.Ousters o JOIN DARKEDEN.Slayer s ON s.Name = o.Name SET o.CharID
 -- Also reverted today: the advancement-gate removal in CGLearnSkillHandler.cpp
 -- and Slayer.cpp. It was never the cause -- AdvancementClass 100 already
 -- satisfied that test (161-151=10 > 100 is false).
+
+-- ---------------------------------------------------------------------------
+-- 2026-09-04 : disable speedhack verification (AttrInfo 201)
+--
+-- Symptom: no character could land a basic melee attack. The server received
+-- CGAttack and sent nothing back at all -- no GCAttackMeleeOK, no
+-- GCSkillFailed1 -- because the failing return in CGAttackHandler is silent.
+--
+-- Cause: AttrInfo attrID 201 is SKILLSPEED_ENABLE_VERIFICATION. The row
+-- (201,1,0,'speedhack detection on/off') came from the original664_content.sql
+-- import. VariableManager::load() replays every AttrInfo row through
+-- setVariable(), overwriting the constructor default of false at
+-- VariableManager.cpp:284.
+--
+-- Why it can never work in this port: GamePlayer::verifyMeleeAttackSpeed
+-- compares packet timestamps, but readTimeStamp() is deliberately commented
+-- out here (the v664 client never sends one), so Packet::GetTimeStamp() is
+-- always 0. lDiffTime is therefore always 0, lErrorTime is always positive,
+-- and the function returns false for every attack from every class.
+--
+-- Applied:
+--   UPDATE AttrInfo SET attr1 = 0 WHERE attrID = 201;
+--
+-- Revert (restores the broken behaviour -- only meaningful if the client is
+-- ever changed to send real timestamps):
+--   UPDATE AttrInfo SET attr1 = 1 WHERE attrID = 201;
+-- ---------------------------------------------------------------------------

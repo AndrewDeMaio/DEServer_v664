@@ -18,6 +18,7 @@
 	#include "ZoneUtil.h"
 	#include "CreatureUtil.h"
     #include "Effect.h"
+	#include "Utility.h"
 
     #include "skill/Sniping.h"
 
@@ -82,6 +83,10 @@ void CGAttackHandler::execute (CGAttack* pPacket , Player* pPlayer)
 		
 		if ( !pGamePlayer->verifyMeleeAttackSpeed(pPacket->GetTimeStamp()) )
 		{
+			// This return sends nothing to the client, so log it: an attack that
+			// dies here is invisible from both sides.
+			filelog("AttackDropped.log", "CGAttack dropped: verifyMeleeAttackSpeed failed (TimeStamp=%lu)",
+				(unsigned long)pPacket->GetTimeStamp());
 			return;
 		}
 		
@@ -95,7 +100,14 @@ void CGAttackHandler::execute (CGAttack* pPacket , Player* pPlayer)
 		
 		pCreature->setLastTarget( pTarget->getObjectID() );
 
-		if (!isAbleToUseObjectSkill(pCreature, SKILL_ATTACK_MELEE)) return;
+		if (!isAbleToUseObjectSkill(pCreature, SKILL_ATTACK_MELEE))
+		{
+			// Also a silent return. It is gated purely on status effects, so name
+			// the creature to show which effect is standing in the way.
+			filelog("AttackDropped.log", "CGAttack dropped: isAbleToUseObjectSkill false for %s (dead=%d)",
+				pCreature->getName().c_str(), (int)pCreature->isDead());
+			return;
+		}
 
 		if (pCreature->isSlayer())
 		{ 
@@ -208,10 +220,19 @@ void CGAttackHandler::execute (CGAttack* pPacket , Player* pPlayer)
 	} 
 	catch (Throwable & t) 
 	{
-		//cout << t.toString();
+		// Both catches here used to be empty, which made a failed attack vanish
+		// completely: no OK packet, no fail packet, no log line. AttackMelee's own
+		// catch already reports failures with GCSkillFailed1(SkillType:0), so
+		// anything that lands here was thrown before the skill handler ever ran.
+		filelog("AttackDropped.log", "CGAttack dropped, Throwable: %s", t.toString().c_str());
+	}
+	catch (std::exception & e)
+	{
+		filelog("AttackDropped.log", "CGAttack dropped, std::exception: %s", e.what());
 	}
 	catch (...)
 	{
+		filelog("AttackDropped.log", "CGAttack dropped, unknown exception type");
 	}
 
 #endif

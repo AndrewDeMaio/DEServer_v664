@@ -18,6 +18,7 @@
 	#include "ZoneUtil.h"
 	#include "CreatureUtil.h"
     #include "Effect.h"
+	#include "Utility.h"
 
     #include "skill/Sniping.h"
 
@@ -208,10 +209,19 @@ void CGAttackHandler::execute (CGAttack* pPacket , Player* pPlayer)
 	} 
 	catch (Throwable & t) 
 	{
-		//cout << t.toString();
+		// Both catches here used to be empty, which made a failed attack vanish
+		// completely: no OK packet, no fail packet, no log line. AttackMelee's own
+		// catch already reports failures with GCSkillFailed1(SkillType:0), so
+		// anything that lands here was thrown before the skill handler ever ran.
+		filelog("AttackDropped.log", "CGAttack dropped, Throwable: %s", t.toString().c_str());
+	}
+	catch (std::exception & e)
+	{
+		filelog("AttackDropped.log", "CGAttack dropped, std::exception: %s", e.what());
 	}
 	catch (...)
 	{
+		filelog("AttackDropped.log", "CGAttack dropped, unknown exception type");
 	}
 
 #endif
