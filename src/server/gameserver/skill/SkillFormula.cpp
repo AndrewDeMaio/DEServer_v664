@@ -3575,7 +3575,7 @@ void HarpoonBomb::computeOutput(const SkillInput& input, SkillOutput& output)
 {
 //	output.Damage = -25 + (input.STR/15) + (min(input.Range,10)*4);
 	output.Damage = min( 100, 20 + (input.STR/4 + min(input.Range,10)*4) );
-	output.Delay = max(240, (70 - (input.DEX/10 + input.Range)) * 10 );
+	output.Delay = max(5, (70 - (input.DEX/10 + input.Range)) * 10 );
 	output.Range = 30 + min(input.Range,10)*2;
 //	output.Tick = 100 + (min(input.Range,10)*5);
 //	이건 이펙트 데미지네...
@@ -3692,7 +3692,7 @@ void BombCrashWalk::computeOutput(const SkillInput& input, SkillOutput& output)
 {
 	output.Damage = min( 250, 20+((input.STR/2) + (input.STR/15) + max(0, min((input.Range-10), 10))*3) ); 
 	// 딜레이 200
-	output.Delay = max( 450, (80 - (input.DEX/6 + input.Range)) * 10 );
+	output.Delay = max( 50, (80 - (input.DEX/6 + input.Range)) * 10 );
 	output.Duration = 200;
 }
 
@@ -3700,7 +3700,7 @@ void SatelliteBomb::computeOutput(const SkillInput& input, SkillOutput& output)
 {
 	output.Damage = min(200, 30 + (input.STR/2 + input.STR/3 + max(0, min((input.Range-10), 10)) * 3) );
 	output.Duration	= 10;
-	output.Delay	= max(450, (75 - (input.DEX/20 + input.Range)) * 10 );
+	output.Delay	= max(3, (75 - (input.DEX/20 + input.Range)) * 10 );
 }
 
 void IllusionInversion::computeOutput(const SkillInput& input, SkillOutput& output)
@@ -3712,7 +3712,7 @@ void IllusionInversion::computeOutput(const SkillInput& input, SkillOutput& outp
 void HeavenGround::computeOutput(const SkillInput& input, SkillOutput& output)
 {
 	output.Damage = min( 200, 20 + (input.INTE/3 + input.INTE/10 + max(0, min((input.Range-10), 10))*3) );
-	output.Delay = max( 450, (80 - ( input.DEX/6 + input.Range )) * 10);
+	output.Delay = max( 290, (80 - ( input.DEX/6 + input.Range )) * 10);
 	output.Duration = min( 300, (input.INTE/15 + input.Range/2) * 10 );
 }
 

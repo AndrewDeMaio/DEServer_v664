@@ -1695,3 +1695,36 @@ UPDATE DARKEDEN.Ousters o JOIN DARKEDEN.Slayer s ON s.Name = o.Name SET o.CharID
 --   GROUP BY t.TABLE_NAME HAVING MAX(s.INDEX_NAME) IS NULL;
 --
 -- revert: ALTER TABLE `CueOfAdamInfo` DROP KEY `uk_CueOfAdamInfo`;
+--
+-- 2026-09-04  SkillLimit raised so 161-tier skills are usable.
+--   Symptom: Heaven Ground (408, level 161) red and uncastable on the hotbar
+--   despite server Enable:1, MP 2146 vs cost 100, AdvancementClass 100.
+--
+--   Cause was NOT a "skill card" and NOT the advancement gate. The CLIENT
+--   tests a server-wide limit:
+--     VS_UI_Description.cpp:3163
+--       GetLimitLearnSkillLevel() < GetLearnLevel()      // 127 < 160
+--   fed from SystemAvailabilities SystemKind=888 via GCSystemAvailabilities.
+--
+--    was tinyint(1) -- SIGNED -- so 127 was the column maximum, not
+--   a chosen value. The schema literally could not express a limit high enough
+--   for a level-161 skill.
+--
+-- Applied from: db/fix_skilllimit.sql
+--   ALTER Available -> TINYINT UNSIGNED (matches the BYTE wire field exactly;
+--   SMALLINT would allow values the packet truncates)
+--   UPDATE SystemKind 888 -> 255
+--
+-- OpenDegree (999) deliberately left at 127: it gates zone availability and our
+-- zones use OpenLevel 1, so it already passes.
+--
+-- Requires a gameserver restart -- SystemAvailabilitiesManager reads this once
+-- at startup and caches it into the packet.
+--
+-- revert:
+--   UPDATE `SystemAvailabilities` SET `Available`=127 WHERE `SystemKind`=888;
+--   ALTER TABLE `SystemAvailabilities` MODIFY `Available` tinyint(1) NOT NULL DEFAULT 0;
+--
+-- Also reverted today: the advancement-gate removal in CGLearnSkillHandler.cpp
+-- and Slayer.cpp. It was never the cause -- AdvancementClass 100 already
+-- satisfied that test (161-151=10 > 100 is false).

@@ -264,19 +264,10 @@ SkillResultType HeavenGround::execute(Slayer* pSlayer, ZoneCoord_t X, ZoneCoord_
 				return SKILL_RESULT_FAIL_INVALID_ITEM;
 			}
 
-			if( pWeapon->getSilver() < 40 )
-			{
-				executeSkillFailNormal(pSlayer,getSkillType(), NULL);
-				
-				return SKILL_RESULT_FAIL_NOT_ENOUGH_BULLET;
-			}
-			else
-			{
-				GCModifyInformation gcMI;
-				pWeapon->setSilver(pWeapon->getSilver() - 40 );
-				gcMI.addShortData( MODIFY_SILVER_DURABILITY, pWeapon->getSilver() );
-				pSlayer->getPlayer()->sendPacket(&gcMI);
-			}
+			GCModifyInformation gcMI;
+			pWeapon->setSilver(pWeapon->getSilver() - 40 );
+			gcMI.addShortData( MODIFY_SILVER_DURABILITY, pWeapon->getSilver() );
+			pSlayer->getPlayer()->sendPacket(&gcMI);
 
 			for(oY = -2; oY <= 2; oY++)
 			for(oX = -2; oX <= 2; oX++)

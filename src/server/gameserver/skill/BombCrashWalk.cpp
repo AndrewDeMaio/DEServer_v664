@@ -98,16 +98,10 @@ SkillResultType BombCrashWalk::execute(Slayer* pSlayer, ObjectID_t targetObjectI
 	int RequiredMP	= (int)pSkillInfo->getConsumeMP();
 	bool bManaCheck = hasEnoughMana( pSlayer, RequiredMP );
 	bool bTimeCheck = param.Delay == 0xffffffff || verifyRunTime(pSkillSlot);
-	bool bSilverCheck = true;
-
-	if( pWeapon->getSilver() < 50 )
-	{
-		bSilverCheck = false;
-	}
 
 	list<Creature*> cList;
 
-	if( bManaCheck && bTimeCheck && bSilverCheck )
+	if( bManaCheck && bTimeCheck )
 	{
 		if ( !bRangeCheck || !pZone->moveFastPC( pSlayer, pSlayer->getX(), pSlayer->getY(), X, Y, getSkillType()) )
 		{
@@ -230,8 +224,6 @@ SkillResultType BombCrashWalk::execute(Slayer* pSlayer, ObjectID_t targetObjectI
 							increaseSkillExp(pSlayer, DomainType, pSkillSlot, pSkillInfo, _GCSkillToTileOK1);
 
 							decreaseDurability(pSlayer, NULL, NULL, &_GCSkillToTileOK1, NULL);
-
-
 						}
 					}
 				}

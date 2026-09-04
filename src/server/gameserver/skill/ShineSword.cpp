@@ -64,15 +64,7 @@ SkillResultType ShineSword::execute(Slayer* pSlayer, ObjectID_t targetObjectID, 
 	}
 	Damage_t silverDamage = 0;
 
-	// 은데미지 산출 공식
 	silverDamage = min( 40, int(pSlayer->getSTR()/25 + pSlayer->getSTR()/40 + input.Range*1.5) );
-	// 무기의 은의 포함량이 50 미만이면 발동 하지 않는다.
-	if( pWeapon->getSilver() < 50 )
-	{
-		executeSkillFailException(pSlayer, getSkillType());
-		
-		return SKILL_RESULT_FAIL_NOT_ENOUGH_BULLET;
-	}
 	
 	skillResult = g_SimpleMissileSkill.execute( pSlayer, targetObjectID, pSkillSlot, param, result );
 

@@ -74,11 +74,6 @@ SkillResultType IllusionInversion::execute(Slayer* pSlayer, ObjectID_t TargetObj
 	
 	skillResult = g_SimpleMissileSkill.execute(pSlayer, TargetObjectID, pSkillSlot, param, result);
 
-	if( pWeapon->getSilver() < 50 )
-	{
-		return SKILL_RESULT_FAIL_NOT_ENOUGH_BULLET;
-	}
-
 	int successRatio = min(25, int(input.INTE/20 + (input.Range-10)));
 
 	if( successRatio < 0 )
