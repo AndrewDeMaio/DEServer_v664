@@ -1755,3 +1755,40 @@ UPDATE DARKEDEN.Ousters o JOIN DARKEDEN.Slayer s ON s.Name = o.Name SET o.CharID
 -- ever changed to send real timestamps):
 --   UPDATE AttrInfo SET attr1 = 1 WHERE attrID = 201;
 -- ---------------------------------------------------------------------------
+
+-- ---------------------------------------------------------------------------
+-- 2026-09-04 : PetItemObject.MixOptionType wrong column type (pet items lost
+--              on relog)
+--
+-- Symptom: a pet item (e.g. Wolfdog Leash) vanished from the inventory after
+-- logging out and back in. PetItemObject had 0 rows despite pets being created
+-- and used; 48 other *Object tables persisted normally.
+--
+-- Cause: every INSERT into PetItemObject failed. PetItem::create() writes
+-- MixOptionType with setOptionTypeToField(), which produces a raw option-byte
+-- STRING (empty when the pet has no mix options), and the loader reads it back
+-- with getString() + setOptionTypeFromField() -- exactly like OptionType, which
+-- is varchar(10). But the column was declared int, so MySQL strict mode
+-- rejected the empty string:
+--
+--   SQLQueryException : Incorrect integer value: '' for column 'MixOptionType'
+--
+-- The failure was only visible in bin/DBError.log and bin/DBExecute.N.log,
+-- because item saves go through the async g_GameDBExecuteManager queue and
+-- nothing surfaces a failed write to the player. All three write paths were
+-- affected: create(), save() and savePetInfo().
+--
+-- Applied:
+--   ALTER TABLE PetItemObject MODIFY MixOptionType varchar(10) NOT NULL DEFAULT '';
+--
+-- Verified by replaying the exact INSERT from DBExecute.1.log: it now succeeds,
+-- and trg_PetItemObject_cid_ins populates OwnerCharID (7 for Jannaa), which is
+-- what PetItemLoader::load()'s "WHERE OwnerCharID = %u" requires.
+--
+-- Note: DEFAULT '' rather than OptionType's DEFAULT '0'. An empty option field
+-- means "no options"; '0' would parse as one option of type 0x30. Every write
+-- path supplies the value explicitly, so the default is not otherwise reached.
+--
+-- Revert:
+--   ALTER TABLE PetItemObject MODIFY MixOptionType int NOT NULL DEFAULT 0;
+-- ---------------------------------------------------------------------------

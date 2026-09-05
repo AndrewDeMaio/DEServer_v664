@@ -1993,7 +1993,7 @@ void UltimateBlow::computeOutput(const SkillInput& input, SkillOutput& output)
 void Illendue::computeOutput(const SkillInput& input, SkillOutput& output)
 {
 	output.Damage = ( input.INTE / 10 ) * ( 1 + ( input.SkillLevel / 33 ) );
-	output.Delay = 50 - input.SkillLevel*10/33;
+	output.Delay = 50 - input.SkillLevel * 10 / 33;
 	output.Range = 5;
 }
 
@@ -3705,7 +3705,7 @@ void SatelliteBomb::computeOutput(const SkillInput& input, SkillOutput& output)
 
 void IllusionInversion::computeOutput(const SkillInput& input, SkillOutput& output)
 {
-	output.Delay = max( 450, (80 - ( input.DEX/6 + input.Range )) * 10);
+	output.Delay = max(20, 200 - (90 * input.INTE / 315) - (90 * input.DEX / 80));
 	output.Damage = min( 210, 10 + (input.INTE/3 + input.INTE/10 + max(0, min((input.Range-10), 10))*3) );
 }
 
