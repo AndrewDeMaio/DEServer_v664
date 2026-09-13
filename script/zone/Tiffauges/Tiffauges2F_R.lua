@@ -863,7 +863,7 @@ function OnBeforeEnterZone(Creature)
 	PlayerLevel = DEScript:GetLevel(Creature)
 	AdvLevel = DEScript:GetAdvancementClassLevel(Creature)
 
-	if (PlayerLevel + AdvLevel ) < 130 then
+	if (PlayerLevel + AdvLevel ) < 150 then
 		DEScriptZone:SendSystemMessage(Creature, 0, "Your level is too low to enter.")
 		
 		return false
@@ -886,7 +886,7 @@ function OnBeforeEnterZone(Creature)
 		return true
 	end
 
-	DEScriptZone:SendSystemMessage(Creature, 0, "You do not have a miracle epistle required.")
+	DEScriptZone:SendSystemMessage(Creature, 0, "You do not have the Miracle Epistle required.")
 
 	return false
 	

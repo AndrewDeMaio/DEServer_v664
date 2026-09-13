@@ -30,6 +30,7 @@ void PetAttrInfoManager::load()
 
 			if ( m_PetAttrInfoMap[PetAttr] == NULL ) m_PetAttrInfoMap[PetAttr] = new PetAttrInfo(PetAttr);
 			PetLevel_t PetLevel = pResult->getInt(2);
+			if ( PetLevel > PetMaxLevel ) continue;   // never index past the vector
 
 			m_PetAttrInfoMap[PetAttr]->setPetAttrLevel( PetLevel, (PetAttrLevel_t)pResult->getInt(4) );
 		}

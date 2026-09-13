@@ -72,7 +72,7 @@ void EffectThorns::affect(Creature* pEffectedCreature)
 	Slayer* pSlayer = dynamic_cast<Slayer*>(pEffectedCreature);
 	Assert( pSlayer != NULL );
 
-//	20080508 Thorns ÀÇ °æ¿ì ÀÌÆåÆ®°¡ ¸ö¿¡ ºÙ¾î ´Ù´Ï¹Ç·Î ¸ÊÀ» ÀÌµ¿ÇØµµ °è¼Ó Áö¼ÓµÇµµ·Ï ÇÑ´Ù.
+//	20080508 Thorns ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¾ï¿½ ï¿½Ù´Ï¹Ç·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Øµï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÓµÇµï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
 //	Creature* pEffectedCreature = pSlayer->getZone()->getCreature( getCasterID() );
 //	bool isCaster = pEffectedCreature == pEffectedCreature;
 
@@ -97,9 +97,10 @@ void EffectThorns::affect(Creature* pEffectedCreature)
 	Level_t maxEnemyLevel = 0;
 	uint EnemyNum = 0;
 
-	for ( int x=-1; x<=1; x++ )
+	// radius 2 (5x5 around the caster); Spirit Guard, the base skill, keeps the 3x3 ring
+	for ( int x=-2; x<=2; x++ )
 	{
-		for ( int y=-1; y<=1; y++ )
+		for ( int y=-2; y<=2; y++ )
 		{
 			if ( x == 0 && y == 0 ) continue;
 
@@ -108,7 +109,7 @@ void EffectThorns::affect(Creature* pEffectedCreature)
 
 			if ( !rect.ptInRect( X, Y ) ) continue;
 
-			// Å¸ÀÏ¾È¿¡ Á¸ÀçÇÏ´Â ¿ÀºêÁ§Æ®¸¦ °¡Á®¿Â´Ù.
+			// Å¸ï¿½Ï¾È¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½.
 			Tile& tile = pZone->getTile( X, Y );
 
 			if( tile.hasCreature(Creature::MOVE_MODE_WALKING) )
@@ -116,8 +117,8 @@ void EffectThorns::affect(Creature* pEffectedCreature)
 				Creature* pCreature = tile.getCreature(Creature::MOVE_MODE_WALKING);
 				Assert( pCreature != NULL );
 
-				// ÀÚ½ÅÀº ¸ÂÁö ¾Ê´Â´Ù. ¹«Àûµµ ¾È ¸Â´Â´Ù. ½½·¹ÀÌ¾îµµ ¾È ¸Â´À´Ù.
-				// ¾ÈÀüÁö´ë Ã¼Å©
+				// ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Â´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Â´Â´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾îµµ ï¿½ï¿½ ï¿½Â´ï¿½ï¿½ï¿½.
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
 				// 2003.1.10 by bezz, Sequoia
 				if ( pCreature == m_pTarget
 				  || !canAttack( pEffectedCreature, pCreature )
@@ -138,7 +139,7 @@ void EffectThorns::affect(Creature* pEffectedCreature)
 				if ( maxEnemyLevel < pCreature->getLevel() ) maxEnemyLevel = pCreature->getLevel();
 				EnemyNum++;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-//		ÀúÇ×°ø½Ä Àû¿ë...
+//		ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½...
 #ifndef VERSION_SKILL_1
 				Damage_t damage = computeMagicDamage(pCreature, m_Damage, SKILL_THORNS);
 #else
@@ -154,9 +155,9 @@ void EffectThorns::affect(Creature* pEffectedCreature)
 
 					pCreature->getPlayer()->sendPacket( &gcMI );
 
-					// ¸Â´Â µ¿ÀÛÀ» º¸¿©ÁØ´Ù.
+					// ï¿½Â´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 					GCSkillToObjectOK2 gcSkillToObjectOK2;
-					gcSkillToObjectOK2.setObjectID( 1 );    // ÀÇ¹Ì ¾ø´Ù.
+					gcSkillToObjectOK2.setObjectID( 1 );    // ï¿½Ç¹ï¿½ ï¿½ï¿½ï¿½ï¿½.
 					gcSkillToObjectOK2.setSkillType( SKILL_ATTACK_MELEE );
 					gcSkillToObjectOK2.setDuration(0);
 					pCreature->getPlayer()->sendPacket(&gcSkillToObjectOK2);
@@ -220,7 +221,7 @@ void EffectThorns::unaffect(Creature* pCreature)
 	Zone* pZone = pCreature->getZone();
 	Assert( pZone != NULL );
 
-	// Effect¸¦ ¾ø¾Ö°í ¾Ë¸°´Ù.
+	// Effectï¿½ï¿½ ï¿½ï¿½ï¿½Ö°ï¿½ ï¿½Ë¸ï¿½ï¿½ï¿½.
 	pCreature->removeFlag( Effect::EFFECT_CLASS_THORNS );
 
 	GCRemoveEffect gcRemoveEffect;

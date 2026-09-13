@@ -403,6 +403,12 @@ void PCFinder::addNPC(NPC *pNPC) throw(DuplicatedException, Error)
 
     if (itr != m_NPCs.end())
     {
+        // A duplicate NPC name used to return here while still holding
+        // m_Mutex, leaking the lock. The next addNPC() call then died with
+        // "Mutex::lock() : SELF DEAD LOCK", pointing at whichever NPC came
+        // next rather than the duplicate. Every other early return in this
+        // file unlocks first; this one did not.
+        m_Mutex.unlock();
 		return;
         //throw DuplicatedException();
     }

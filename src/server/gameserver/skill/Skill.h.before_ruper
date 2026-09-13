@@ -694,18 +694,6 @@ enum SkillTypes
 	SKILL_SQUALLY_BARRIER1,						// 504		// 질풍의 베리어1
 	SKILL_SQUALLY_BARRIER2,						// 505		// 질풍의 베리어2
 
-	// Ruper Island monster skills - numbered as in the v9 gameserver / DARKEDEN_v9.sql
-	SKILL_SIUS_CRASH,                       // 506
-	SKILL_LYCAN_HOWL,                       // 507
-	SKILL_BIRFRONZE_MAGIC,                  // 508
-	SKILL_PALUS_MIDDLE_RANGE_MAGIC,         // 509
-	SKILL_PALUS_LONG_RANGE_MAGIC,           // 510
-	SKILL_GARUM_MAGIC,                      // 511
-	SKILL_CLAVIE_MAGIC,                     // 512
-	SKILL_WIDE_WILD_WOLF,                   // 513
-	SKILL_BLESS_OF_LYCAN,                   // 514
-	SKILL_SMILE_OF_DEATH,                   // 515
-
 	SKILL_MAX                                   
 };
 
@@ -1326,18 +1314,6 @@ const string SkillTypes2String[] =
 	"SKILL_MAGMA_DETONATION_2",					// 503		// 마그마 데토네이션2
 	"SKILL_SQUALLY_BARRIER1",					// 504		// 질풍의 베리어1	
 	"SKILL_SQUALLY_BARRIER2",					// 504		// 질풍의 베리어2
-
-	// Ruper Island monster skills
-	"SKILL_SIUS_CRASH",                     // 506
-	"SKILL_LYCAN_HOWL",                     // 507
-	"SKILL_BIRFRONZE_MAGIC",                // 508
-	"SKILL_PALUS_MIDDLE_RANGE_MAGIC",       // 509
-	"SKILL_PALUS_LONG_RANGE_MAGIC",         // 510
-	"SKILL_GARUM_MAGIC",                    // 511
-	"SKILL_CLAVIE_MAGIC",                   // 512
-	"SKILL_WIDE_WILD_WOLF",                 // 513
-	"SKILL_BLESS_OF_LYCAN",                 // 514
-	"SKILL_SMILE_OF_DEATH",                 // 515
 
 	"SKILL_MAX"
 };

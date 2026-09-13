@@ -43,8 +43,11 @@
 #include "SystemAvailabilitiesManager.h"
 
 int NeedMoney = 2000000;
+// Arrive two tiles south of the crystal orb, which stands on (88,110).
+// Landing on the orb tile put the player sprite on top of it, so it could
+// not be clicked. (88,112) is open on all five lobby maps.
 ZoneCoord_t TargetZone_X = 88;
-ZoneCoord_t TargetZone_Y = 110;
+ZoneCoord_t TargetZone_Y = 112;
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////

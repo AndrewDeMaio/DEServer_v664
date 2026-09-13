@@ -6,7 +6,7 @@
 
 #include <vector>
 
-const PetLevel_t PetMaxLevel=50;
+const PetLevel_t PetMaxLevel=60;   // data has levels 0-60 (61 rows)
 
 class PetExpInfo
 {
@@ -30,7 +30,7 @@ private:
 class PetExpInfoManager
 {
 public:
-	PetExpInfoManager() { m_PetExpInfos.reserve(PetMaxLevel+1); }
+	PetExpInfoManager() { m_PetExpInfos.resize(PetMaxLevel+1, NULL); }
 	~PetExpInfoManager() { clear(); }
 
 	void clear();

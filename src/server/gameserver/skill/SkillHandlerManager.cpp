@@ -464,6 +464,13 @@
 #include "SquallyBarrier1.h"
 #include "SquallyBarrier2.h"
 
+// Ruper Island monster skills
+#include "BifronzeMagic.h"
+#include "PalusMiddleRangeMagic.h"
+#include "PalusLongRangeMagic.h"
+#include "GarumMagic.h"
+#include "ClavieMagic.h"
+
 // global variable declaration
 SkillHandlerManager * g_pSkillHandlerManager = NULL;
 
@@ -1022,6 +1029,13 @@ void SkillHandlerManager::init ()
 	addSkillHandler(&g_MagmaDetonation2);
 	addSkillHandler(&g_SquallyBarrier1);
 	addSkillHandler(&g_SquallyBarrier2);
+
+	// Ruper Island monster skills
+	addSkillHandler(&g_BifronzeMagic);
+	addSkillHandler(&g_PalusMiddleRangeMagic);
+	addSkillHandler(&g_PalusLongRangeMagic);
+	addSkillHandler(&g_GarumMagic);
+	addSkillHandler(&g_ClavieMagic);
 	
 	
 	__END_CATCH

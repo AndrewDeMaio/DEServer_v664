@@ -42,7 +42,10 @@
 
 #include "SystemAvailabilitiesManager.h"
 
-const int NeedSeedNum = 90; // 50개에서 90 개로 수정 20070703 by bigheart
+// Lowered from the live-server value of 90 for this server. Seeds drop at 7% per
+// stage cleared, so 90 was roughly 128 full tower clears per reward, and each
+// seed reward is claimable only once per character.
+const int NeedSeedNum = 20; // was 90 // 50개에서 90 개로 수정 20070703 by bigheart
 
 ////////////////////////////////////////////////////////////////////////////////
 // 

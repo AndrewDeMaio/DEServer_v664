@@ -36,9 +36,19 @@ void CGSelectBloodBibleHandler::execute (CGSelectBloodBible* pPacket , Player* p
 
 	BloodBibleBonus* pBonus = NULL;
 
+	// Only the twelve base bibles have a row in BloodBibleBonusInfo, so a
+	// clan tier token has to be looked up by the base bible it derives from.
+	// Looking the raw type up threw NoSuchElementException and returned
+	// without sending the client anything, so picking a tiered token from the
+	// rent menu looked like nothing happening at all.
+	const int bloodBibleID = (int)pPacket->getBloodBibleID();
+
+	if ( bloodBibleID < 0 || bloodBibleID >= BLOOD_BIBLE_TYPE_MAX )
+		return;
+
 	try
 	{
-		pBonus = g_pBloodBibleBonusManager->getBloodBibleBonus( pPacket->getBloodBibleID() );
+		pBonus = g_pBloodBibleBonusManager->getBloodBibleBonus( bloodBibleID % BLOOD_BIBLE_PER_TIER );
 		if ( pBonus == NULL ) return;
 	}
 	catch ( NoSuchElementException& e )

@@ -963,7 +963,7 @@ void Bless::computeOutput(const SkillInput& input, SkillOutput& output)
 		output.Damage   = 2 + input.INTE/40 + input.SkillLevel/20;
 	}
 
-	output.Duration = (30 + input.SkillLevel * 3 / 2) * 10; // 30~50초
+	output.Duration = (60 + input.SkillLevel * 3 / 2) * 10; // 30~50초
 	output.Delay    = (7 - input.SkillLevel/20) * 10; // 6->3초
 
 	// 파티 보너스를 계산한다.
@@ -1037,8 +1037,7 @@ void Striking::computeOutput(const SkillInput& input, SkillOutput& output)
 		output.Damage = input.INTE/30 + input.SkillLevel/10;
 	}
 
-	output.Duration = (30 + input.SkillLevel * 3 / 2) * 10;
-//	output.Duration = (30 + input.SkillLevel * 2 / 3) * 10;
+	output.Duration = (60 + input.SkillLevel * 3 / 2) * 10;
 	output.Delay    = (6 - input.SkillLevel/33) * 10; // 6->3초
 
 	// 파티 보너스를 계산한다.
@@ -2458,11 +2457,11 @@ void GreatHeal::computeOutput(const SkillInput& input, SkillOutput& output)
 {
 	if (input.TargetType == SkillInput::TARGET_OTHER) 
 	{
-		output.Damage = 100 + input.SkillLevel/3;
+		output.Damage = 100 + (input.INTE/5) + (input.SkillLevel/3);
 	}
 	else
 	{
-		output.Damage = 110 + input.SkillLevel/3;
+		output.Damage = 110 + (input.INTE/3) + (input.SkillLevel/3);
 	}
 
 	output.Delay = (5 - input.SkillLevel/33) * 10;
@@ -2597,16 +2596,18 @@ void InstallTrap::computeOutput(const SkillInput& input, SkillOutput& output)
 
 void HolyArmor::computeOutput(const SkillInput& input, SkillOutput& output)
 {
-	output.Duration = (30+(input.SkillLevel/2))*10;
+	output.Duration = (90 + (input.INTE / 5) + (input.SkillLevel / 2)) * 10;
 	output.Damage = 10 + (input.INTE/20) + (input.SkillLevel/10);
-	output.Delay = output.Duration;
+	// Matches IntimateGrail. Delay used to be pinned to Duration, so raising the
+	// duration to Grail parity would also have made the cooldown 6m45s.
+	output.Delay = (15 - (input.SkillLevel/30)) * 10;
 }
 
 void MercyGround::computeOutput(const SkillInput& input, SkillOutput& output)
 {
 //	output.Duration = (10 + input.INTE/20 + input.SkillLevel/10)*10;
 	output.Duration = (15 + input.INTE/15 + input.SkillLevel/6)*10;
-	output.Delay = (10 - input.SkillLevel/33) * 10;
+	output.Delay = (10 - input.SkillLevel / 15) * 10;
 }
 
 void CreateHolyPotion::computeOutput(const SkillInput& input, SkillOutput& output)

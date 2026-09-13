@@ -430,8 +430,7 @@ SKILL_OBJS = \
 	MagmaDetonation.o \
 	MagmaDetonation2.o \
 	SquallyBarrier1.o \
-	SquallyBarrier2.o \
-	BifronzeMagic.o PalusMiddleRangeMagic.o PalusLongRangeMagic.o GarumMagic.o ClavieMagic.o
+	SquallyBarrier2.o 
 
 EFFECT_OBJS = \
 	EffectAcidSwamp.o \

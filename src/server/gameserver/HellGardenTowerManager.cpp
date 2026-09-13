@@ -198,15 +198,17 @@ bool HellGardenTowerManager::enterPC(PlayerCreature* pPC )
 
 	__ENTER_CRITICAL_SECTION(m_Mutex)
 
-	if (pPC->isDM() || pPC->isGOD())
-	{
-		m_Mutex.unlock();
+	// GM/GOD are exempt from the party, key and capacity requirements below,
+	// but must still drive the state machine. This used to "return true" right
+	// here, which left the tower in STATE_OPEN -- heartbeat() has no case for
+	// that state, so the 2-minute timer never started and no monsters spawned.
+	const bool bStaff = pPC->isDM() || pPC->isGOD();
 
+	if (bStaff)
 		filelog("HellGardenTower.log", "enterPC - DM or GOD pass! - %s", pPC->getName().c_str() );
-		return true;
-	}
+
 	// 허용된 인원이 다 찻다. 못들어간다.
-	else if( m_nPassPlayer >= MaxPassPlayer )
+	if( !bStaff && m_nPassPlayer >= MaxPassPlayer )
 	{
 		m_Mutex.unlock();
 		return false;
@@ -215,7 +217,7 @@ bool HellGardenTowerManager::enterPC(PlayerCreature* pPC )
 	if ( m_State == STATE_OPEN )
 	{
 		// 파티의 유무 확인
-		if(pPC->getPartyID() == 0)
+		if( !bStaff && pPC->getPartyID() == 0 )
 		{
 			m_Mutex.unlock();
 			return false;
@@ -224,15 +226,26 @@ bool HellGardenTowerManager::enterPC(PlayerCreature* pPC )
 		// key 확인 ( m_HellGardenType 으로 구분 )
 		Inventory* pInventory = pPC->getInventory();
 		Assert( pInventory != NULL );
-		if ( !pInventory->hasEnoughNumItem( Item::ITEM_CLASS_QUEST_ITEM, m_HellGardenType + 11, 1 ) )
+		const bool bHasKey = pInventory->hasEnoughNumItem( Item::ITEM_CLASS_QUEST_ITEM, m_HellGardenType + 11, 1 );
+
+		if ( !bStaff && !bHasKey )
 		{
 			m_Mutex.unlock();
 
 			filelog("HellGardenTower.log", "enterPC - no key. deny! - %s", pPC->getName().c_str() );
 			return false;
 		}
-		else
+
+		// Staff may enter without a key, but spend one when they are carrying it,
+		// so the real key economy can be exercised from a GM character.
+		if ( bHasKey )
+		{
 			pPC->decreaseItemClassTypeNum( Item::ITEM_CLASS_QUEST_ITEM, m_HellGardenType + 11, 1 );
+
+			if ( bStaff )
+				filelog("HellGardenTower.log", "enterPC - staff %s spent a key (type %d)",
+					pPC->getName().c_str(), (int)(m_HellGardenType + 11) );
+		}
 
 		// Party ID 저장
 		m_PartyID = pPC->getPartyID();
@@ -259,22 +272,35 @@ bool HellGardenTowerManager::enterPC(PlayerCreature* pPC )
 		m_pZone->broadcastPacket( &gcSystemMessage );
 
 		// m_nPassPlayer 의 숫자를 눌려준다
-		m_nPassPlayer = 1;
+		// Staff are not counted against MaxPassPlayer -- leaveCreature() returns
+		// early for them, so counting them here would leak the slot.
+		m_nPassPlayer = bStaff ? 0 : 1;
+
+		filelog("HellGardenTower.log", "OPEN - zone %d by %s: state=%d, stage 1 due in %ds",
+			(int)m_pZone->getZoneID(), pPC->getName().c_str(), (int)m_State, (int)HellGardenEnterWaitTime );
 
 	}
 	else if( m_State == STATE_WAIT )
 	{
 		// 여기에 먼저 들어온 사람의 파티원인지 확인한다
-		if(pPC->getPartyID() != m_PartyID)
+		if( !bStaff && m_PartyID != 0 && pPC->getPartyID() != m_PartyID )
 		{
 			m_Mutex.unlock();
 			return false;
 		}
+
+		// A staff member who opened the tower solo has no party, so m_PartyID is
+		// still 0. Adopt the first real party that follows them in.
+		if( m_PartyID == 0 )
+			m_PartyID = pPC->getPartyID();
 		// m_nPassPlayer 의 숫자를 눌려준다
-		m_nPassPlayer++;
-		if( m_nPassPlayer >= MaxPassPlayer )
+		if( !bStaff )
 		{
-			m_State = STATE_STAGE_1;
+			m_nPassPlayer++;
+			if( m_nPassPlayer >= MaxPassPlayer )
+			{
+				m_State = STATE_STAGE_1;
+			}
 		}
 	}
 	else
@@ -350,6 +376,9 @@ bool HellGardenTowerManager::heartbeat()
 				}
 
 				m_State = STATE_STAGE_1;
+
+				filelog("HellGardenTower.log", "WAIT-END - zone %d: entering stage 1",
+					(int)m_pZone->getZoneID() );
 				
 			}
 		break;
@@ -405,7 +434,14 @@ throw (Error)
 		
 		// 몬스터 소환한다.
 //		cout << "Summon Monster" << endl;
+		filelog("HellGardenTower.log", "STAGE-START - zone %d stage %d",
+			(int)m_pZone->getZoneID(), (int)m_State - 1 );
+
 		summonMonster();
+
+		filelog("HellGardenTower.log", "STAGE-SPAWNED - zone %d stage %d: %d monsters alive",
+			(int)m_pZone->getZoneID(), (int)m_State - 1,
+			(int)m_pZone->getMonsterManager()->getSize() );
 		// 전투시간을 셋팅한다.
 		m_StateTime.tv_sec = currentTime.tv_sec + HellGardenCombatWaitTime;
 		m_TimeOutMessageNextTime.tv_sec = currentTime.tv_sec + TimeOutMessageTime;
@@ -515,13 +551,32 @@ void HellGardenTowerManager::summonMonster()
 	__BEGIN_TRY
 
 	//
+	filelog("HellGardenTower.log", "SUMMON - zone %d stage %d: %d x monster type %d",
+		(int)m_pZone->getZoneID(), (int)m_State - 1,
+		(int)m_MonterList[m_State].MonsterCount, (int)m_MonterList[m_State].MonsterType );
+
 	for ( int i=0; i< m_MonterList[m_State].MonsterCount; ++i )
 	{
 		// 존의 빈자리를 찾아낸다.
 		ZoneCoord_t x,y;
-		if ( !m_pZone->getMonsterManager()->findPosition( m_MonterList[m_State].MonsterType, x, y ) )
+		// findPosition() is declared throw() but throws a const char* after 300
+		// blocked picks rather than returning false, so the guard below was dead
+		// code and the exception escaped all the way out of heartbeat(), leaving
+		// the tower stalled mid-stage. Contain it and say so in the log.
+		bool bFound = false;
+		try
 		{
-			Assert(false);
+			bFound = m_pZone->getMonsterManager()->findPosition( m_MonterList[m_State].MonsterType, x, y );
+		}
+		catch ( ... )
+		{
+			bFound = false;
+		}
+
+		if ( !bFound )
+		{
+			filelog("HellGardenTower.log", "SUMMON-FAIL - zone %d stage %d: no free position for monster %d",
+				(int)m_pZone->getZoneID(), (int)m_State - 1, (int)m_MonterList[m_State].MonsterType );
 			return;
 		}
 

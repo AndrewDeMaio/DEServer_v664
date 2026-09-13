@@ -27,6 +27,7 @@ void PetExpInfoManager::load()
 		{
 			PetLevel_t PetLevel = pResult->getInt(1);
 			PetExp_t PetExp = pResult->getInt(2);
+			if ( PetLevel > PetMaxLevel ) continue;   // never index past the vector
 
 			m_PetExpInfos[PetLevel] = new PetExpInfo(PetLevel, PetExp);
 		}

@@ -13,7 +13,7 @@ class PetInfo;
 class PetAttrInfo
 {
 public:
-	PetAttrInfo(PetAttr_t PetAttr) : m_PetAttr(PetAttr) { m_PetAttrLevels.reserve(PetMaxLevel); m_PetAttrLevels.clear(); m_EnchantRatio=0; }
+	PetAttrInfo(PetAttr_t PetAttr) : m_PetAttr(PetAttr) { m_PetAttrLevels.resize(PetMaxLevel+1, 0); m_EnchantRatio=0; }
 	PetAttr_t getPetAttr() const { return m_PetAttr; }
 
 	PetAttrLevel_t getPetAttrLevel( PetLevel_t PetLevel ) { return m_PetAttrLevels[PetLevel]; }
