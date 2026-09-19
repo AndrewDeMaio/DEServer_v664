@@ -222,7 +222,9 @@ ACTION_OBJS = \
 	ActionMapleRegister.o \
 	ActionMapleReward.o \
 	ActionEnterPVPSystem.o \
-	ActionPVPSystemSignUp.o
+	ActionPVPSystemSignUp.o \
+	ActionMonsterSummon.o \
+	ActionEnterWithItem.o
 #	ActionTradeGiftBox.o
 #	ActionGiveTestServerReward.o
 #	ActionGiveEventItem.o

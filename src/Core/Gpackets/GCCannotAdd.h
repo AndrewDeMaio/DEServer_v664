@@ -43,7 +43,7 @@ public :
 	// get packet's body size
 	// *OPTIMIZATION HINT*
 	// const static GCCannotAddPacketSize 를 정의해서 리턴하라.
-	PacketSize_t getPacketSize() const throw() { return szObjectID; /* m_CannotReason not written, see the .cpp */ }
+	PacketSize_t getPacketSize() const throw() { return szObjectID + sizeof(int); /* m_CannotReason is on the wire again, see the .cpp */ }
 
 	// get packet name
 	string getPacketName() const throw() { return "GCCannotAdd"; }
@@ -105,7 +105,7 @@ public :
 	// get packet's max body size
 	// *OPTIMIZATION HINT*
 	// const static GCCannotAddPacketSize 를 정의해서 리턴하라.
-	PacketSize_t getPacketMaxSize() const throw() { return szObjectID; /* m_CannotReason not written, see the .cpp */ }
+	PacketSize_t getPacketMaxSize() const throw() { return szObjectID + sizeof(int); /* m_CannotReason is on the wire, as in getPacketSize() */ }
 
 };
 

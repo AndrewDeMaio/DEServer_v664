@@ -67,7 +67,7 @@ SkillResultType CauseCriticalWounds::execute(Slayer* pSlayer, ObjectID_t TargetO
 		bHitRoll &= HitRoll::isSuccessMagic( pSlayer, pTargetCreature );
 #endif
 		bool bCanHit = canHit( pSlayer, pTargetCreature, SkillType );
-		bool bEffected = pTargetCreature->isFlag( Effect::EFFECT_CLASS_CAUSE_CRITICAL_WOUNDS ) || rTile.getEffect(Effect::EFFECT_CLASS_TRYING_POSITION)!=NULL;
+		bool bEffected = pTargetCreature->isFlag( Effect::EFFECT_CLASS_CAUSE_CRITICAL_WOUNDS ) || pTargetCreature->isFlag( Effect::EFFECT_CLASS_CHAIN_OF_DEMON ) || rTile.getEffect(Effect::EFFECT_CLASS_TRYING_POSITION)!=NULL;
 		bool bPK = verifyPK( pSlayer, pTargetCreature );
 
 		if ( bManaCheck && bTimeCheck && bRangeCheck && bHitRoll && bCanHit && !bEffected && bPK )

@@ -104,6 +104,7 @@ void CGDissectionCorpseHandler::execute (CGDissectionCorpse* pPacket , Player* p
         // 현재 박쥐 상태라면 리턴
         if (pCreature->isFlag(Effect::EFFECT_CLASS_COMA)
        	 	|| pCreature->isFlag(Effect::EFFECT_CLASS_PARALYZE)
+			|| pCreature->isFlag(Effect::EFFECT_CLASS_CHAIN_OF_DEMON)
 			|| pCreature->isVampire() && pCreature->isFlag(Effect::EFFECT_CLASS_TRANSFORM_TO_BAT))
            return;
 		

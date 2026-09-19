@@ -438,6 +438,39 @@
 #include "MagmaDetonation2.h"
 #include "SquallyBarrier1.h"
 #include "SquallyBarrier2.h"
+#include "BlazeWalk2.h"
+#include "Gladiator.h"
+#include "CrushingStorm.h"
+#include "SatelliteBomb2.h"
+#include "IntimateGrail2.h"
+#include "HolyArmor2.h"
+#include "Striking2.h"
+#include "Bless2.h"
+#include "GloryGround.h"
+#include "PassingHeal2.h"
+#include "GreatHeal2.h"
+#include "DragonHurricane.h"
+#include "LarStroke.h"
+#include "GaeBulga.h"
+#include "ViciousGuidance.h"
+#include "SpectorInverse.h"
+#include "DragonHurricane2.h"
+#include "ChainOfDemon.h"
+#include "BloodySkull.h"
+#include "RageOfBlood.h"
+#include "BatBreaker.h"
+#include "ShadyDouble.h"
+#include "AllysterWind.h"
+#include "FlameSight.h"
+#include "SpiralMegalith.h"
+#include "Radchia.h"
+#include "BreathOfDryad.h"
+#include "ChakramHail.h"
+#include "FlameSpike.h"
+#include "Blizzard.h"
+#include "Demolisher.h"
+#include "Blizzard2.h"
+#include "ChakramHail2.h"
 
 #include <math.h>
 
@@ -3949,4 +3982,435 @@ void WhiteAstralSpellCrystal::computeOutput(const SkillInput& input, SkillOutput
 	output.Damage = (input.INTE/12)*(1+(input.SkillLevel/36));
 	output.Duration = 10;
 	output.Delay = 15;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Level 171/181 skill-book skills (installed by install_skillbooks_server.py).
+// Ported from the v9 gameserver unless noted; see the handler files for the flows.
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// Blaze Walk 2 formula (custom, 2026-09-16):
+//   instant hit on the target = weapon damage + STR/4 + 115 (gameserver_664 BLAZEWALK2 skill damage),
+//   follow-up hits 20 + SkillLevel/5 (Blaze Walk: 10 + SkillLevel/5), splash = half of a hit,
+//   Delay (5 - SkillLevel/50) * 10 like Blaze Walk (5 s -> 3 s; user 2026-09-17, v9 had 1 s)
+//////////////////////////////////////////////////////////////////////////////
+void BlazeWalk2::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage = input.STR/4 + 115;
+	output.Delay  = ( 5 - input.SkillLevel/50 ) * 10;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Gladiator (user design 2026-09-17): the caster gets protection + ToHit% and max HP + Tick, the caster and the
+// party members within Range tiles get weapon damage + Damage (v9 GLADIATOR's STR * 4.7%).
+// Duration 12000 (20 min), Delay 100 (10 s)
+//////////////////////////////////////////////////////////////////////////////
+void Gladiator::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage   = (int)(input.STR * 0.047);
+	output.ToHit    = 20;
+	output.Tick     = min(350, 50 + input.STR / 3);
+	output.Range    = 10;
+	output.Duration = 12000;
+	output.Delay    = 100;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 Crushingstorm::computeOutput:
+//   damage STR * 1.2 + DEX * 0.8 over 5x5, field lasts 250 (25 s), Delay 84 (8.4 s)
+//   enemies standing in the field take 140% + SkillLevel/5 damage (SkillUtil setDamage)
+//////////////////////////////////////////////////////////////////////////////
+void CrushingStorm::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage   = (int)(input.STR * 1.2 + input.DEX * 0.8);
+	output.Duration = 250;
+	output.Delay    = 84;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 SatelliteBomb2::computeOutput:
+//   Damage DEX * 0.8 (the aim effect recomputes it from DEX), aim time 10 (1 s), Delay 100 (10 s)
+//////////////////////////////////////////////////////////////////////////////
+void SatelliteBomb2::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage   = (int)(input.DEX * 0.8);
+	output.Duration = 10;
+	output.Delay    = 100;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 IntimateGrail2::computeOutput:
+//   Slayer target 12000 (20 min), enemy target 450 (45 s), Delay 100 (10 s)
+//////////////////////////////////////////////////////////////////////////////
+void IntimateGrail2::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	if (input.TargetType == SkillInput::TARGET_SELF)
+		output.Duration = 12000;
+	else
+		output.Duration = 450;
+
+	output.Delay = 100;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 HolyArmor2::computeOutput:
+//   Duration 12000 (20 min), defense bonus INT * 0.06 + 28, Delay 800 (80 s)
+//   v9 capped the bonus at 100; raised to 125 so high INT keeps it above Holy Armor
+//////////////////////////////////////////////////////////////////////////////
+void HolyArmor2::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Duration = 12000;
+	output.Damage   = min(125, (int)(input.INTE * 0.06 + 28));
+	output.Delay    = 800;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 Striking2::computeOutput:
+//   damage bonus 60 (self and others), Duration 12000 (20 min) with the party duration boost,
+//   Delay (6 - SkillLevel/33) * 10
+//////////////////////////////////////////////////////////////////////////////
+void Striking2::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage   = 60;
+	output.Duration = 12000;
+	output.Delay    = (6 - input.SkillLevel/33) * 10;
+
+	output.Duration = getPercentValue(output.Duration, PartyDurationBoost[input.PartySize]);
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Bless 2 formula (user decision 2026-09-16): gameserver_664 BLESS2, capped at +65% so it is a
+// 25% step over Bless (about +40%):
+//   INT counts up to 1265; STR/DEX/INT bonus INT/40 * 2.2 + 15 on self, INT/40 * 1.9 + 15 on others,
+//   party bonus like Bless, then capped at 65. Duration 12000 (20 min), v9 Delay (7 - SkillLevel/20) * 10.
+//////////////////////////////////////////////////////////////////////////////
+void Bless2::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	int INTE = min(input.INTE, 1265);
+
+	if (input.TargetType == SkillInput::TARGET_SELF)
+		output.Damage = (INTE/40) * 22 / 10 + 15;
+	else
+		output.Damage = (INTE/40) * 19 / 10 + 15;
+
+	output.Damage   = min(65, getPercentValue(output.Damage, PartyEffectBoost[input.PartySize]));
+	output.Duration = 12000;
+	output.Delay    = (7 - input.SkillLevel/20) * 10;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 GloryGround::computeOutput:
+//   heal / damage per tick INT * 0.25, field lasts 400 (40 s), ticks every 10 (1 s),
+//   Delay = Duration (40 s, v9 SkillBalance 400)
+//////////////////////////////////////////////////////////////////////////////
+void GloryGround::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage   = (int)(input.INTE * 0.25);
+	output.Duration = 400;
+	output.Delay    = output.Duration;
+	output.Tick     = 10;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 PassingHeal2::computeOutput:
+//   first heal INT * 0.18, but never less than Passing Heal's 80 + min(Range,10)*4
+//   (each jump heals 80% of the previous), Delay 20 (2 s),
+//   jumps 5 + min(Range,10)/5, first tick immediately
+//   (v9 also multiplied the heal by 1.1 while an item of type 652 was worn in slots 30-65; not ported)
+//////////////////////////////////////////////////////////////////////////////
+void PassingHeal2::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage   = max((int)(input.INTE * 0.18), 80 + (min(input.Range,10)*4));
+	output.Delay    = 20;
+	output.Range    = 5 + (min(input.Range,10)/5);
+	output.Duration = 0;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Great Heal 2 formula: v9 GreatHeal2 adds 140 to v9 Great Heal (240/250 + SkillLevel/3 vs 100/110);
+// the same +140 is applied to the live Great Heal (which has INT scaling) so Great Heal 2 always
+// heals more than Great Heal. Delay 20 (2 s, v9).
+//   (v9 also multiplied the heal by 1.3 while an item of type 653 was worn in slots 30-65; not ported)
+//////////////////////////////////////////////////////////////////////////////
+void GreatHeal2::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	if (input.TargetType == SkillInput::TARGET_OTHER)
+		output.Damage = 240 + (input.INTE/5) + (input.SkillLevel/3);
+	else
+		output.Damage = 250 + (input.INTE/3) + (input.SkillLevel/3);
+
+	output.Delay = 20;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 DragonHurricane::computeOutput:
+//   hit STR + 30 + DEX * 0.4 + min(Range,10)*2, tornado damage min(1000, STR + 80 + min(Range,10)*4),
+//   child tornado damage min(1000, STR + 50 + min(Range,10)*4), Duration 200 (20 s), Delay 300 (30 s)
+//////////////////////////////////////////////////////////////////////////////
+void DragonHurricane::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage   = (int)(input.STR + 30 + input.DEX * 0.4 + min(input.Range,10) * 2);
+	output.Range    = min(1000, input.STR + 80 + min(input.Range,10) * 4);
+	output.Tick     = min(1000, input.STR + 50 + min(input.Range,10) * 4);
+	output.Duration = 200;
+	output.Delay    = 300;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 LarStroke::computeOutput:
+//   damage STR * 0.65 + DEX * 0.35 on top of the weapon hit, Delay 4 (0.4 s, like Lar Slash)
+//////////////////////////////////////////////////////////////////////////////
+void LarStroke::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage = (int)(input.STR * 0.65 + input.DEX * 0.35);
+	output.Delay  = 4;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 GaeBulga::computeOutput:
+//   to-hit bonus DEX * 0.4, damage DEX * 0.45, Delay 2 (0.2 s, like Trident)
+//////////////////////////////////////////////////////////////////////////////
+void GaeBulga::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.ToHit  = (int)(input.DEX * 0.4);
+	output.Damage = (int)(input.DEX * 0.45);
+	output.Delay  = 2;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 ViciousGuidance::computeOutput:
+//   damage INT * 0.3 every 15 (1.5 s), to-hit INT * 0.3, range 3 + SkillLevel/50, lasts 150 (15 s),
+//   Delay = Duration (v9 read the duration before setting it, which left Delay at 0 and let the
+//   SkillBalance MaxDelay of 150 throttle it; same result)
+//////////////////////////////////////////////////////////////////////////////
+void ViciousGuidance::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage   = (int)(input.INTE * 0.3);
+	output.Tick     = 15;
+	output.ToHit    = (int)(input.INTE * 0.3);
+	output.Range    = 3 + (input.SkillLevel / 50);
+	output.Duration = 150;
+	output.Delay    = output.Duration;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 SpectorInverse::computeOutput:
+//   damage INT * 1.5 + max(0, min(Range-10, 10)) * 3, Delay 40 (4 s)
+//////////////////////////////////////////////////////////////////////////////
+void SpectorInverse::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage = (int)(input.INTE * 1.5 + max(0, min(input.Range-10, 10)) * 3);
+	output.Delay  = 40;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 DragonHurricane2::computeOutput (Dragon Hurricane with STR counted twice, higher caps, longer):
+//   hit STR * 2 + 30 + DEX * 0.4 + min(Range,10)*2, tornado damage min(1200, STR + 80 + min(Range,10)*4),
+//   child tornado damage min(1200, STR + 50 + min(Range,10)*4), Duration 300 (30 s), Delay 300 (30 s)
+//////////////////////////////////////////////////////////////////////////////
+void DragonHurricane2::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage   = (int)(input.STR * 2 + 30 + input.DEX * 0.4 + min(input.Range,10) * 2);
+	output.Range    = min(1200, input.STR + 80 + min(input.Range,10) * 4);
+	output.Tick     = min(1200, input.STR + 50 + min(input.Range,10) * 4);
+	output.Duration = 300;
+	output.Delay    = 300;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Level 171/181 skill-book skills: Vampire (installed by install_skillbooks_server.py).
+// Ported from the v9 gameserver unless noted; see the handler files for the flows.
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// Chain of Demon formula (v9 ChainofDemon::computeOutput, stun length set by the user 2026-09-17):
+//   Damage min(40, 25 + (INT-20)/20) (unused, as in v9), Duration 30 (3 s; v9 was 40),
+//   Delay 400 (40 s). While chained the target takes (50 - caster level/10)% less damage.
+//////////////////////////////////////////////////////////////////////////////
+void ChainOfDemon::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage   = min(40, 25 + ((int)input.INTE - 20) / 20);
+	output.Duration = 30;
+	output.Delay    = 400;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// gameserver_664 BLOODYSKULL::computeOutput (hit count set by the user 2026-09-17):
+//   Damage max(220, (INT*1.1 + 50) * 1.2) in total, split over 3 hits 0.3 s apart starting 0.5 s after
+//   the cast (Duration 12), Delay 20 (2 s)
+//////////////////////////////////////////////////////////////////////////////
+void BloodySkull::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage   = max(220, (int)((int)(input.INTE * 1.1 + 50) * 1.2));
+	output.Tick     = 3;
+	output.Duration = 12;
+	output.Delay    = 20;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Rage of Blood formula (v9 RageOfBlood::computeOutput, cooldown set by the user 2026-09-17):
+//   Duration 200 (20 s), Delay 1200 (2 min; v9 was 1800).
+//   The regeneration itself is in Vampire::heartbeat: 159 + HP regen bonus per second.
+//////////////////////////////////////////////////////////////////////////////
+void RageOfBlood::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Duration = 200;
+	output.Delay    = 1200;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 BatBreaker::computeOutput:
+//   Damage STR * 0.3 + DEX * 0.2 (+ full weapon damage per hit in the effect),
+//   Duration 10 (hits at 0.3 / 0.6 / 0.9 s), Delay 20 (2 s)
+// v9's 5x5 (radius 3 needs its item 684, the +150 to-hit its item 683 - neither exists here)
+//////////////////////////////////////////////////////////////////////////////
+void BatBreaker::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage   = (int)(input.STR * 0.3 + input.DEX * 0.2);
+	output.Duration = 10;
+	output.Delay    = 20;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 ShadyDouple::computeOutput:
+//   Damage INT * 0.7 (split over the three hits), Delay 30 (3 s)
+//////////////////////////////////////////////////////////////////////////////
+void ShadyDouble::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage = (int)(input.INTE * 0.7);
+	output.Delay  = 30;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Level 171/181 skill-book skills: Ousters (installed by install_skillbooks_server.py).
+// Ported from the v9 gameserver unless noted; see the handler files for the flows.
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 AllysterWind::computeOutput:
+//   bonus DEX * 0.02 (ToHit + bonus%, min damage + bonus*8.5%, max damage + bonus*5%),
+//   Duration 400 (40 s, +10% at skill level 30), Delay 1500 (2.5 min)
+//////////////////////////////////////////////////////////////////////////////
+void AllysterWind::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage   = (int)(input.DEX * 0.02);
+	output.Duration = 400;
+	if ( input.SkillLevel == 30 ) output.Duration = (int)(output.Duration * 1.1);
+	output.Delay    = 1500;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 FlameSight::computeOutput:
+//   Duration 600 (60 s), Delay 1200 (2 min)
+//////////////////////////////////////////////////////////////////////////////
+void FlameSight::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Duration = 600;
+	output.Delay    = 1200;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 Spiralmegalith::computeOutput:
+//   Damage INT * 0.8 (+10% at skill level 30), Delay 0
+//////////////////////////////////////////////////////////////////////////////
+void SpiralMegalith::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage = (int)(input.INTE * 0.8);
+	if ( input.SkillLevel == 30 ) output.Damage = (int)(output.Damage * 1.1);
+	output.Delay  = 0;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 radchia::computeOutput:
+//   heal min(505, INT*0.25 + 300) every Tick 50 (5 s), Duration 300 (30 s), Delay 150 (15 s)
+//////////////////////////////////////////////////////////////////////////////
+void Radchia::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Duration = 300;
+	output.Delay    = 150;
+	output.Tick     = 50;
+	output.Damage   = min(505, (int)(input.INTE * 0.25 + 300));
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 BreathofDryad::computeOutput:
+//   Duration 12000 (20 min), Delay 100 (10 s); the max HP bonus (+300) is in Ousters::initAllStat
+//////////////////////////////////////////////////////////////////////////////
+void BreathOfDryad::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Duration = 12000;
+	output.Delay    = 100;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 ChakramHail::computeOutput:
+//   Damage DEX * 0.9 (+ the target's weapon damage at cast, split over 3 hits on every tile of the 5x5),
+//   Tick 3, Duration 10, Delay 20 (2 s)
+//////////////////////////////////////////////////////////////////////////////
+void ChakramHail::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage   = (int)(input.DEX * 0.9);
+	output.Tick     = 3;
+	output.Duration = 10;
+	output.Delay    = 20;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 FlameSpike::computeOutput:
+//   Damage INT * 1.3, Delay 0 (like Fire Piercing)
+//////////////////////////////////////////////////////////////////////////////
+void FlameSpike::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage = (int)(input.INTE * 1.3);
+	output.Delay  = 0;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 Blizzard::computeOutput:
+//   Damage INT * 0.35 (+ the target's weapon damage at cast, split over 3 hits on every tile of the 5x5),
+//   Tick 3, Duration 10, Delay 20 (2 s)
+//////////////////////////////////////////////////////////////////////////////
+void Blizzard::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage   = (int)(input.INTE * 0.35);
+	output.Tick     = 3;
+	output.Duration = 10;
+	output.Delay    = 20;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Demolisher formula (new, 2026-09-17; v9 had none): twice Destinies' damage, the chain hits for half,
+//   Delay 200 (20 s, the Destinies cooldown it shares on the client)
+//////////////////////////////////////////////////////////////////////////////
+void Demolisher::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage = 140 + (input.INTE/5) + (min(input.Range,10)*8);
+	output.Delay  = 200;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 Blizzard2::computeOutput:
+//   Damage INT * 0.75 (+ the target's weapon damage at cast, split over 3 hits on every tile of the 5x5),
+//   Tick 3, Duration 10, Delay 20 (2 s)
+//////////////////////////////////////////////////////////////////////////////
+void Blizzard2::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage   = (int)(input.INTE * 0.75);
+	output.Tick     = 3;
+	output.Duration = 10;
+	output.Delay    = 20;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// v9 ChakramHail2::computeOutput:
+//   Damage DEX * 2.0 (+ the target's weapon damage at cast, split over 3 hits on every tile of the 5x5),
+//   Tick 3, Duration 10, Delay 20 (2 s)
+//////////////////////////////////////////////////////////////////////////////
+void ChakramHail2::computeOutput(const SkillInput& input, SkillOutput& output)
+{
+	output.Damage   = (int)(input.DEX * 2.0);
+	output.Tick     = 3;
+	output.Duration = 10;
+	output.Delay    = 20;
 }

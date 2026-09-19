@@ -28,7 +28,6 @@ SkillResultType HeterChakram::execute(Ousters* pOusters, ObjectID_t TargetObject
 	Creature* pTargetCreature = pZone->getCreature(TargetObjectID);
 	Assert(pTargetCreature != NULL);
 	
-	Inventory *pInventory = pOusters->getInventory();
 
 	SkillInput		input(pOusters, pOustersSkillSlot);
 	SkillOutput		output;
@@ -51,12 +50,8 @@ SkillResultType HeterChakram::execute(Ousters* pOusters, ObjectID_t TargetObject
 
 	skillResult = g_SimpleMissileSkill.execute( pOusters, TargetObjectID, pOustersSkillSlot, param, result );
 	
-	bool bSummonItem = pInventory->hasEnoughNumItem( Item::ITEM_CLASS_PUPA, 5, 3);
-
-	if( result.bSuccess && bSummonItem )
+	if( result.bSuccess )
 	{
-		pInventory->decreaseNumItem( Item::ITEM_CLASS_PUPA, 5, 3, pOusters->getPlayer() );
-
 		EffectHeterChakram* pEffect = new EffectHeterChakram(pTargetCreature);
 		pEffect->setDamage(output.Damage);
 		pEffect->setUserObjectID( pOusters->getObjectID() );

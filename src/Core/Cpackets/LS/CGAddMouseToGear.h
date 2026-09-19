@@ -25,7 +25,7 @@ public:
     void write(SocketOutputStream & oStream) const throw(ProtocolException, Error);
 	void execute(Player* pPlayer) throw(ProtocolException, Error);
 	PacketID_t getPacketID() const throw() { return PACKET_CG_ADD_MOUSE_TO_GEAR; }
-	PacketSize_t getPacketSize() const throw() { return szObjectID + szSlotID; } /* m_GearSlotID is NOT on the wire: the client guards it with __CONTENTS(__GEAR_SWAP_CHANGE), which is __OFF for this build, so it sends only these two fields (5 bytes). Counting it here made the server read 7 and swallow 2 bytes of the next packet. */
+	PacketSize_t getPacketSize() const throw() { return szGearSlotID + szObjectID + szSlotID; } /* the client sends the gear set too under __CONTENTS(__GEAR_SWAP_CHANGE), __ON again (2026-09-17) */
 	string getPacketName() const throw() { return "CGAddMouseToGear"; }
 	string toString() const throw();
 	
@@ -56,7 +56,7 @@ public:
 	Packet* createPacket() throw() { return new CGAddMouseToGear(); }
 	string getPacketName() const throw() { return "CGAddMouseToGear"; }
 	PacketID_t getPacketID() const throw() { return Packet::PACKET_CG_ADD_MOUSE_TO_GEAR; }
-	PacketSize_t getPacketMaxSize() const throw() { return szObjectID + szSlotID; } /* m_GearSlotID is NOT on the wire: the client guards it with __CONTENTS(__GEAR_SWAP_CHANGE), which is __OFF for this build, so it sends only these two fields (5 bytes). Counting it here made the server read 7 and swallow 2 bytes of the next packet. */
+	PacketSize_t getPacketMaxSize() const throw() { return szGearSlotID + szObjectID + szSlotID; } /* the same 7 bytes as getPacketSize(): GamePlayer drops the connection when a packet is larger than this */
 };
 
 //////////////////////////////////////////////////////////////////////////////

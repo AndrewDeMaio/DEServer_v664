@@ -57,7 +57,7 @@ SkillResultType HolyArmor::execute(Slayer* pSlayer, SlayerSkillSlot* pSkillSlot,
 		bool bTimeCheck  = verifyRunTime(pSkillSlot);
 		bool bRangeCheck = checkZoneLevelToUseSkill(pSlayer);
 		bool bHitRoll    = HitRoll::isSuccessMagic(pSlayer, pSkillInfo, pSkillSlot);
-		bool bEffected   = pSlayer->isFlag(Effect::EFFECT_CLASS_HOLY_ARMOR);
+		bool bEffected   = pSlayer->isFlag(Effect::EFFECT_CLASS_HOLY_ARMOR) || pSlayer->isFlag(Effect::EFFECT_CLASS_HOLY_ARMOR_2);
 
 		if (bManaCheck && bTimeCheck && bRangeCheck && bHitRoll && !bEffected)
 		{

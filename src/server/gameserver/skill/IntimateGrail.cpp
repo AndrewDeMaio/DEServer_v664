@@ -63,7 +63,7 @@ SkillResultType IntimateGrail::execute(Slayer* pSlayer, ObjectID_t TargetObjectI
 		bool bTimeCheck  = verifyRunTime(pSkillSlot);
 		bool bRangeCheck = verifyDistance(pSlayer, pTargetCreature, pSkillInfo->getRange());
 		bool bHitRoll    = HitRoll::isSuccessMagic(pSlayer, pSkillInfo, pSkillSlot);
-		bool bEffected   = pTargetCreature->isFlag(Effect::EFFECT_CLASS_INTIMATE_GRAIL);
+		bool bEffected   = pTargetCreature->isFlag(Effect::EFFECT_CLASS_INTIMATE_GRAIL) || pTargetCreature->isFlag(Effect::EFFECT_CLASS_INTIMATE_GRAIL_2);
 
 		if ( !pTargetCreature->isSlayer() && !canAttack( pSlayer, pTargetCreature ) )
 		{
@@ -230,7 +230,7 @@ SkillResultType IntimateGrail::execute(Slayer* pSlayer, SlayerSkillSlot* pSkillS
 		bool bTimeCheck  = verifyRunTime(pSkillSlot);
 		bool bRangeCheck = checkZoneLevelToUseSkill(pSlayer);
 		bool bHitRoll    = HitRoll::isSuccessMagic(pSlayer, pSkillInfo, pSkillSlot);
-		bool bEffected   = pSlayer->isFlag(Effect::EFFECT_CLASS_INTIMATE_GRAIL);
+		bool bEffected   = pSlayer->isFlag(Effect::EFFECT_CLASS_INTIMATE_GRAIL) || pSlayer->isFlag(Effect::EFFECT_CLASS_INTIMATE_GRAIL_2);
 
 		if (bManaCheck && bTimeCheck && bRangeCheck && bHitRoll && !bEffected)
 		{

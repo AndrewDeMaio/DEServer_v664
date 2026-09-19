@@ -79,7 +79,7 @@ void EffectHydroConvergenceBomb::affect(Creature* pCreature)
 
 				if( pTargetCreature == NULL 
 #ifdef VERSION_SKILL_1
-				|| HitRoll::isSuccessMagic( pCastCreature, pTargetCreature )
+				|| !HitRoll::isSuccessMagic( pCastCreature, pTargetCreature )	// skip the target when the roll FAILS; this was inverted, so the bomb only ever hit what it should have missed
 #endif
 				)
 				{

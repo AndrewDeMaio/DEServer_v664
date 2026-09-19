@@ -520,6 +520,38 @@ int DEScript::ReadIntegerOnWhiteBoard(const char *strKey, int iDefaultVal)
 	return iDefaultVal;
 }
 
+bool DEScript::SetExistingIntegerOnWhiteBoard(const char *strKey, int iVal)
+{
+	TWhiteBoardOfInteger::iterator itr = m_WhiteBoardOfInteger.find(strKey);
+	if ( itr == m_WhiteBoardOfInteger.end() )
+		return false;
+
+	itr->second = iVal;
+	return true;
+}
+
+bool DEScript::PeekIntegerOnWhiteBoard(const char *strKey, int& iVal)
+{
+	TWhiteBoardOfInteger::const_iterator itr = m_WhiteBoardOfInteger.find(strKey);
+	if ( itr == m_WhiteBoardOfInteger.end() )
+		return false;
+
+	iVal = itr->second;
+	return true;
+}
+
+// Lua-free entry points for code built without the Lua include path (the GS packet
+// library). They are declared where they are used, e.g. CGSayHandler.cpp.
+bool setExistingScriptWhiteBoardInteger(const char *strKey, int iVal)
+{
+	return DEScript::SetExistingIntegerOnWhiteBoard(strKey, iVal);
+}
+
+bool peekScriptWhiteBoardInteger(const char *strKey, int& iVal)
+{
+	return DEScript::PeekIntegerOnWhiteBoard(strKey, iVal);
+}
+
 
 void DEScript::WriteFileLog(const char *pLogFileName, const char *pLogMsg)
 {

@@ -67,7 +67,7 @@ SkillResultType Bless::execute(Slayer* pSlayer, ObjectID_t TargetObjectID, Slaye
 		bool bTimeCheck  = verifyRunTime(pSkillSlot);
 		bool bRangeCheck = verifyDistance(pSlayer, pTargetCreature, pSkillInfo->getRange());
 		bool bHitRoll    = HitRoll::isSuccessMagic(pSlayer, pSkillInfo, pSkillSlot);
-		bool bEffected   = pTargetSlayer->isFlag(Effect::EFFECT_CLASS_BLESS);
+		bool bEffected   = pTargetSlayer->isFlag(Effect::EFFECT_CLASS_BLESS) || pTargetSlayer->isFlag(Effect::EFFECT_CLASS_BLESS_2);
 
 		if (bManaCheck && bTimeCheck && bRangeCheck && bHitRoll && !bEffected)
 		{
@@ -241,7 +241,7 @@ SkillResultType Bless::execute(Slayer* pSlayer, SlayerSkillSlot* pSkillSlot, CEf
 		bool bTimeCheck  = verifyRunTime(pSkillSlot);
 		bool bRangeCheck = checkZoneLevelToUseSkill(pSlayer);
 		bool bHitRoll    = HitRoll::isSuccessMagic(pSlayer, pSkillInfo, pSkillSlot);
-		bool bEffected   = pSlayer->isFlag(Effect::EFFECT_CLASS_BLESS);
+		bool bEffected   = pSlayer->isFlag(Effect::EFFECT_CLASS_BLESS) || pSlayer->isFlag(Effect::EFFECT_CLASS_BLESS_2);
 
 		if (bManaCheck && bTimeCheck && bRangeCheck && bHitRoll && !bEffected)
 		{

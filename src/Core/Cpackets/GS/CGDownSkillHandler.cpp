@@ -13,6 +13,7 @@
 	#include "SkillDomainInfoManager.h"
 	#include "Ousters.h"
 	#include "OustersSkillSlot.h"
+	#include "RareBookSkill.h"
 
 	#include "Gpackets/GCDownSkillOK.h"
 	#include "Gpackets/GCDownSkillFailed.h"
@@ -85,6 +86,14 @@ void CGDownSkillHandler::execute (CGDownSkill* pPacket , Player* pPlayer)
 		failpkt.setDesc( INVALID_SKILL );
 		pPlayer->sendPacket( &failpkt );
 
+		return;
+	}
+
+	// level 171/181 book skills are learned mastered and cannot be lowered (they give no points back)
+	if ( isRareBookSkill( targetSkillType ) )
+	{
+		failpkt.setDesc( CANNOT_DROP_SKILL );
+		pPlayer->sendPacket( &failpkt );
 		return;
 	}
 

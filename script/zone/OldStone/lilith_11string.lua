@@ -1,0 +1,5 @@
+StringPool = {
+	STRID_LILITH_VAMPIRE_SAY1 = 742, -- 10초 후에 티모르 NE로 이동합니다.
+	STRID_TIFFAUGES_5SECONDS_MOVE_TIFFAUGES_O = 743, -- 5초 후에 티포쥬성2F 과거로 이동합니다.
+	STRID_MONSTER_NAME_LOUSTERS = 739,
+}

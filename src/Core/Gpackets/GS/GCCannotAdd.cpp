@@ -19,9 +19,9 @@ void GCCannotAdd::read ( SocketInputStream & iStream )
 {
 	__BEGIN_TRY
 
-	iStream.read( m_ObjectID );
-	// NOT on the wire: the client guards m_CannotReason with #if __CONTENTS(__GEAR_SWAP_CHANGE), which is __OFF for this build.
-	//iStream.read( m_CannotReason );
+	iStream.read( m_ObjectID );
+	// on the wire again: the client reads it under __CONTENTS(__GEAR_SWAP_CHANGE) (2026-09-17)
+	iStream.read( m_CannotReason );
 
 	__END_CATCH
 }
@@ -35,9 +35,9 @@ void GCCannotAdd::write ( SocketOutputStream & oStream ) const
 {
 	__BEGIN_TRY
 
-	oStream.write( m_ObjectID );
-	// NOT on the wire: the client guards m_CannotReason with #if __CONTENTS(__GEAR_SWAP_CHANGE), which is __OFF for this build.
-	//oStream.write( m_CannotReason );
+	oStream.write( m_ObjectID );
+	// on the wire again: the client reads it under __CONTENTS(__GEAR_SWAP_CHANGE) (2026-09-17)
+	oStream.write( m_CannotReason );
 
 	__END_CATCH
 }

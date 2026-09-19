@@ -87,12 +87,10 @@ void GearInfo::write ( SocketOutputStream & oStream )
 		(*itr)->write( oStream );
 	}
 
-	// NOT written: the client guards these with
-	// #if __CONTENTS(__GEAR_SWAP_CHANGE), which is __OFF for
-	// __DESIGNED_INTERNATION, so it never reads them. Emitting them
-	// shifted the rest of GCUpdateInfo and made the client throw.
-	//oStream.write( m_GearSlotID );
-	//oStream.write( m_bActive );
+	// The client reads these under __CONTENTS(__GEAR_SWAP_CHANGE), which is
+	// __ON again for the gear swap UI (2026-09-17).
+	oStream.write( m_GearSlotID );
+	oStream.write( m_bActive );
 
 	__END_CATCH
 }
@@ -112,9 +110,9 @@ PacketSize_t GearInfo::getSize()
 
 	}
 
-	// Must match write(): no GearSlotID / bActive on the wire.
-	//PacketSize += sizeof(GearSlotID_t);
-	//PacketSize += sizeof(bool);
+	// Must match write().
+	PacketSize += sizeof(GearSlotID_t);
+	PacketSize += sizeof(bool);
 
 	return PacketSize;
 

@@ -109,6 +109,11 @@ public :
 	void MakeMonsterInfo(lua_tinker::table& MonsterInfo, Monster *pMonster);
 	void MakeZoneInfo(lua_tinker::table& ZoneInfo, Zone *pZone);
 	void MakeEffectInfo(lua_tinker::table& EffectInfo, Effect *pEffect);
+
+	// For C++ callers such as GM commands. Only keys a script already created are touched,
+	// so the map is never restructured while zone threads are using it.
+	static bool SetExistingIntegerOnWhiteBoard(const char *strKey, int iVal);
+	static bool PeekIntegerOnWhiteBoard(const char *strKey, int& iVal);
 	
 protected :
 	bool IsGod(lua_tinker::table CreatureInfo);

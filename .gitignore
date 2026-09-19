@@ -25,3 +25,5 @@ bin/*.txt
 .vscode/
 Thumbs.db
 desktop.ini
+__pycache__/
+*.pyc

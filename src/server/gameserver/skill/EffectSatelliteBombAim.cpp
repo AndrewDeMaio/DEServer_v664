@@ -85,7 +85,7 @@ void EffectSatelliteBombAim::unaffect(Creature* pCastCreature)
 	pEffect->setSTR(getSTR());
 	pEffect->setSkillLevel(getSkillLevel());
 	pEffect->setNextTime(10);
-	pEffect->setDeadline(15);
+	pEffect->setDeadline(10);	// the 5x5 hit lands as the client beam (fire status, 1 s) turns into the explosion
 
 	pCastCreature->addEffect( pEffect );
 	pCastCreature->setFlag( Effect::EFFECT_CLASS_SATELLITE_BOMB_FIRE );

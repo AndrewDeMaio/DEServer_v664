@@ -13,6 +13,7 @@
 #include "Gpackets/GCStatusCurrentHP.h"
 
 #include "EffectParalyze.h"
+#include "EffectChainOfDemon.h"
 
 //////////////////////////////////////////////////////////////////////////////
 // 슬레이어 오브젝트 핸들러
@@ -69,19 +70,21 @@ SkillResultType Liberty::execute(Ousters* pOusters, ObjectID_t TargetObjectID, O
 		bool bRangeCheck = verifyDistance(pOusters, pTargetCreature, pSkillInfo->getRange()) && canHit( pOusters, pTargetCreature, SkillType, pOustersSkillSlot->getExpLevel() );
 		bool bHitRoll    = HitRoll::isSuccessMagic(pOusters, pSkillInfo, pOustersSkillSlot);
 		bool bSatisfyRequire	= pOusters->satisfySkillRequire( pSkillInfo );
-		bool bHPCheck	= pTargetOusters->isFlag( Effect::EFFECT_CLASS_PARALYZE );
+		bool bHPCheck	= pTargetOusters->isFlag( Effect::EFFECT_CLASS_PARALYZE ) || pTargetOusters->isFlag( Effect::EFFECT_CLASS_CHAIN_OF_DEMON );
 
 		int Ratio = 0;
 		EffectParalyze* pEffect = dynamic_cast<EffectParalyze*>(pTargetOusters->findEffect( Effect::EFFECT_CLASS_PARALYZE ));
-		if ( pEffect != NULL )
+		EffectChainOfDemon* pChain = dynamic_cast<EffectChainOfDemon*>(pTargetOusters->findEffect( Effect::EFFECT_CLASS_CHAIN_OF_DEMON ));
+		int EffectLevel = ( pEffect != NULL ) ? pEffect->getLevel() : ( pChain != NULL ? pChain->getLevel() : 0 );
+		if ( pEffect != NULL || pChain != NULL )
 		{
 			if ( pOustersSkillSlot->getExpLevel() <= 15 )
 			{
-				Ratio = ( pOusters->getLevel() + ( pOustersSkillSlot->getExpLevel() * 8.0 / 3.0 ) ) - pEffect->getLevel();
+				Ratio = ( pOusters->getLevel() + ( pOustersSkillSlot->getExpLevel() * 8.0 / 3.0 ) ) - EffectLevel;
 			}
 			else
 			{
-				Ratio = ( pOusters->getLevel() + 20 + ( pOustersSkillSlot->getExpLevel() * 4.0 / 3.0 ) ) - pEffect->getLevel();
+				Ratio = ( pOusters->getLevel() + 20 + ( pOustersSkillSlot->getExpLevel() * 4.0 / 3.0 ) ) - EffectLevel;
 				if ( pOustersSkillSlot->getExpLevel() == 30 ) Ratio *= 1.1;
 			}
 		}
@@ -99,7 +102,8 @@ SkillResultType Liberty::execute(Ousters* pOusters, ObjectID_t TargetObjectID, O
 			input.TargetType = SkillInput::TARGET_OTHER;
 			computeOutput(input, output);
 
-			pEffect->setDeadline(0);
+			if ( pEffect != NULL ) pEffect->setDeadline(0);
+			if ( pChain != NULL ) pChain->setDeadline(0);
 
 			// 패킷을 준비해서 보낸다.
 			_GCSkillToObjectOK1.setSkillType(SkillType);

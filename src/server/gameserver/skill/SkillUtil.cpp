@@ -68,6 +68,9 @@
 
 #include "EffectCanEnterGDRLair.h"
 #include "EffectSwordOfThor.h"
+#include "EffectCrushingStorm.h"
+#include "EffectChainOfDemon.h"
+#include "EffectStriking2.h"
 #include "EffectInstallTurret.h"
 #include "EffectReactiveArmor.h"
 #include "EffectCauseCriticalWounds.h"
@@ -2179,6 +2182,15 @@ HP_t setDamage(Creature* pTargetCreature, Damage_t Damage,
 		}
 	}
 
+	if ( pAttacker != NULL && pSkillProperty->isMagic() && pAttacker->isFlag( Effect::EFFECT_CLASS_STRIKING_2 ) )
+	{
+		EffectStriking2* pEffect = dynamic_cast<EffectStriking2*>(pAttacker->findEffect( Effect::EFFECT_CLASS_STRIKING_2 ));
+		if ( pEffect != NULL )
+		{
+			Damage += pEffect->getDamageBonus();
+		}
+	}
+
 	if ( pTargetCreature != NULL && pTargetCreature->isFlag( Effect::EFFECT_CLASS_INSTALL_TURRET ) )
 	{
 		EffectInstallTurret* pEffect = dynamic_cast<EffectInstallTurret*>( pTargetCreature->findEffect( Effect::EFFECT_CLASS_INSTALL_TURRET ) );
@@ -2666,6 +2678,20 @@ HP_t setDamage(Creature* pTargetCreature, Damage_t Damage,
 		}
 	}
 
+	// Crushing Storm field (v9): enemies standing in it take 140% + SkillLevel/5
+	if ( pTargetCreature != NULL && !pTargetCreature->isSlayer() )
+	{
+		Effect* pEffect = pTargetCreature->getZone()->getTile(pTargetCreature->getX(), pTargetCreature->getY()).getEffect(Effect::EFFECT_CLASS_CRUSHING_STORM);
+		if ( pEffect != NULL )
+		{
+			EffectCrushingStorm* pStorm = dynamic_cast<EffectCrushingStorm*>(pEffect);
+			if ( pStorm != NULL )
+			{
+				Damage = getPercentValue( Damage, 140 + (pStorm->getLevel()/5) );
+			}
+		}
+	}
+
 	// Paralyze 가 걸려있다면 데미지 감소
 	if ( pTargetCreature->isPC() && pTargetCreature->isFlag( Effect::EFFECT_CLASS_PARALYZE ) )
 	{
@@ -2677,6 +2703,19 @@ HP_t setDamage(Creature* pTargetCreature, Damage_t Damage,
 		if ( ratio < 0 ) ratio = 0;
 
 		Damage = max(1,getPercentValue( Damage, ratio ));
+	}
+
+	// Chain of Demon: the same damage reduction as Paralyze
+	if ( pTargetCreature->isPC() && pTargetCreature->isFlag( Effect::EFFECT_CLASS_CHAIN_OF_DEMON ) )
+	{
+		EffectChainOfDemon* pEffect = dynamic_cast<EffectChainOfDemon*>(pTargetCreature->findEffect( Effect::EFFECT_CLASS_CHAIN_OF_DEMON ));
+		if ( pEffect != NULL )
+		{
+			int ratio = 100 - pEffect->getDamageReduceRatio();
+			if ( ratio < 0 ) ratio = 0;
+
+			Damage = max(1,getPercentValue( Damage, ratio ));
+		}
 	}
 
 	////////////////////////////////////////////////////////////

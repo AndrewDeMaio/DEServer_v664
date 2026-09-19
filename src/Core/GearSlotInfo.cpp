@@ -36,10 +36,9 @@ void GearSlotInfo::write ( SocketOutputStream & oStream ) const
 	PCItemInfo::write(oStream);
 
 	// 이 클래스의 데이터를 읽어들인다.
-	oStream.write(m_SlotID);
-	// NOT written: client guards this with #if __CONTENTS(__GEAR_SWAP_CHANGE),
-	// which is __OFF here, so it never reads it.
-	//oStream.write(m_bActiveSlot);
+	oStream.write(m_SlotID);
+	// read by the client under __CONTENTS(__GEAR_SWAP_CHANGE), __ON again (2026-09-17)
+	oStream.write(m_bActiveSlot);
 
 	__END_CATCH
 }

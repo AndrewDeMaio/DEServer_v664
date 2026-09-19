@@ -3199,6 +3199,19 @@ void PlayerCreature::OnDead()
 
 		deleteEffect(Effect::EFFECT_CLASS_STUN);
 		removeFlag(Effect::EFFECT_CLASS_STUN);
+
+	if (isFlag(Effect::EFFECT_CLASS_CHAIN_OF_DEMON))
+	{
+		Effect* pEffect = findEffect(Effect::EFFECT_CLASS_CHAIN_OF_DEMON);
+
+		if (pEffect != NULL)
+		{
+			pEffect->unaffect();
+		}
+
+		deleteEffect(Effect::EFFECT_CLASS_CHAIN_OF_DEMON);
+		removeFlag(Effect::EFFECT_CLASS_CHAIN_OF_DEMON);
+	}
 	}
 
 	if (isFlag(Effect::EFFECT_CLASS_HALLUCINATION))

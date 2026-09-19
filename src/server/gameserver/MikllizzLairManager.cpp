@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Filename    : MikllizzLairManager.h 
-// Written By  : ½­
+// Written By  : ï¿½ï¿½
 // Description : 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -18,6 +18,8 @@
 #include "PCManager.h"
 #include "Item.h"
 #include "ItemUtil.h"
+#include "ItemInfo.h"
+#include "ItemInfoManager.h"
 #include "ItemFactoryManager.h"
 #include "PacketUtil.h"
 #include "Player.h"
@@ -84,6 +86,7 @@ MikllizzLairManager::MikllizzLairManager (Zone* pZone)
 	m_nMaxPassPlayer = g_pVariableManager->getVariable( MIKLLIZZ_MAX_PLAYER );
 //	m_nMaxPassPlayer = 20;
 	m_nPassPlayer = 0;
+	m_bRegenPaused = false;
 
 	m_State = STATE_CLOSE;
 
@@ -124,14 +127,14 @@ MikllizzLairManager::~MikllizzLairManager ()
 //
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Creature°¡ ÀÌ Zone(MikllizzLair)¿¡ µé¾î¿Ã ¼ö ÀÖ´ÂÁö Ã¼Å©ÇÏ°í
-// µé¾î¿Ã ¼ö ÀÖ´Ù¸é µé¾î¿Ô´Ù°í º¸°í Ã¼Å©ÇØµÐ´Ù.
+// Creatureï¿½ï¿½ ï¿½ï¿½ Zone(MikllizzLair)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ Ã¼Å©ï¿½Ï°ï¿½
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½ï¿½ï¿½Ô´Ù°ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼Å©ï¿½ØµÐ´ï¿½.
 //
-// [Á¶°Ç]
+// [ï¿½ï¿½ï¿½ï¿½]
 //   - STATE_TANTACLE_COMBAT
 //   - m_nPassPlayer < m_nMaxPassPlayer
-//   - ºÀÀÎ¼®À» °¡Áö°í ÀÖ´Â°æ¿ì
-//   - 100 ·¹º§ ÀÌ»ó
+//   - ï¿½ï¿½ï¿½Î¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Â°ï¿½ï¿½
+//   - 100 ï¿½ï¿½ï¿½ï¿½ ï¿½Ì»ï¿½
 //
 ////////////////////////////////////////////////////////////////////////////////
 bool MikllizzLairManager::enterPC(PlayerCreature* pPC )
@@ -155,11 +158,11 @@ bool MikllizzLairManager::enterPC(PlayerCreature* pPC )
 		return false;
 	}
 
-	// ºÀÀÎ¼®À» °¡Áö°í ÀÖ³ª?
+	// ï¿½ï¿½ï¿½Î¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö³ï¿½?
 	Inventory* pInventory = pPC->getInventory();
 	Assert( pInventory != NULL );
 
-	// ·¹º§ Á¦ÇÑ
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if ( pPC->getLevel() < 100 )
 	{
 		m_Mutex.unlock();
@@ -168,7 +171,7 @@ bool MikllizzLairManager::enterPC(PlayerCreature* pPC )
 		return false;
 	}
 
-	// ÀÎ¿ø Á¦ÇÑ
+	// ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (m_nPassPlayer >= m_nMaxPassPlayer )
 	{
 		m_Mutex.unlock();
@@ -194,7 +197,7 @@ bool MikllizzLairManager::enterPC(PlayerCreature* pPC )
 		Slayer* pSlayer = dynamic_cast<Slayer*>(pPC);
 		Assert( pSlayer != NULL );
 
-		// ¿ÀÅä¹ÙÀÌ¸¦ Å¸°í ÀÖÀ¸¸é ¿ÀÅä¹ÙÀÌ¿¡¼­ ³»¸°´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 		if ( pSlayer->hasRideMotorcycle() )
 		{
 			pSlayer->getOffMotorcycle();
@@ -206,7 +209,7 @@ bool MikllizzLairManager::enterPC(PlayerCreature* pPC )
 		Ousters* pOusters = dynamic_cast<Ousters*>(pPC);
 		Assert( pOusters != NULL );
 
-		// ½ÇÇÁ Å¸°í ÀÖÀ¸¸é ³»·ÁÁØ´Ù
+		// ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½
 		if ( pOusters->isFlag(Effect::EFFECT_CLASS_SUMMON_SYLPH) )
 		{
 			Effect* pEffect = pOusters->findEffect(Effect::EFFECT_CLASS_SUMMON_SYLPH);
@@ -225,7 +228,7 @@ bool MikllizzLairManager::enterPC(PlayerCreature* pPC )
 		}
 	}
 
-	// µé¾î¿Ã ¼ö ÀÖ´Ù°í ÆÇ´ÜµÈ °æ¿ì
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´Ù°ï¿½ ï¿½Ç´Üµï¿½ ï¿½ï¿½ï¿½
 	++m_nPassPlayer;
 
 	filelog("Mikllizz.log", "enterPC - pass! - PassPlayerNum : %d", m_nPassPlayer );
@@ -318,22 +321,32 @@ void MikllizzLairManager::processCloseState()
 	Timeval currentTime;
 	getCurrentTime(currentTime);
 
+	// normal regen stays held after a close until every player has been moved out of B5F
+	if (m_bRegenPaused && m_pZone->getPCManager()->getSize() == 0)
+	{
+		m_bRegenPaused = false;
+		filelog("Mikllizz.log", "zone empty after close - monster regen resumes");
+	}
+
 	if (currentTime >= m_StateTime)
 	{
-		// ¸ðµç ¸ó½ºÅÍ¸¦ Á×ÀÎ´Ù.
+		// the lair opens: hold normal regen until it has closed and emptied again
+		m_bRegenPaused = true;
+
+		// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½Î´ï¿½.
 		m_pZone->killAllMonsters_UNLOCK();
 
-		// ´ë±â ½Ã°£ÀÌ ³¡³ª¸é..
-		// ÅÄÅ¸Å¬ ¼ÒÈ¯
+		// ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½..
+		// ï¿½ï¿½Å¸Å¬ ï¿½ï¿½È¯
 		summonTantacle();
-		// ¹ÌÅ¬¸®Áî ½ÃÃ¼ Ãß°¡
+		// ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ß°ï¿½
 		addMikllizzCorpse();
 
-		// Tantacle Combat »óÅÂ·Î ¹Ù²Û´Ù.
+		// Tantacle Combat ï¿½ï¿½ï¿½Â·ï¿½ ï¿½Ù²Û´ï¿½.
 		m_State = STATE_TANTACLE_COMBAT;
-		m_StateTime.tv_sec = currentTime.tv_sec + 30 * 60; // 20ºÐÀ¸·Î ¼¼ÆÃ
+		m_StateTime.tv_sec = currentTime.tv_sec + 30 * 60; // 20ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-		// ¹ÌÅ¬¸®Áî ·¹¾î ¿ÀÇÂ ¸Þ½ÃÁö ¹ß¼Û
+		// ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ß¼ï¿½
 		GCSystemMessage gcSystemMessage;
 		gcSystemMessage.setType( SYSTEM_MESSAGE_MASTER_LAIR );
 		gcSystemMessage.setMessage( g_pStringPool->c_str(STRID_SOON_MIKLLIZZ_REVIVE_RAOM_DUNGEON5) ); // 20070814
@@ -341,7 +354,7 @@ void MikllizzLairManager::processCloseState()
 		gcSystemMessage.setMessage( g_pStringPool->c_str(STRID_CAN_ENTER_RAOM_DUNGEON_30MINUTE) );
 		g_pZoneGroupManager->pushBroadcastPacket( &gcSystemMessage );
 
-		// ·¹¾î ¸Þ½ÃÁö ¹ß¼Û ´Ü°è ÃÊ±âÈ­
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ß¼ï¿½ ï¿½Ü°ï¿½ ï¿½Ê±ï¿½È­
 		m_ClosingMessageStep = 0;
 
 		m_nMaxPassPlayer = g_pVariableManager->getVariable( MIKLLIZZ_MAX_PLAYER ) ;
@@ -375,50 +388,50 @@ void MikllizzLairManager::processTantacleCombatState()
 		}
 	}
 
-	// ´ë±â ½Ã°£ÀÌ ³¡³ª¸é..
-	// °­Á¦Ãß¹æÇÑ´Ù.
+	// ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½..
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ß¹ï¿½ï¿½Ñ´ï¿½.
 	if (currentTime >= m_StateTime)
 	{
-		// ¸ðµÎ ÆÃ°Ü³½´Ù.
+		// ï¿½ï¿½ï¿½ ï¿½Ã°Ü³ï¿½ï¿½ï¿½.
 		kickOutAllPC();
 
-		// Close »óÅÂ·Î ¸¸µç´Ù.
+		// Close ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.
 		setStateClose();
 
-		// ¹ÌÅ¬¸®Áî ½ÃÃ¼ »èÁ¦
+		// ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
 		removeMikllizzCorpse();
 
 		return;
 	}
 
-	// ³²Àº ÅÄÅ¸Å¬ ¼ö È®ÀÎ
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸Å¬ ï¿½ï¿½ È®ï¿½ï¿½
 	const hash_map<SpriteType_t,MonsterCounter*> monsters = m_pZone->getMonsterManager()->getMonsters();
 	hash_map<SpriteType_t,MonsterCounter*>::const_iterator itr = monsters.find( SpriteTypeTantacle );
 	if ( itr != monsters.end() )
 	{
 		if ( itr->second->getCurrentMonsters() == 0 )
 		{
-			// ÅÄÅ¸Å¬ÀÌ ¸ðµÎ Á×¾ú´Ù.
-			// Mikllizz Combat »óÅÂ·Î ¹Ù²Û´Ù.
+			// ï¿½ï¿½Å¸Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½×¾ï¿½ï¿½ï¿½.
+			// Mikllizz Combat ï¿½ï¿½ï¿½Â·ï¿½ ï¿½Ù²Û´ï¿½.
 			m_State = STATE_MIKLLIZZ_COMBAT;
-			m_StateTime.tv_sec = currentTime.tv_sec + 60 * 60; // 45ºÐÀ¸·Î º¯°æ
+			m_StateTime.tv_sec = currentTime.tv_sec + 60 * 60; // 45ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-			// ¹ÌÅ¬¸®Áî ½ÃÃ¼ »èÁ¦
+			// ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
 			removeMikllizzCorpse();
 
-			// ¹ÌÅ¬¸®Áî¸¦ È°µ¿ÇÏ°Ô ¸¸µç´Ù.
+			// ï¿½ï¿½Å¬ï¿½ï¿½ï¿½î¸¦ È°ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.
 			activeMikllizz();
 
-			// ºÀÀÎ¼®À» ¼ÒºñÇÑ´Ù.
+			// ï¿½ï¿½ï¿½Î¼ï¿½ï¿½ï¿½ ï¿½Òºï¿½ï¿½Ñ´ï¿½.
 //			decreaseSealingStone();
 
-			// ·¹¾î ¸Þ½ÃÁö ¹ß¼Û ´Ü°è ÃÊ±âÈ­
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ß¼ï¿½ ï¿½Ü°ï¿½ ï¿½Ê±ï¿½È­
 			m_ResurrectMikllizzMessageStep = 0;
 
 			filelog("Mikllizz.log", "State Mikllizz Combat : reamin %d minutes", ( m_StateTime.tv_sec - currentTime.tv_sec ) / 60 );
 		}
 
-//		cout << "³²Àº ÅÄÅ¸Å¬ ¼ö: " << itr->second->getCurrentMonsters() << endl;
+//		cout << "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸Å¬ ï¿½ï¿½: " << itr->second->getCurrentMonsters() << endl;
 	}
 
 	__END_CATCH
@@ -449,31 +462,39 @@ void MikllizzLairManager::processMikllizzCombatState()
 
 	Creature* pMikllizz = m_pZone->getMonsterManager()->getCreature( m_MikllizzID );
 
-	// ¹ÌÅ¬¸®Áî°¡ Á×¾úÀ¸¸é
+	// ï¿½ï¿½Å¬ï¿½ï¿½ï¿½î°¡ ï¿½×¾ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (pMikllizz==NULL || pMikllizz->isDead() )
 	{
-		// º¸»óÀ» ÁÖ°í
+		// server-wide announcement (there was none: the lair just closed quietly)
+		GCSystemMessage gcDefeatMessage;
+		gcDefeatMessage.setType( SYSTEM_MESSAGE_MASTER_LAIR );
+		gcDefeatMessage.setMessage( "Mikkliz has been defeated in Raohm Dungeon B5F!" );
+		g_pZoneGroupManager->pushBroadcastPacket( &gcDefeatMessage );
+
+		filelog("Mikllizz.log", "Mikllizz defeated - %d players rewarded", (int)m_pZone->getPCManager()->getSize() );
+
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½
 		giveKillingReward();
 
-		// ¸ðµÎ ÂÑ¾Æ³½´Ù.
+		// ï¿½ï¿½ï¿½ ï¿½Ñ¾Æ³ï¿½ï¿½ï¿½.
 		kickOutAllPC();
 
-		// Close »óÅÂ·Î ¸¸µç´Ù.
+		// Close ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.
 		setStateClose();
 	}
 	else if (currentTime >= m_StateTime)
 	{
-		// ½Ã°£ Áö³µ´Ù.
-		// ¸ðµÎ ÂÑ¾Æ³½´Ù.
+		// ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
+		// ï¿½ï¿½ï¿½ ï¿½Ñ¾Æ³ï¿½ï¿½ï¿½.
 		kickOutAllPC();
-		// Close »óÅÂ·Î ¸¸µç´Ù.
+		// Close ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.
 		setStateClose();
 	}
 
-	// ÇÃ·¹ÀÌ¾îµéÀÌ ´Ù Á×Àº °æ¿ì
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	if (m_pZone->getPCManager()->getSize()==0)
 	{
-		// Close »óÅÂ·Î ¸¸µç´Ù.
+		// Close ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.
 		setStateClose();
 	}
 
@@ -488,10 +509,10 @@ void MikllizzLairManager::summonTantacle()
 {
 	__BEGIN_TRY
 
-	// 30¸¶¸®¿¡¼­ 70¸¶¸®·Î º¯°æ 
+	// 30ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 70ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 	for ( int i=0; i<70; ++i )
 	{
-		// Á¸ÀÇ ºóÀÚ¸®¸¦ Ã£¾Æ³½´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½ Ã£ï¿½Æ³ï¿½ï¿½ï¿½.
 		ZoneCoord_t x,y;
 		if ( !m_pZone->getMonsterManager()->findPosition( MonsterTypeTantacle, x, y ) )
 		{
@@ -524,7 +545,7 @@ void MikllizzLairManager::addMikllizzCorpse()
 {
 	__BEGIN_TRY
 
-	MonsterCorpse* pMikllizzCorpse = new MonsterCorpse( MonsterTypeMikllizz, "¹ÌÅ¬¸®Áî", 2 );
+	MonsterCorpse* pMikllizzCorpse = new MonsterCorpse( MonsterTypeMikllizz, "ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½", 2 );
 	Assert( pMikllizzCorpse != NULL );
 
 	m_pZone->registerObject( pMikllizzCorpse );
@@ -662,10 +683,10 @@ bool MikllizzLairManager::isSummonTiming()
 // give Killing Reward
 //
 ////////////////////////////////////////////////////////////////////////////////
-// ¸¶½ºÅÍ°¡ Á×¾úÀ»¶§ÀÇ º¸»ó
-// Áö±ÝÀº QuestItemÀ» ÇöÀç Á¸ÀÇ »ç¶÷µé¿¡°Ô °¢ÀÚÀÇ ÀÎº¥Åä¸®¿¡ ³Ö¾îÁØ´Ù.
-// ÀÎº¥Åä¸®¿¡ ÀÚ¸®°¡ ¾ø´Â °æ¿ì¿£ ¹Ù´Ú¿¡ ¶³¾î¶ß¸®´Âµ¥
-// ÀÌ¹Ì °¡Áö°í ÀÖ´Â »ç¶÷Àº ÁÖ¿ï ¼ö ¾ø´Ù.
+// ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½×¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ QuestItemï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½é¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ø´ï¿½.
+// ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½Ú¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ì¿£ ï¿½Ù´Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½ß¸ï¿½ï¿½Âµï¿½
+// ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¿ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 ////////////////////////////////////////////////////////////////////////////////
 void MikllizzLairManager::giveKillingReward() 
 	throw (Error)
@@ -687,13 +708,13 @@ void MikllizzLairManager::giveKillingReward()
 			Inventory* pInventory = pPC->getInventory();
 
 			//------------------------------------------------------------
-			// °è±Þ °æÇèÄ¡¸¦ ¿Ã·ÁÁØ´Ù.
+			// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ø´ï¿½.
 			//------------------------------------------------------------
-			// ¸¶½ºÅÍ À§Ä¡¿Í 7Å¸ÀÏ ÀÌ³»¿¡ ÀÌ´Â °æ¿ì
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ 7Å¸ï¿½ï¿½ ï¿½Ì³ï¿½ï¿½ï¿½ ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½
 			//
 			pPC->increaseRankExp( MASTER_KILL_RANK_EXP );
 
-			// ¾ÆÀÌÅÛ º¸»ó~ ¸ó½ºÅÍ ·çÆÃÇ¥¿¡¼­ °¡Á®¿Â´Ù.
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½~ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½.
 			const MonsterInfo* pMonsterInfo = g_pMonsterInfoManager->getMonsterInfo( MonsterTypeReward );
 			Assert( pMonsterInfo != NULL );
 
@@ -709,16 +730,21 @@ void MikllizzLairManager::giveKillingReward()
 				Assert( false );
 
 			const list<Treasure*>& treasures = pTreasureList->getTreasures();
-			list<Treasure*>::const_iterator itr = treasures.begin();
+			list<Treasure*>::const_iterator itr;
 			list<Treasure*>::const_iterator endItr = treasures.end();
 
-			ITEM_TEMPLATE it;
 			Item* pItem = NULL;
 
-			for ( ; itr != endItr; ++itr )
+			// every player gets MikllizzRewardRolls passes over the treasure list; each roll starts from a
+			// fresh template so options rolled for one item never carry into the next
+			const int MikllizzRewardRolls = 3;
+
+			for ( int roll = 0; roll < MikllizzRewardRolls; ++roll )
+			for ( itr = treasures.begin(); itr != endItr; ++itr )
 			{
 				Treasure* pTreasure = (*itr);
 
+				ITEM_TEMPLATE it;
 				it.ItemClass = Item::ITEM_CLASS_MAX;
 				it.ItemType = 0;
 
@@ -726,10 +752,10 @@ void MikllizzLairManager::giveKillingReward()
 				if ( !pTreasure->getRandomItem(&it,true) )
 				{
 					it.ItemClass = Item::ITEM_CLASS_SKILL_BOOK;
-					it.ItemType = 33; // 20080711 Çï½º3À¸·Î ±³Ã¼
+					it.ItemType = 33; // 20080711 ï¿½ï½º3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼
 					static int HealthCount = 0;
 					
-					filelog("MiklizzHealth.log", "Çï½º 3 ¶³¾îÁø ´©Àû °¹¼ö : %d", HealthCount++);
+					filelog("MiklizzHealth.log", "ï¿½ï½º 3 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : %d", HealthCount++);
 				}	
 
 				{
@@ -749,6 +775,16 @@ void MikllizzLairManager::giveKillingReward()
 
 						pPC->getPlayer()->sendPacket( &gcCreateItem );
 
+						// tell the player what they got: the item lands in the inventory silently otherwise
+						string itemName = "an item";
+						ItemInfo* pItemInfo = g_pItemInfoManager->getItemInfo( pItem->getItemClass(), pItem->getItemType() );
+						if ( pItemInfo != NULL && !pItemInfo->getEName().empty() )
+							itemName = pItemInfo->getEName();
+
+						GCSystemMessage gcRewardMessage;
+						gcRewardMessage.setMessage( "Mikkliz reward: " + itemName + " was added to your inventory." );
+						pPC->getPlayer()->sendPacket( &gcRewardMessage );
+
 						if ( pItem->isTraceItem() )
 						{
 							remainTraceLog( pItem, pPC->getName(), "Mikllizz", ITEM_LOG_CREATE, DETAIL_EVENTNPC );
@@ -756,6 +792,12 @@ void MikllizzLairManager::giveKillingReward()
 					}
 					else
 					{
+						GCSystemMessage gcRewardMessage;
+						gcRewardMessage.setMessage( "Your inventory is full, so the Mikkliz reward was lost." );
+						pPC->getPlayer()->sendPacket( &gcRewardMessage );
+
+						filelog("Mikllizz.log", "reward lost, inventory full - %s", pPC->getName().c_str() );
+
 						SAFE_DELETE( pItem );
 					}
 				}
@@ -818,7 +860,7 @@ throw ( Error )
 
 		if( !bAdvanceMode && pPC->getItemClassTypeNum( Item::ITEM_CLASS_QUEST_ITEM, 10 ) <= 0 )
 		{
-			// ºÀÀÎ¼®À» °¡Áö°í ÀÖÁö ¾ÊÀ½À¸·Î Æ÷Å» ÅÂ¿ö ³»º¸³½´Ù!
+			// ï¿½ï¿½ï¿½Î¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å» ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!
 			GamePlayer* pGamePlayer = dynamic_cast<GamePlayer*>(pCreature->getPlayer());
 			EventTransport* pEventTransport = dynamic_cast<EventTransport*>(pGamePlayer->getEvent(Event::EVENT_CLASS_TRANSPORT));
 			

@@ -718,39 +718,32 @@ void CLCreatePCHandler::execute (CLCreatePC* pPacket , Player* pPlayer)
 
 #ifdef __LOGIN_SERVER__
 //////////////////////////////////////////////////////////////////////////////
-// Free a character name that only soft-deleted characters still hold.
+// Free a character name that only deleted characters still hold.
 //
-// This build takes CLDeletePCHandler's #else branch: deleting a character sets
-// Active='INACTIVE' and deliberately keeps every row belonging to it. Only the
-// CHINA/THAILAND/NETMARBLE builds hard-delete and purge. So a deleted name
-// stays taken forever, and simply allowing its reuse would hand the new
-// character the dead one's items -- ownership is keyed by NAME, not by any id.
+// Deleting a character keeps it: CLDeletePCHandler sets Active='INACTIVE' and
+// then retires it (schema 1.1.0, sp_RetireCharacter). A retired character is
+// known by its CharID alone -- its key in every name-keyed column becomes
+// `~<CharID>` and the name it had moves to Slayer.RetiredName -- so the name is
+// free the moment the character is deleted, and a new character of that name
+// inherits nothing. '~' fails isAvailableCharName(), which whitelists a-z A-Z
+// 0-9 and Korean only, so no player can type such a key.
 //
-// Instead, rename the dead character and everything pointing at it to
-//     [D_<hex>]<OriginalName>      e.g. [D_001]Caravice
-// Nothing is destroyed, and the form is unreachable for players: brackets and
-// '_' both fail isAvailableCharName(), which whitelists a-z A-Z 0-9 and Korean
-// only. With names capped at 10 characters and the columns at varchar(32),
-// there is room for 18 hex digits before the form could ever overflow.
+// What is left to do here:
+//   * the grace period, if one is configured
+//   * retire a dead character that is STILL holding the name: one deleted while
+//     the database was older than 1.1.0, or whose retirement failed
+//
+// This used to rename the dead character to [D_<hex>]<Name> itself, counting in
+// the deleteNum column. That is gone; the column is unused.
 //////////////////////////////////////////////////////////////////////////////
 bool
 freeInactiveCharName(Statement* pStmt, const string& name)
 {
-	// Is any soft-deleted character still holding this name?
-	Result* pResult = pStmt->executeQuery(
-		"SELECT Name FROM Slayer  WHERE Name='%s' AND Active='INACTIVE'"
-		" UNION ALL SELECT Name FROM Vampire WHERE Name='%s' AND Active='INACTIVE'"
-		" UNION ALL SELECT Name FROM Ousters WHERE Name='%s' AND Active='INACTIVE'",
-		name.c_str(), name.c_str(), name.c_str());
-
-	// Nobody dead is holding it -- the name was simply unused.
-	if (pResult->getRowCount() == 0)
-		return true;
-
 	// Grace period. Reusing a name and restoring a deleted character under its
 	// own name are mutually exclusive: once someone else takes it, the original
-	// cannot have it back. Holding the name for a while after deletion is what
-	// makes a restore window actually guaranteed rather than best-effort.
+	// cannot have it back (sp_RestoreCharacter refuses). Holding the name for a
+	// while after deletion is what makes a restore window guaranteed rather
+	// than best-effort.
 	//
 	// 0 or absent disables it and names are reusable immediately.
 	int graceDays = 0;
@@ -762,12 +755,12 @@ freeInactiveCharName(Statement* pStmt, const string& name)
 	{
 		// Compared in SQL so there is no date parsing on this side. DeleteChar
 		// records every deletion that goes through CLDeletePCHandler.
-		pResult = pStmt->executeQuery(
+		Result* pGrace = pStmt->executeQuery(
 			"SELECT COUNT(*) FROM DeleteChar"
 			" WHERE Name='%s' AND delDate > DATE_SUB(NOW(), INTERVAL %d DAY)",
 			name.c_str(), graceDays);
 
-		if (pResult->next() && pResult->getInt(1) > 0)
+		if (pGrace->next() && pGrace->getInt(1) > 0)
 		{
 			filelog("NameReuse.log", "denied [%s]: still inside the %d day grace period",
 				name.c_str(), graceDays);
@@ -775,58 +768,21 @@ freeInactiveCharName(Statement* pStmt, const string& name)
 		}
 	}
 
-	// Next sequence number. One global counter across the three tables, read
-	// from the deleteNum column -- previously this parsed the hex back out of
-	// existing marker names, which broke once the counter passed 0xFFF and the
-	// strings stopped being equal width.
-	pResult = pStmt->executeQuery(
-		"SELECT GREATEST("
-		" IFNULL((SELECT MAX(deleteNum) FROM Slayer),0),"
-		" IFNULL((SELECT MAX(deleteNum) FROM Vampire),0),"
-		" IFNULL((SELECT MAX(deleteNum) FROM Ousters),0)) + 1");
+	// Is a dead character still holding this name?
+	Result* pResult = pStmt->executeQuery(
+		"SELECT Name FROM Slayer  WHERE Name='%s' AND Active='INACTIVE'"
+		" UNION ALL SELECT Name FROM Vampire WHERE Name='%s' AND Active='INACTIVE'"
+		" UNION ALL SELECT Name FROM Ousters WHERE Name='%s' AND Active='INACTIVE'",
+		name.c_str(), name.c_str(), name.c_str());
 
-	unsigned int seq = 1;
+	// The usual case: whoever had it was retired when they were deleted.
+	if (pResult->getRowCount() == 0)
+		return true;
 
-	if (pResult->next())
-		seq = (unsigned int)pResult->getInt(1);
+	// Throws if it cannot, which fails the creation before anything is written.
+	pStmt->executeQuery("CALL sp_RetireCharacter('%s')", name.c_str());
 
-	char newName[64];
-	sprintf(newName, "[D_%03X]%s", seq, name.c_str());
-
-	// The character rows. INACTIVE only -- never rename a live character out
-	// from under its player.
-	pStmt->executeQuery("UPDATE Slayer  SET Name='%s', deleteNum=%u WHERE Name='%s' AND Active='INACTIVE'", newName, seq, name.c_str());
-	pStmt->executeQuery("UPDATE Vampire SET Name='%s', deleteNum=%u WHERE Name='%s' AND Active='INACTIVE'", newName, seq, name.c_str());
-	pStmt->executeQuery("UPDATE Ousters SET Name='%s', deleteNum=%u WHERE Name='%s' AND Active='INACTIVE'", newName, seq, name.c_str());
-
-	// Everything that owns items/skills by name. The table list is read from
-	// the schema rather than hardcoded: CLDeletePCHandler keeps its own list of
-	// ~190 OwnerID tables and a hardcoded copy rots as tables are added.
-	// Collect first -- the next query invalidates this Result.
-	vector<string> tables;
-
-	pResult = pStmt->executeQuery(
-		"SELECT TABLE_NAME FROM information_schema.COLUMNS"
-		" WHERE TABLE_SCHEMA=DATABASE() AND COLUMN_NAME='OwnerID'");
-
-	while (pResult->next())
-		tables.push_back(pResult->getString(1));
-
-	for (uint i = 0; i < tables.size(); i++)
-		pStmt->executeQuery("UPDATE `%s` SET OwnerID='%s' WHERE OwnerID='%s'",
-			tables[i].c_str(), newName, name.c_str());
-
-	// These three key on the character name but have no OwnerID column, so the
-	// sweep above misses them. Without this a reused name inherits the dead
-	// character's guild membership, friend list and mail.
-	pStmt->executeQuery("UPDATE GuildMember SET Name='%s'       WHERE Name='%s'",       newName, name.c_str());
-	pStmt->executeQuery("UPDATE FriendList  SET Name='%s'       WHERE Name='%s'",       newName, name.c_str());
-	pStmt->executeQuery("UPDATE FriendList  SET FriendName='%s' WHERE FriendName='%s'", newName, name.c_str());
-	pStmt->executeQuery("UPDATE Messages    SET Sender='%s'     WHERE Sender='%s'",     newName, name.c_str());
-	pStmt->executeQuery("UPDATE Messages    SET Receiver='%s'   WHERE Receiver='%s'",   newName, name.c_str());
-
-	filelog("NameReuse.log", "freed [%s] -> [%s] (deleteNum %u) across %u owner tables",
-		name.c_str(), newName, seq, (uint)tables.size());
+	filelog("NameReuse.log", "retired the deleted character that still held [%s]", name.c_str());
 
 	return true;
 }

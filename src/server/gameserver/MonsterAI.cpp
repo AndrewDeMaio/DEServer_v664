@@ -1852,7 +1852,7 @@ bool checkEnemyNotParalyzed(Monster* pMonster, Creature* pEnemy)
 	Assert(pMonster != NULL);
 
 	if (pEnemy == NULL) return false;
-	if (!pEnemy->isFlag(Effect::EFFECT_CLASS_PARALYZE)) return true;
+	if (!pEnemy->isFlag(Effect::EFFECT_CLASS_PARALYZE) && !pEnemy->isFlag(Effect::EFFECT_CLASS_CHAIN_OF_DEMON)) return true;
 	return false;
 }
 

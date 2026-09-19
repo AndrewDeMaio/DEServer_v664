@@ -187,7 +187,7 @@ OBJS = main.o Zone.o Slayer.o Vampire.o Ousters.o OustersEXPInfo.o \
 	DynamicZoneVampireMirrorOfAbyss.o DynamicZoneOustersMirrorOfAbyss.o \
 	NewYear2005ItemUtil.o BalloonHeadbandUtil.o Fall2005ItemUtil.o \
 	ViewAbility.o Viewable.o Born.o \
-	MikllizzLairManager.o CastleDungeonMonsterManager.o \
+	MikllizzLairManager.o CastleDungeonMonsterManager.o RodinBossManager.o \
 	EventSurvivalZoneManager.o \
 	PlayerInventory.o ContractOfBloodUtil.o \
 	HellGardenTowerManager.o \

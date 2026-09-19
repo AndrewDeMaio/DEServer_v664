@@ -1,0 +1,221 @@
+//////////////////////////////////////////////////////////////////////////////
+// Filename    : EffectSatelliteBombAim2.cpp
+// Written by  : bezz
+// Description : Satellite Bomb 2 aim (effect 618): hits the aimed tile, then starts the fire phase.
+//               Same as EffectSatelliteBombAim with the v9 SatelliteBomb2 damage (DEX based).
+//////////////////////////////////////////////////////////////////////////////
+
+#include "EffectSatelliteBombAim2.h"
+#include "EffectSatelliteBombFire2.h"
+#include "EffectBlind.h"
+#include "Slayer.h"
+#include "Vampire.h"
+#include "Monster.h"
+#include "GamePlayer.h"
+#include "PCFinder.h"
+#include "ZoneUtil.h"
+#include "ZoneInfoManager.h"
+#include "SkillInfo.h"
+#include "SkillUtil.h"
+#include "HitRoll.h"
+#include "Gpackets/GCRemoveEffect.h"
+#include "Gpackets/GCAddEffectToTile.h"
+#include "Gpackets/GCSkillToObjectOK2.h"
+#include "Gpackets/GCSkillToObjectOK4.h"
+#include "Gpackets/GCStatusCurrentHP.h"
+#include "Gpackets/GCAddEffect.h"
+
+/*
+int GSGDamageModify[5][5] =
+{
+    { 50, 50,  50, 50, 50 },
+    { 50, 75,  75, 75, 50 },
+    { 50, 75, 100, 75, 50 },
+    { 50, 75,  75, 75, 50 },
+    { 50, 50,  50, 50, 50 }
+};
+*/
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+EffectSatelliteBombAim2::EffectSatelliteBombAim2(Creature* pCreature, Zone* pZone, ZoneCoord_t x, ZoneCoord_t y)
+	throw(Error)
+{
+	__BEGIN_TRY
+
+	setTarget(pCreature);
+	m_pZone = pZone;
+	m_X = x;
+	m_Y = y;
+	m_SkillLevel = 0;
+	m_DEX = 0;
+
+	__END_CATCH
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+void EffectSatelliteBombAim2::affect(Creature* pCreature)
+	throw(Error)
+{
+	__BEGIN_TRY
+	__END_CATCH
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+void EffectSatelliteBombAim2::unaffect(Creature* pCastCreature)
+	throw(Error)
+{
+	__BEGIN_TRY
+	
+	Assert(pCastCreature != NULL);
+
+	if ( !pCastCreature->isFlag( Effect::EFFECT_CLASS_SATELLITE_BOMB_AIM_2 ) )
+		return;
+
+	pCastCreature->removeFlag( Effect::EFFECT_CLASS_SATELLITE_BOMB_AIM_2 );
+
+	GCRemoveEffect gcRemoveEffect;
+	gcRemoveEffect.setObjectID( pCastCreature->getObjectID() );
+	gcRemoveEffect.addEffectList( Effect::EFFECT_CLASS_SATELLITE_BOMB_AIM_2 );
+
+	m_pZone->broadcastPacket( pCastCreature->getX(), pCastCreature->getY(), &gcRemoveEffect );
+
+	EffectSatelliteBombFire2* pEffect = new EffectSatelliteBombFire2(pCastCreature, m_pZone, m_X, m_Y);
+	pEffect->setDEX(getDEX());
+	pEffect->setSkillLevel(getSkillLevel());
+	pEffect->setNextTime(10);
+	pEffect->setDeadline(10);	// the 5x5 hit lands as the client beam (fire status, 1 s) turns into the explosion
+
+	pCastCreature->addEffect( pEffect );
+	pCastCreature->setFlag( Effect::EFFECT_CLASS_SATELLITE_BOMB_FIRE_2 );
+
+	GCAddEffectToTile gcAddEffectToTile;
+	gcAddEffectToTile.setObjectID( pCastCreature->getObjectID() );
+	gcAddEffectToTile.setEffectID( Effect::EFFECT_CLASS_BLOODY_SKULL_2 );	// client status 628 = Satellite Bomb 2 red beam
+	gcAddEffectToTile.setXY( m_X, m_Y );
+	gcAddEffectToTile.setDuration( 10 );
+
+	m_pZone->broadcastPacket( m_X, m_Y, &gcAddEffectToTile );
+
+	VSRect rect( 0, 0, m_pZone->getWidth()-1, m_pZone->getHeight()-1 );
+
+	GCSkillToObjectOK2 gcSkillToObjectOK2;
+	GCSkillToObjectOK4 gcSkillToObjectOK4;
+
+	if( rect.ptInRect( m_X, m_Y ) )
+	{
+		Tile& tile = m_pZone->getTile( m_X, m_Y );
+		const slist<Object*>& oList = tile.getObjectList();
+		slist<Object*>::const_iterator itr = oList.begin();
+
+		Damage_t damage = 0;
+		// v9: DEX * 0.8 + SkillLevel + 10, up to 2500
+		damage = min( 2500, int(getDEX() * 0.8 + getSkillLevel() + 10) );
+
+		for( ; itr != oList.end(); ++itr )
+		{
+			Object* pObject = *itr;
+			Assert( pObject != NULL );
+
+			if( pObject->getObjectClass() == Object::OBJECT_CLASS_CREATURE )
+			{
+				Creature* pCreature = dynamic_cast<Creature*>(pObject);
+				Assert( pCreature != NULL );
+
+				if( pCreature == m_pTarget
+				|| !canAttack(pCastCreature, pCreature)
+				|| pCreature->isFlag(Effect::EFFECT_CLASS_COMA) )
+				{
+					continue;
+				}
+
+				bool bPK				= verifyPK( pCastCreature, pCreature );
+				bool bZoneLevelCheck	= checkZoneLevelToHitTarget(pCreature); 
+				bool bHitRoll			= HitRoll::isSuccess( pCastCreature, pCreature, 100 );
+
+				if( bPK && bZoneLevelCheck && bHitRoll )
+				{
+					if( pCreature->isPC() && pCreature->getCreatureClass() != pCastCreature->getCreatureClass() )
+					{
+						GCModifyInformation gcMI;
+						::setDamage( pCreature, damage, pCastCreature, SKILL_SATELLITE_BOMB_2, &gcMI);
+
+						pCreature->getPlayer()->sendPacket( &gcMI );
+
+						gcSkillToObjectOK2.setObjectID( 1 );
+						gcSkillToObjectOK2.setSkillType( SKILL_ATTACK_MELEE );
+						gcSkillToObjectOK2.setDuration(0);
+						pCreature->getPlayer()->sendPacket(&gcSkillToObjectOK2);
+					}
+					else if( pCreature->isMonster() )
+					{
+						Monster* pMonster = dynamic_cast<Monster*>(pCreature);
+
+						::setDamage( pMonster, damage, pCastCreature, SKILL_SATELLITE_BOMB_2 );
+
+						pMonster->addEnemy( pCastCreature );
+					}
+					else continue;
+
+					gcSkillToObjectOK4.setTargetObjectID( pCreature->getObjectID() );
+					gcSkillToObjectOK4.setSkillType( SKILL_ATTACK_MELEE );
+					gcSkillToObjectOK4.setDuration( 0 );
+					m_pZone->broadcastPacket( m_X, m_Y, &gcSkillToObjectOK4, pCreature );
+				}
+			}
+		}
+	}
+	
+	__END_CATCH
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+void EffectSatelliteBombAim2::unaffect()
+	throw(Error)
+{
+	__BEGIN_TRY
+
+	Creature* pCreature = dynamic_cast<Creature*>(m_pTarget);	// by Sequoia
+
+	Assert( pCreature != NULL );
+
+	if ( m_pZone != NULL && m_pZone == pCreature->getZone() )
+	{
+		unaffect(pCreature);
+	}
+	else
+	{
+		Zone* pZone = pCreature->getZone();
+		Assert( pZone != NULL );
+
+		pCreature->removeFlag( Effect::EFFECT_CLASS_SATELLITE_BOMB_AIM_2 );
+
+		GCRemoveEffect gcRemoveEffect;
+		gcRemoveEffect.setObjectID( pCreature->getObjectID() );
+		gcRemoveEffect.addEffectList( Effect::EFFECT_CLASS_SATELLITE_BOMB_AIM_2 );
+
+		pZone->broadcastPacket( pCreature->getX(), pCreature->getY(), &gcRemoveEffect );
+	}
+	
+	__END_CATCH
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+string EffectSatelliteBombAim2::toString() const 
+	throw()
+{
+	__BEGIN_TRY
+
+	StringStream msg;
+	msg << "EffectSatelliteBombAim2("
+		<< "Zone:" << g_pZoneInfoManager->getZoneInfo( m_pZone->getZoneID() )->getFullName()
+		<< ",X:" << (int)m_X
+		<< ",Y:" << (int)m_Y
+		<< ")";
+	return msg.toString();
+
+	__END_CATCH
+}

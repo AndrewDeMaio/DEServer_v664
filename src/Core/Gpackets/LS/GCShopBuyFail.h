@@ -67,7 +67,7 @@ public:
 	void write(SocketOutputStream & oStream) const throw(ProtocolException, Error);
 	void execute(Player* pPlayer) throw(ProtocolException, Error);
 	PacketID_t getPacketID() const throw() { return PACKET_GC_SHOP_BUY_FAIL; }
-	PacketSize_t getPacketSize() const throw() { return szObjectID;}
+	PacketSize_t getPacketSize() const throw() { return szObjectID + szBYTE + szuint; }	// ObjectID, Code, Amount: what write() sends
 	string getPacketName() const throw() { return "GCShopBuyFail"; }
 	string toString() const throw();
 
@@ -96,7 +96,7 @@ public:
 	Packet* createPacket() throw() { return new GCShopBuyFail(); }
 	string getPacketName() const throw() { return "GCShopBuyFail"; }
 	PacketID_t getPacketID() const throw() { return Packet::PACKET_GC_SHOP_BUY_FAIL; }
-	PacketSize_t getPacketMaxSize() const throw() { return szObjectID; }
+	PacketSize_t getPacketMaxSize() const throw() { return szObjectID + szBYTE + szuint; }
 };
 
 //////////////////////////////////////////////////////////////////////////////

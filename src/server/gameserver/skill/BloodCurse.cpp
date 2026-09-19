@@ -34,7 +34,6 @@ SkillResultType BloodCurse::execute(Vampire* pVampire, VampireSkillSlot* pVampir
 	{
 		Player* pPlayer = pVampire->getPlayer();
 		Zone* pZone = pVampire->getZone();
-		Inventory *pInventory = pVampire->getInventory();
 
 		Assert(pPlayer != NULL);
 		Assert(pZone != NULL);
@@ -54,13 +53,11 @@ SkillResultType BloodCurse::execute(Vampire* pVampire, VampireSkillSlot* pVampir
 //		성공 확률은 시전자 인트와 상관 없이 80%로 설정
 		bool bHitRoll	 = (rand()%100 < 80);
 		bool bEffected   = pVampire->isFlag(Effect::EFFECT_CLASS_BLOOD_CURSE);
-		bool bSerum		 = pInventory->hasEnoughNumItem( Item::ITEM_CLASS_SERUM, 6, 3);
 		bool bSuccess	 = pVampire->isFlag(Effect::EFFECT_CLASS_BLOODS_SYMPOSION_ATTACK);
 
-		if (bManaCheck && bTimeCheck && bRangeCheck && bHitRoll && !bEffected && bSerum && !bSuccess)
+		if (bManaCheck && bTimeCheck && bRangeCheck && bHitRoll && !bEffected && !bSuccess)
 		{
 			decreaseMana(pVampire, RequiredMP, _GCSkillToSelfOK1);
-			pInventory->decreaseNumItem( Item::ITEM_CLASS_SERUM, 6, 3, pPlayer);
 
 			// 스킬 레벨에 따라 데미지 보너스가 달라진다.
 			SkillInput input( pVampire );

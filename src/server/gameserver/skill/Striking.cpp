@@ -65,7 +65,7 @@ SkillResultType Striking::execute(Slayer* pSlayer, ObjectID_t TargetObjectID, Sl
 		bool bTimeCheck  = verifyRunTime(pSkillSlot);
 		bool bRangeCheck = verifyDistance(pSlayer, pTargetCreature, pSkillInfo->getRange());
 		bool bHitRoll    = HitRoll::isSuccessMagic(pSlayer, pSkillInfo, pSkillSlot);
-		bool bEffected   = pTargetSlayer->isFlag(Effect::EFFECT_CLASS_STRIKING);
+		bool bEffected   = pTargetSlayer->isFlag(Effect::EFFECT_CLASS_STRIKING) || pTargetSlayer->isFlag(Effect::EFFECT_CLASS_STRIKING_2);
 
 		Item* pItem = pTargetSlayer->getWearItem(Slayer::WEAR_RIGHTHAND);
 
@@ -210,7 +210,7 @@ SkillResultType Striking::execute(Slayer* pSlayer, SlayerSkillSlot* pSkillSlot, 
 		bool bTimeCheck  = verifyRunTime(pSkillSlot);
 		bool bRangeCheck = checkZoneLevelToUseSkill(pSlayer);
 		bool bHitRoll    = HitRoll::isSuccessMagic(pSlayer, pSkillInfo, pSkillSlot);
-		bool bEffected   = pSlayer->isFlag(Effect::EFFECT_CLASS_STRIKING);
+		bool bEffected   = pSlayer->isFlag(Effect::EFFECT_CLASS_STRIKING) || pSlayer->isFlag(Effect::EFFECT_CLASS_STRIKING_2);
 
 		Item* pItem = pSlayer->getWearItem(Slayer::WEAR_RIGHTHAND);
 

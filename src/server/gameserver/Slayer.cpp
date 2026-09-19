@@ -15,6 +15,7 @@
 #include <stdio.h>
 
 #include "SkillInfo.h"
+#include "RareBookSkill.h"
 #include "ItemInfoManager.h"
 #include "ParkingCenter.h"
 #include "SkillHandlerManager.h"
@@ -1129,6 +1130,8 @@ bool Slayer::load ()
 
 			pSkillSlot->setExpLevel(pResult->getInt(++i));
 			pSkillSlot->setExp (pResult->getInt(++i));
+			if (isRareBookSkill(pSkillSlot->getSkillType()))	// book skills never level: always mastered
+				pSkillSlot->setExpLevel(RARE_BOOK_SLAYER_SKILL_LEVEL);
 			pSkillSlot->setInterval (99999999);
 			pSkillSlot->setCastingTime (pResult->getInt(++i));
 			pSkillSlot->setRunTime();
@@ -1728,7 +1731,7 @@ void Slayer::addSkill(SkillType_t SkillType)
 		pSkillSlot->setName(m_Name);
 		pSkillSlot->setSkillType(SkillType);
 		pSkillSlot->setInterval(Delay);
-		pSkillSlot->setExpLevel(0);
+		pSkillSlot->setExpLevel(isRareBookSkill(SkillType) ? RARE_BOOK_SLAYER_SKILL_LEVEL : 0);	// book skills never level
 		pSkillSlot->setExp(1);
 		pSkillSlot->setRunTime();
 		pSkillSlot->create(m_Name);

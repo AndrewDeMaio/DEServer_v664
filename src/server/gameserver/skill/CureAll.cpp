@@ -15,6 +15,7 @@
 #include "Gpackets/GCSkillToSelfOK2.h"
 #include "EffectDoom.h"
 #include "EffectParalyze.h"
+#include "EffectChainOfDemon.h"
 #include "EffectSeduction.h"
 #include "CurePoison.h"
 #include "EffectPoison.h"
@@ -123,6 +124,8 @@ SkillResultType CureAll::execute(Slayer* pSlayer, ObjectID_t TargetObjectID, Sla
 		EffectDoom*      pEffectDoom     = NULL;
 		EffectBlunting*  pEffectBlunting = NULL;
 		EffectParalyze*  pEffectParalyze = NULL;
+		EffectChainOfDemon* pEffectChainOfDemon = NULL;
+		bool bChainOfDemon = false;
 		EffectSeduction* pEffectSeduction = NULL;
 
 		// 历林 拌凯 秦家
@@ -152,6 +155,16 @@ SkillResultType CureAll::execute(Slayer* pSlayer, ObjectID_t TargetObjectID, Sla
 			bParalyze = HitRoll::isSuccessRemoveCurse(50, SkillLevel, 20, pEffectParalyze->getLevel(), 10);
 			bEffected = true;
 			bHPCheck = true;
+		}
+		if (pTargetCreature->isEffect(Effect::EFFECT_CLASS_CHAIN_OF_DEMON))
+		{
+			pEffectChainOfDemon = dynamic_cast<EffectChainOfDemon*>(pTargetCreature->findEffect(Effect::EFFECT_CLASS_CHAIN_OF_DEMON));
+			if (pEffectChainOfDemon != NULL)
+			{
+				bChainOfDemon = HitRoll::isSuccessRemoveCurse(50, SkillLevel, 20, pEffectChainOfDemon->getLevel(), 10);
+				bEffected = true;
+				bHPCheck = true;
+			}
 		}
 		if (pTargetCreature->isEffect(Effect::EFFECT_CLASS_SEDUCTION)) 
 		{
@@ -280,6 +293,12 @@ SkillResultType CureAll::execute(Slayer* pSlayer, ObjectID_t TargetObjectID, Sla
 				pEffectParalyze->setDeadline(0);
 				pTargetCreature->removeFlag(Effect::EFFECT_CLASS_PARALYZE);
 				gcRemoveEffect.addEffectList(Effect::EFFECT_CLASS_PARALYZE);
+			}
+			if (bChainOfDemon)
+			{
+				pEffectChainOfDemon->setDeadline(0);
+				pTargetCreature->removeFlag(Effect::EFFECT_CLASS_CHAIN_OF_DEMON);
+				gcRemoveEffect.addEffectList(Effect::EFFECT_CLASS_CHAIN_OF_DEMON);
 			}
 			if (bSeduction)
 			{
@@ -484,6 +503,8 @@ SkillResultType CureAll::execute(Slayer* pSlayer, SlayerSkillSlot* pSkillSlot, C
 		EffectDoom*      pEffectDoom     = NULL;
 		EffectBlunting*  pEffectBlunting = NULL;
 		EffectParalyze*  pEffectParalyze = NULL;
+		EffectChainOfDemon* pEffectChainOfDemon = NULL;
+		bool bChainOfDemon = false;
 		EffectSeduction* pEffectSeduction = NULL;
 
 		// 历林 拌凯 秦家
@@ -513,6 +534,16 @@ SkillResultType CureAll::execute(Slayer* pSlayer, SlayerSkillSlot* pSkillSlot, C
 			bParalyze = HitRoll::isSuccessRemoveCurse(75, SkillLevel, 20, pEffectParalyze->getLevel(), 25);
 			bEffected = true;
 			bHPCheck = true;
+		}
+		if (pSlayer->isEffect(Effect::EFFECT_CLASS_CHAIN_OF_DEMON))
+		{
+			pEffectChainOfDemon = dynamic_cast<EffectChainOfDemon*>(pSlayer->findEffect(Effect::EFFECT_CLASS_CHAIN_OF_DEMON));
+			if (pEffectChainOfDemon != NULL)
+			{
+				bChainOfDemon = HitRoll::isSuccessRemoveCurse(75, SkillLevel, 20, pEffectChainOfDemon->getLevel(), 25);
+				bEffected = true;
+				bHPCheck = true;
+			}
 		}
 		if (pSlayer->isEffect(Effect::EFFECT_CLASS_SEDUCTION)) 
 		{
@@ -646,6 +677,12 @@ SkillResultType CureAll::execute(Slayer* pSlayer, SlayerSkillSlot* pSkillSlot, C
 				pEffectParalyze->setDeadline(0);
 				pSlayer->removeFlag(Effect::EFFECT_CLASS_PARALYZE);
 				gcRemoveEffect.addEffectList(Effect::EFFECT_CLASS_PARALYZE);
+			}
+			if (bChainOfDemon)
+			{
+				pEffectChainOfDemon->setDeadline(0);
+				pSlayer->removeFlag(Effect::EFFECT_CLASS_CHAIN_OF_DEMON);
+				gcRemoveEffect.addEffectList(Effect::EFFECT_CLASS_CHAIN_OF_DEMON);
 			}
 			if (bSeduction)
 			{

@@ -1116,7 +1116,7 @@ void CGUseItemFromInventoryHandler::executeSlayerPortalItem(CGUseItemFromInvento
 	}
 
 	// 석화되어 있다면 헬기를 부를 수 없다.
-	bool bParalyze = pSlayer->isFlag( Effect::EFFECT_CLASS_PARALYZE ) ? true : false;
+	bool bParalyze = ( pSlayer->isFlag( Effect::EFFECT_CLASS_PARALYZE ) || pSlayer->isFlag( Effect::EFFECT_CLASS_CHAIN_OF_DEMON ) ) ? true : false;
 
 	bool bZoneTypeCheck   = (pZone->getZoneType() == ZONE_NORMAL_FIELD) ? true : false;
 	bool bCanUseCheck     = pSlayer->isRealWearing(pPortalItem);
@@ -1255,7 +1255,7 @@ void CGUseItemFromInventoryHandler::executeOustersSummonItem(CGUseItemFromInvent
 	}
 
 	// 석화되어 있다면 헬기를 부를 수 없다.
-	bool bParalyze = pOusters->isFlag( Effect::EFFECT_CLASS_PARALYZE ) ? true : false;
+	bool bParalyze = ( pOusters->isFlag( Effect::EFFECT_CLASS_PARALYZE ) || pOusters->isFlag( Effect::EFFECT_CLASS_CHAIN_OF_DEMON ) ) ? true : false;
 
 //	OustersSummonItem* pSummonItem = dynamic_cast<OustersSummonItem*>(pItem);
 //	Assert(pSummonItem != NULL);

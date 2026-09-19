@@ -7,11 +7,11 @@
 #include "SkillHandlerManager.h"
 #include "Assert.h"
 
-// ÀÏ¹Ý °ø°Ý
+// ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½
 #include "AttackMelee.h"
 #include "AttackArms.h"
 
-// °Ë°è¿­
+// ï¿½Ë°è¿­
 #include "DoubleImpact.h"
 #include "TripleSlasher.h"
 #include "RainbowSlasher.h"
@@ -32,7 +32,7 @@
 #include "SwordRay.h"
 #include "HitConvert.h"
 
-// µµ°è¿­
+// ï¿½ï¿½ï¿½è¿­
 #include "SingleBlow.h"
 #include "SpiralSlay.h"
 #include "TripleBreak.h"
@@ -53,7 +53,7 @@
 #include "MultiAmputate.h"
 #include "WildTyphoon.h"
 
-// ±ºÀÎ °è¿­
+// ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­
 #include "QuickFire.h"
 #include "DoubleShot.h"
 #include "TripleShot.h"
@@ -72,7 +72,7 @@
 #include "Concealment.h"
 #include "UltimateBlow.h"
 
-// ÀÎÃ¦ °è¿­
+// ï¿½ï¿½Ã¦ ï¿½è¿­
 #include "CreateHolyWater.h"
 #include "Light.h"
 #include "DetectHidden.h"
@@ -98,7 +98,7 @@
 #include "Requital.h"
 #include "Lightness.h"
 
-// Èú¸µ °è¿­
+// ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­
 #include "CureLightWounds.h"
 #include "CurePoison.h"
 #include "ProtectionFromPoison.h"
@@ -126,7 +126,7 @@
 #include "Illendue.h"
 
 
-// ¹ìÇÁ °è¿­
+// ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­
 #include "BloodDrain.h"
 
 #include "PoisonousHands.h"
@@ -196,7 +196,7 @@
 #include "Mephisto.h"
 
 
-// ±âÅ¸ °è¿­
+// ï¿½ï¿½Å¸ ï¿½è¿­
 #include "CriticalGround.h"
 #include "SummonMonsters.h"
 #include "GroundAttack.h"
@@ -216,13 +216,13 @@
 #include "HandsOfWisdom.h"
 #include "Armageddon.h"
 
-// ¼ºÁö½ºÅ³
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å³
 #include "MagicElusion.h"
 #include "PoisonMesh.h"
 #include "IllusionOfAvenge.h"
 #include "WillOfLife.h"
 
-// ¾Æ¿ì½ºÅÍÁî ½ºÅ³
+// ï¿½Æ¿ì½ºï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³
 #include "Flourish.h"
 #include "Evade.h"
 #include "SharpRound.h"
@@ -339,7 +339,7 @@
 #include "NooseOfWraith.h"
 #include "SetAfire.h"
 
-// ¾Æ¿ì½ºÅÍÁî 140·¹º§ ½ºÅ³
+// ï¿½Æ¿ì½ºï¿½ï¿½ï¿½ï¿½ 140ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³
 #include "SharpHail.h"
 #include "IceHorizon.h"
 #include "FuryOfGnome.h"
@@ -355,7 +355,7 @@
 #include "FeldwebelFire.h"
 #include "FeebleVirus.h"
 
-// ½ÂÁ÷ ½ºÅ³
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³
 #include "Halo.h"
 #include "Destinies.h"
 #include "FierceFlame.h"
@@ -434,7 +434,7 @@
 #include "MistOfSoul1.h"
 #include "MistOfSoul2.h"
 
-// ½ÂÁ÷ ·¹¾î½ºÅ³ 
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½î½ºÅ³ 
 #include "HeavenlySpark.h" // 20080401
 #include "BladeStorm.h" // 20080403
 #include "ExplosionRocketLauncher.h" // 20080407
@@ -470,11 +470,56 @@
 #include "PalusLongRangeMagic.h"
 #include "GarumMagic.h"
 #include "ClavieMagic.h"
+#include "SiusCrash.h"
+#include "LycanHowl.h"
+#include "WideWildWolf.h"
+#include "SmileofDeath.h"
+#include "LivingDeadBEchoEsper.h"
+#include "TsarBlueRoseDevil.h"
+#include "FolletPoisonFrame.h"
+#include "FueFolletRedRoseDevil.h"
+#include "DraculeTalonOfDracule.h"
+#include "DraculeBloodyScarify2.h"
+#include "DraculeBloodyCarpe.h"
+// level 171/181 skill books
+#include "BlazeWalk2.h"
+#include "Gladiator.h"
+#include "CrushingStorm.h"
+#include "SatelliteBomb2.h"
+#include "IntimateGrail2.h"
+#include "HolyArmor2.h"
+#include "Striking2.h"
+#include "Bless2.h"
+#include "GloryGround.h"
+#include "PassingHeal2.h"
+#include "GreatHeal2.h"
+#include "DragonHurricane.h"
+#include "LarStroke.h"
+#include "GaeBulga.h"
+#include "ViciousGuidance.h"
+#include "SpectorInverse.h"
+#include "DragonHurricane2.h"
+#include "ChainOfDemon.h"
+#include "BloodySkull.h"
+#include "RageOfBlood.h"
+#include "BatBreaker.h"
+#include "ShadyDouble.h"
+#include "AllysterWind.h"
+#include "FlameSight.h"
+#include "SpiralMegalith.h"
+#include "Radchia.h"
+#include "BreathOfDryad.h"
+#include "ChakramHail.h"
+#include "FlameSpike.h"
+#include "Blizzard.h"
+#include "Demolisher.h"
+#include "Blizzard2.h"
+#include "ChakramHail2.h"
 
 // global variable declaration
 SkillHandlerManager * g_pSkillHandlerManager = NULL;
 
-// ¸ó½ºÅÍ ·¹ÀÎÁö ½ºÅ³µé
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ï¿½ï¿½
 MonsterRangeSkill
 	g_TraslaAttack(SKILL_TRASLA_ATTACK, false),
 	g_PuscaAttack(SKILL_PUSCA_ATTACK, false),
@@ -491,10 +536,10 @@ SkillHandlerManager::SkillHandlerManager ()
 
 	Assert(m_Size > 0);
 	
-	// ½ºÅ³ ÇÚµé·¯ ¹è¿­À» »ý¼ºÇÑ´Ù.
+	// ï¿½ï¿½Å³ ï¿½Úµé·¯ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 	m_SkillHandlers = new SkillHandler*[ m_Size ];
 	
-	// ½ºÅ³ ÇÚµé·¯ÀÇ ¹è¿­À» ÃÊ±âÈ­ÇÑ´Ù.
+	// ï¿½ï¿½Å³ ï¿½Úµé·¯ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½Ñ´ï¿½.
 	for (int i = 0 ; i < m_Size ; i ++) 
 		m_SkillHandlers[i] = NULL;
 			
@@ -510,13 +555,13 @@ SkillHandlerManager::~SkillHandlerManager ()
 		
 	Assert(m_SkillHandlers != NULL);
 
-	// ½ºÅ³ ÇÚµé·¯¸¦ °¢°¢ »èÁ¦ÇÑ´Ù.
+	// ï¿½ï¿½Å³ ï¿½Úµé·¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 	for (int i = 0 ; i < m_Size ; i ++) 
 	{
 		SAFE_DELETE(m_SkillHandlers[i]);
 	}
 	
-	// ½ºÅ³ÇÚµé·¯ ¹è¿­À» »èÁ¦ÇÑ´Ù.
+	// ï¿½ï¿½Å³ï¿½Úµé·¯ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 	SAFE_DELETE_ARRAY(m_SkillHandlers);
 			
 	__END_CATCH
@@ -529,11 +574,11 @@ void SkillHandlerManager::init ()
 {
 	__BEGIN_TRY
 		
-	// ±âº» °ø°Ý
+	// ï¿½âº» ï¿½ï¿½ï¿½ï¿½
 	addSkillHandler(&g_AttackMelee);
 	addSkillHandler(&g_AttackArms);
 
-	// °Ë °è¿­
+	// ï¿½ï¿½ ï¿½è¿­
 	addSkillHandler(&g_DoubleImpact);
 	addSkillHandler(&g_TripleSlasher);
 	addSkillHandler(&g_RainbowSlasher);
@@ -556,7 +601,7 @@ void SkillHandlerManager::init ()
 	//addSkillHandler(&g_FiveStormCrash);
 	//addSkillHandler(&g_HeavensSword);
 
-	// µµ°è¿­
+	// ï¿½ï¿½ï¿½è¿­
 	addSkillHandler(&g_SingleBlow);
 	addSkillHandler(&g_SpiralSlay);
 	addSkillHandler(&g_TripleBreak);
@@ -573,7 +618,7 @@ void SkillHandlerManager::init ()
 	addSkillHandler(&g_ShadowDancing);
 	addSkillHandler(&g_Typhoon);
 
-	// ±ºÀÎ °è¿­
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­
 	addSkillHandler(&g_QuickFire);
 	addSkillHandler(&g_DoubleShot);
 	addSkillHandler(&g_TripleShot);
@@ -589,7 +634,7 @@ void SkillHandlerManager::init ()
 	addSkillHandler(&g_CreateMine);
 	addSkillHandler(&g_ObservingEye);
 
-	// ÀÎÃ¦ °è¿­
+	// ï¿½ï¿½Ã¦ ï¿½è¿­
 	addSkillHandler(&g_CreateHolyWater);
 	addSkillHandler(&g_Light);
 	addSkillHandler(&g_DetectHidden);
@@ -610,7 +655,7 @@ void SkillHandlerManager::init ()
 	addSkillHandler(&g_Reflection);
 	addSkillHandler(&g_Hymn);
 
-	// Èú¸µ °è¿­
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­
 	addSkillHandler(&g_CureLightWounds);
 	addSkillHandler(&g_CurePoison);
 	addSkillHandler(&g_ProtectionFromPoison);
@@ -633,7 +678,7 @@ void SkillHandlerManager::init ()
 	//addSkillHandler(&g_MassCure);
 	//addSkillHandler(&g_MassHeal);
 
-	// ¹ìÇÁ °è¿­
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­
 	addSkillHandler(&g_BloodDrain);
 
 	addSkillHandler(&g_PoisonousHands);
@@ -1036,6 +1081,52 @@ void SkillHandlerManager::init ()
 	addSkillHandler(&g_PalusLongRangeMagic);
 	addSkillHandler(&g_GarumMagic);
 	addSkillHandler(&g_ClavieMagic);
+	addSkillHandler(&g_SiusCrash);
+	addSkillHandler(&g_LycanHowl);
+	addSkillHandler(&g_WideWildWolf);
+	addSkillHandler(&g_SmileofDeath);
+	// Dracula Castle monster skills
+	addSkillHandler(&g_LivingDeadBEchoEsper);
+	addSkillHandler(&g_TsarBlueRoseDevil);
+	addSkillHandler(&g_FolletPoisonFrame);
+	addSkillHandler(&g_FueFolletRedRoseDevil);
+	addSkillHandler(&g_DraculeTalonOfDracule);
+	addSkillHandler(&g_DraculeBloodyScarify2);
+	addSkillHandler(&g_DraculeBloodyCarpe);
+	// level 171/181 skill books
+	addSkillHandler(&g_BlazeWalk2);
+	addSkillHandler(&g_Gladiator);
+	addSkillHandler(&g_CrushingStorm);
+	addSkillHandler(&g_SatelliteBomb2);
+	addSkillHandler(&g_IntimateGrail2);
+	addSkillHandler(&g_HolyArmor2);
+	addSkillHandler(&g_Striking2);
+	addSkillHandler(&g_Bless2);
+	addSkillHandler(&g_GloryGround);
+	addSkillHandler(&g_PassingHeal2);
+	addSkillHandler(&g_GreatHeal2);
+	addSkillHandler(&g_DragonHurricane);
+	addSkillHandler(&g_LarStroke);
+	addSkillHandler(&g_GaeBulga);
+	addSkillHandler(&g_ViciousGuidance);
+	addSkillHandler(&g_SpectorInverse);
+	addSkillHandler(&g_DragonHurricane2);
+	addSkillHandler(&g_ChainOfDemon);
+	addSkillHandler(&g_BloodySkull);
+	addSkillHandler(&g_RageOfBlood);
+	addSkillHandler(&g_BatBreaker);
+	addSkillHandler(&g_ShadyDouble);
+	addSkillHandler(&g_AllysterWind);
+	addSkillHandler(&g_FlameSight);
+	addSkillHandler(&g_SpiralMegalith);
+	addSkillHandler(&g_Radchia);
+	addSkillHandler(&g_BreathOfDryad);
+	addSkillHandler(&g_ChakramHail);
+	addSkillHandler(&g_FlameSpike);
+	addSkillHandler(&g_Blizzard);
+	addSkillHandler(&g_Demolisher);
+	addSkillHandler(&g_Blizzard2);
+	addSkillHandler(&g_ChakramHail2);
 	
 	
 	__END_CATCH
@@ -1054,7 +1145,7 @@ void SkillHandlerManager::addSkillHandler (SkillHandler * pSkillHandler)
 		throw Error(msg.toString());
 	}
 	
-	// ½ºÅ³ÇÚµé·¯¸¦ µî·ÏÇÑ´Ù.
+	// ï¿½ï¿½Å³ï¿½Úµé·¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 	m_SkillHandlers[ pSkillHandler->getSkillType() ] = pSkillHandler;
 			
 	__END_CATCH
@@ -1067,7 +1158,7 @@ SkillHandler * SkillHandlerManager::getSkillHandler (SkillType_t SkillType)
 {
 	__BEGIN_TRY
 
-	// Wide Storm À» °¡Áö°í ÀÖÀ» °æ¿ì, Wide Ã³¸®´Â ¿ø·¡ ±â¼ú ¾È¿¡¼­ Ã³¸®ÇÑ´Ù.
+	// Wide Storm ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½, Wide Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½È¿ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ñ´ï¿½.
 /*	if ( SkillType == SKILL_DARKNESS_WIDE )
 	{
 		SkillType = SKILL_DARKNESS;

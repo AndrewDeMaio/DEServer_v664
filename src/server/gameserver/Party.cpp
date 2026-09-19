@@ -32,6 +32,9 @@
 #include "skill/EffectActivation.h"
 #include "skill/EffectGnomesWhisper.h"
 #include "skill/EffectHolyArmor.h"
+#include "skill/EffectHolyArmor2.h"
+#include "skill/EffectGladiator.h"
+#include "skill/EffectFlameSight.h"
 
 #include "EffectCanEnterGDRLair.h"
 
@@ -1752,6 +1755,191 @@ void Party::shareHolyArmor(Creature* pCaster, int DefBonus, int SkillLevel )
 
 	__END_CATCH
 }
+
+void Party::shareHolyArmor2(Creature* pCaster, int DefBonus, int SkillLevel )
+	throw (Error)
+{
+	__BEGIN_TRY
+
+	Zone*       pZone = pCaster->getZone();
+	ZoneCoord_t cx    = pCaster->getX();
+	ZoneCoord_t cy    = pCaster->getY();
+
+	list<Creature*> MemberList;
+
+	__ENTER_CRITICAL_SECTION(m_Mutex)
+
+	hash_map<string, Creature*>::const_iterator mitr = m_MemberMap.begin();
+	for (; mitr != m_MemberMap.end(); mitr++)
+	{
+		Creature* pCreature = mitr->second;
+		Assert(pCreature != NULL);
+		if (pCreature->getDistance(cx, cy) <= 8)
+		{
+			MemberList.push_back(pCreature);
+		}
+	}
+
+	if (MemberList.size() == 1)
+	{
+		m_Mutex.unlock();
+		return;
+	}
+
+	list<Creature*>::iterator litr = MemberList.begin();
+	for (; litr != MemberList.end(); litr++)
+	{
+		Creature* pCreature = (*litr);
+		Assert(pCreature != NULL);
+		Assert(pCreature->isSlayer());
+
+		if (pCreature != pCaster
+			&& !pCreature->isFlag(Effect::EFFECT_CLASS_HOLY_ARMOR)
+			&& !pCreature->isFlag(Effect::EFFECT_CLASS_HOLY_ARMOR_2))
+		{
+			int Duration = 12000;	// v9 Party::shareHolyArmor2
+			Slayer* pSlayer = dynamic_cast<Slayer*>(pCreature);
+			EffectHolyArmor2* pEffect = new EffectHolyArmor2(pSlayer);
+			pEffect->setDeadline( Duration );
+			pEffect->setDefBonus( DefBonus );
+			pSlayer->addEffect(pEffect);
+			pSlayer->setFlag(Effect::EFFECT_CLASS_HOLY_ARMOR_2);
+
+			SLAYER_RECORD prev;
+			pSlayer->getSlayerRecord(prev);
+			pSlayer->initAllStat();
+			pSlayer->sendModifyInfo(prev);
+
+			GCAddEffect gcAddEffect;
+			gcAddEffect.setObjectID(pSlayer->getObjectID());
+			gcAddEffect.setEffectID(Effect::EFFECT_CLASS_HOLY_ARMOR_2);
+			gcAddEffect.setDuration(Duration);
+			pZone->broadcastPacket(pSlayer->getX(), pSlayer->getY(), &gcAddEffect);
+		}
+	}
+
+	__LEAVE_CRITICAL_SECTION(m_Mutex)
+
+	__END_CATCH
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Gladiator: party members within Range tiles of the caster get its damage bonus (not the caster's protection
+// or HP bonus). A member's own Gladiator is left alone; a shared one is refreshed.
+//////////////////////////////////////////////////////////////////////////////
+void Party::shareGladiator(Creature* pCaster, int DamageBonus, int Range, int Duration)
+	throw (Error)
+{
+	__BEGIN_TRY
+
+	Zone*       pZone = pCaster->getZone();
+	ZoneCoord_t cx    = pCaster->getX();
+	ZoneCoord_t cy    = pCaster->getY();
+
+	list<Creature*> MemberList;
+
+	__ENTER_CRITICAL_SECTION(m_Mutex)
+
+	hash_map<string, Creature*>::const_iterator mitr = m_MemberMap.begin();
+	for (; mitr != m_MemberMap.end(); mitr++)
+	{
+		Creature* pCreature = mitr->second;
+		Assert(pCreature != NULL);
+		if (pCreature != pCaster
+			&& pCreature->isSlayer()
+			&& pCreature->getZone() == pZone
+			&& pCreature->getDistance(cx, cy) <= Range)
+		{
+			MemberList.push_back(pCreature);
+		}
+	}
+
+	list<Creature*>::iterator litr = MemberList.begin();
+	for (; litr != MemberList.end(); litr++)
+	{
+		Slayer* pSlayer = dynamic_cast<Slayer*>(*litr);
+		Assert(pSlayer != NULL);
+
+		EffectGladiator* pEffect = NULL;
+		if (pSlayer->isFlag(Effect::EFFECT_CLASS_GLADIATOR))
+		{
+			pEffect = dynamic_cast<EffectGladiator*>(pSlayer->findEffect(Effect::EFFECT_CLASS_GLADIATOR));
+			if (pEffect == NULL || !pEffect->isShared()) continue;
+
+			pEffect->setDeadline(Duration);
+			pEffect->setDamageBonus(max(pEffect->getDamageBonus(), DamageBonus));
+		}
+		else
+		{
+			pEffect = new EffectGladiator(pSlayer);
+			pEffect->setDeadline(Duration);
+			pEffect->setShared(true);
+			pEffect->setDamageBonus(DamageBonus);
+			pSlayer->addEffect(pEffect);
+			pSlayer->setFlag(Effect::EFFECT_CLASS_GLADIATOR);
+		}
+
+		SLAYER_RECORD prev;
+		pSlayer->getSlayerRecord(prev);
+		pSlayer->initAllStat();
+		pSlayer->sendRealWearingInfo();
+		pSlayer->sendModifyInfo(prev);
+
+		GCAddEffect gcAddEffect;
+		gcAddEffect.setObjectID(pSlayer->getObjectID());
+		gcAddEffect.setEffectID(Effect::EFFECT_CLASS_GLADIATOR);
+		gcAddEffect.setDuration(Duration);
+		pZone->broadcastPacket(pSlayer->getX(), pSlayer->getY(), &gcAddEffect);
+
+		GCOtherModifyInfo gcOtherModifyInfo;
+		makeGCOtherModifyInfo(&gcOtherModifyInfo, pSlayer, &prev);
+		pZone->broadcastPacket(pSlayer->getX(), pSlayer->getY(), &gcOtherModifyInfo, pSlayer);
+	}
+
+	__LEAVE_CRITICAL_SECTION(m_Mutex)
+
+	__END_CATCH
+}
+
+void Party::shareFlameSight(Creature* pCaster, int Duration)
+	throw (Error)
+{
+	__BEGIN_TRY
+
+	ZoneCoord_t cx = pCaster->getX();
+	ZoneCoord_t cy = pCaster->getY();
+
+	list<Creature*> MemberList;
+
+	__ENTER_CRITICAL_SECTION(m_Mutex)
+
+	// v9 Party::shareFlameSight: Ousters party members within 8 tiles that do not have it yet
+	hash_map<string, Creature*>::const_iterator mitr = m_MemberMap.begin();
+	for (; mitr != m_MemberMap.end(); mitr++)
+	{
+		Creature* pCreature = mitr->second;
+		Assert(pCreature != NULL);
+
+		if (pCreature != pCaster
+			&& pCreature->isOusters()
+			&& pCreature->getZone() == pCaster->getZone()
+			&& pCreature->getDistance(cx, cy) <= 8
+			&& !pCreature->isFlag(Effect::EFFECT_CLASS_FLAME_SIGHT))
+		{
+			MemberList.push_back(pCreature);
+		}
+	}
+
+	list<Creature*>::iterator litr = MemberList.begin();
+	for (; litr != MemberList.end(); litr++)
+	{
+		addFlameSight(*litr, Duration, NULL);
+	}
+
+	__LEAVE_CRITICAL_SECTION(m_Mutex)
+
+	__END_CATCH
+}
 	
 bool Party::shareWaterElementalHeal(Creature* pCaster, int HealPoint)
 	throw (Error)
@@ -2814,6 +3002,78 @@ void LocalPartyManager::shareHolyArmor(int PartyID, Creature* pCaster, int DefBo
 	Assert(pParty != NULL);
 
 	pParty->shareHolyArmor(pCaster, DefBonus, SkillLevel);
+
+	__LEAVE_CRITICAL_SECTION(m_Mutex);
+
+	__END_CATCH
+}
+
+void LocalPartyManager::shareHolyArmor2(int PartyID, Creature* pCaster, int DefBonus, int SkillLevel)
+	throw (Error)
+{
+	__BEGIN_TRY
+
+	__ENTER_CRITICAL_SECTION(m_Mutex);
+
+	hash_map<int, Party*>::const_iterator itr = m_PartyMap.find(PartyID);
+	if (itr == m_PartyMap.end())
+	{
+		m_Mutex.unlock();
+		return;
+	}
+
+	Party* pParty = itr->second;
+	Assert(pParty != NULL);
+
+	pParty->shareHolyArmor2(pCaster, DefBonus, SkillLevel);
+
+	__LEAVE_CRITICAL_SECTION(m_Mutex);
+
+	__END_CATCH
+}
+
+void LocalPartyManager::shareGladiator(int PartyID, Creature* pCaster, int DamageBonus, int Range, int Duration)
+	throw (Error)
+{
+	__BEGIN_TRY
+
+	__ENTER_CRITICAL_SECTION(m_Mutex);
+
+	hash_map<int, Party*>::const_iterator itr = m_PartyMap.find(PartyID);
+	if (itr == m_PartyMap.end())
+	{
+		m_Mutex.unlock();
+		return;
+	}
+
+	Party* pParty = itr->second;
+	Assert(pParty != NULL);
+
+	pParty->shareGladiator(pCaster, DamageBonus, Range, Duration);
+
+	__LEAVE_CRITICAL_SECTION(m_Mutex);
+
+	__END_CATCH
+}
+
+void LocalPartyManager::shareFlameSight(int PartyID, Creature* pCaster, int Duration)
+	throw (Error)
+{
+	__BEGIN_TRY
+
+	__ENTER_CRITICAL_SECTION(m_Mutex);
+
+	hash_map<int, Party*>::const_iterator itr = m_PartyMap.find(PartyID);
+	if (itr == m_PartyMap.end())
+	{
+		m_Mutex.unlock();
+		return;
+	}
+
+	Party* pParty = itr->second;
+	Assert(pParty != NULL);
+
+	pParty->shareFlameSight(pCaster, Duration);
 
 	__LEAVE_CRITICAL_SECTION(m_Mutex);
 

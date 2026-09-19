@@ -131,7 +131,7 @@ bool CheckReflection(Creature* pAttacker, Creature* pTargetCreature, SkillType_t
 
 	// 기술이 걸려있고, 현재 마비 상태가 아니라면...
 	if (pTargetCreature->isFlag(Effect::EFFECT_CLASS_REFLECTION) 
-		&& !pTargetCreature->isFlag(Effect::EFFECT_CLASS_PARALYZE))
+		&& !pTargetCreature->isFlag(Effect::EFFECT_CLASS_PARALYZE) && !pTargetCreature->isFlag(Effect::EFFECT_CLASS_CHAIN_OF_DEMON))
 	{
 		Slayer*           pTargetSlayer          = dynamic_cast<Slayer*>(pTargetCreature);
 		SlayerSkillSlot*        pSkillSlot = pTargetSlayer->hasSkill(SKILL_REFLECTION);

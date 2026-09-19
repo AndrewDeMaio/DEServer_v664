@@ -169,6 +169,16 @@ SkillResultType DeleoEfficio::execute(Ousters* pOusters, ObjectID_t TargetObject
 				Effect::EFFECT_CLASS_DANCING_SWORD,
 				Effect::EFFECT_CLASS_SNIPING_MODE,
 				Effect::EFFECT_CLASS_REDIANCE,
+				// level 171/181 skill-book buffs and Chain of Demon
+				Effect::EFFECT_CLASS_BLESS_2,
+				Effect::EFFECT_CLASS_STRIKING_2,
+				Effect::EFFECT_CLASS_HOLY_ARMOR_2,
+				Effect::EFFECT_CLASS_GLADIATOR,
+				Effect::EFFECT_CLASS_CHAIN_OF_DEMON,
+				Effect::EFFECT_CLASS_RAGE_OF_BLOOD,
+				Effect::EFFECT_CLASS_ALLYSTER_WIND,
+				Effect::EFFECT_CLASS_FLAME_SIGHT,
+				Effect::EFFECT_CLASS_BREATH_OF_DRYAD,
 				Effect::EFFECT_CLASS_MAX
 			};
 

@@ -412,7 +412,7 @@ void CGSelectWayPointHandler::execute(CGSelectWayPoint* pPacket , Player* pPlaye
 			else
 			{
 				// 석화 상태일 경우 생깐다.
-				if ( pCreature->isFlag( Effect::EFFECT_CLASS_PARALYZE ) || pCreature->isFlag( Effect::EFFECT_CLASS_STUN ) )
+				if ( pCreature->isFlag( Effect::EFFECT_CLASS_PARALYZE ) || pCreature->isFlag( Effect::EFFECT_CLASS_STUN ) || pCreature->isFlag( Effect::EFFECT_CLASS_CHAIN_OF_DEMON ) )
 				{
 					bCancel = true;
 				}

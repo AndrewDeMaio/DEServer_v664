@@ -14,294 +14,80 @@ BossStage_Boss =
 	}
 }
 
-BossStage_Monster = 
+-- After the race war Onibla's servants attack in waves in front of the green gates: the pocket between the two
+-- gate ramps, which stay blocked by RaceWarBlockPos. Each wave spawns once the previous one is dead, and the gates
+-- open to Onibla after the last one. Counts set by the user 2026-09-14: 2 Villain Lady, then 1 Agony Child +
+-- 1 Agony's Hound, then 3 Oni Spaniel + 12 Big Tor.
+OniblaWaves =
 {
 	{
-		MonsterInfo = AgonyChild,
-		MonsterPos = 
+		Message = "Villain Ladies emerge before the green gates!",
+		Groups =
 		{
-			{54,26},
-			{63,33},
-			{72,26},
-			{50,38},
-			{77,37}
-			
+			{
+				MonsterInfo = VillaninLady,
+				MonsterPos = { {61,66}, {65,66} }
+			}
 		}
 	},
 	{
-		MonsterInfo = AgonysHound,
-		MonsterPos = 
+		Message = "An Agony Child and its Hound rush the gates!",
+		Groups =
 		{
-			{53,27},
-			{54,28},
-			{55,27},
-			{62,34},
-			{63,35},
-			{64,34},
-			{71,27},
-			{72,28},
-			{73,27},
-			{48,33},
-			{47,34},
-			{48,36},
-			{80,33},
-			{80,35},
-			{79,35}
+			{
+				MonsterInfo = AgonyChild,
+				MonsterPos = { {63,65} }
+			},
+			{
+				MonsterInfo = AgonysHound,
+				MonsterPos = { {63,67} }
+			}
 		}
 	},
 	{
-		MonsterInfo = VillaninLady,
-		MonsterPos = 
+		Message = "Oni Spaniels and Big Tors charge the gates!",
+		Groups =
 		{
-			{49,35},
-			{79,34},
-			{57,25},
-			{59,27},
-			{67,26},
-			{69,24},
-			{62,42},
-			{65,42},
-			{39,46},
-			{87,46}
-		}
-	},
-	{
-		MonsterInfo = OniSpaniel,
-		MonsterPos = 
-		{
-			{75,54},
-			{52,55},
-			{53,39},
-			{74,38},
-			{63,44},
-			{40,45},
-			{88,47},
-			{64,27}
-		}
-	},
-	{
-		MonsterInfo = Bigtore,
-		MonsterPos = 
-		{
-			{73,54},
-			{74,55},
-			{75,56},
-			{52,57},
-			{53,56},
-			{54,55},
-			{54,40},
-			{53,41},
-			{52,40},
-			{73,39},
-			{74,40},
-			{75,39},
-			{64,44},
-			{64,45},
-			{63,45},
-			{39,47},
-			{40,47},
-			{41,46},
-			{86,47},
-			{87,48},
-			{88,48},
-			{63,28},
-			{64,28},
-			{65,28}
+			{
+				MonsterInfo = OniSpaniel,
+				MonsterPos = { {61,65}, {63,65}, {65,65} }
+			},
+			{
+				MonsterInfo = Bigtore,
+				MonsterPos = { {63,69}, {65,68}, {61,69}, {65,70}, {63,71}, {61,71}, {59,68}, {67,68}, {59,66}, {59,70}, {65,72}, {67,66} }
+			}
 		}
 	}
 }
 
-NoneSlayer_MonsterPos = 
+-- The boss room itself now holds only Onibla (BossStage_Boss); its old monster groups moved to OniblaWaves.
+BossStage_Monster = {}
+
+-- Race war guards, spawned for every race with nobody in the dungeon. User's counts (2026-09-14): every side holds
+-- 1 Gussion, 1 Morgoth, 1 Chief Mum Rimmon and 1 Chief Mount Crag, 4 per race (the Ousters side's Shaman Oaf became
+-- a Mum Rimmon; Lich Jel, Hell Grouper, Nod Copila and Ruin Guardian were removed).
+NoneSlayer_MonsterPos =
 {
-	{
-		MonsterInfo = CloneGussion,
-		MonsterPos = 
-		{
-			{45,71},
-			{45,77},
-			{39,77}
-		}
-	},
-	{
-		MonsterInfo = CloneMorgothInfo,
-		MonsterPos = 
-		{
-			{46,70},
-			{44,78},
-			{38,78},
-			{39,71}
-			
-		}
-	},
-	{
-		MonsterInfo = ChiefMumRimmon,
-		MonsterPos = 
-		{
-			{46,71},
-			{45,78},
-			{39,78},
-			{39,70}
-		}
-	},
-	{
-		MonsterInfo = ChiefMountCrag,
-		MonsterPos = 
-		{
-			{45,70},
-			{44,79},
-			{38,76},
-			{40,70}
-		}
-	},
-	{
-		MonsterInfo = ChiefLichJel,
-		MonsterPos = 
-		{
-			{45,69},
-			{46,78},
-			{44,80},
-			{37,76},
-			{39,69}
-		}
-	},
-	{
-		MonsterInfo = HellGrouper,
-		MonsterPos = 
-		{
-			{44,72},
-			{43,76},
-			{40,76},
-			{41,72}
-		}
-	}
+	{ MonsterInfo = CloneGussion,     MonsterPos = { {45,71} } },
+	{ MonsterInfo = CloneMorgothInfo, MonsterPos = { {38,78} } },
+	{ MonsterInfo = ChiefMumRimmon,   MonsterPos = { {45,78} } },
+	{ MonsterInfo = ChiefMountCrag,   MonsterPos = { {40,70} } }
 }
 
-NoneVampire_MonsterPos = 
+NoneVampire_MonsterPos =
 {
-	{
-		MonsterInfo = CloneGussion,
-		MonsterPos = 
-		{
-			{62,114},
-			{60,105},
-			{65,105}
-		}
-	},
-	{
-		MonsterInfo = CloneMorgothInfo,
-		MonsterPos = 
-		{
-			{62,114},
-			{59,111},
-			{67,111},
-			{61,105},
-			{64,105}
-		}
-	},
-	{
-		MonsterInfo = ChiefMumRimmon,
-		MonsterPos = 
-		{
-			{64,114},
-			{58,111},
-			{68,110},
-			{66,105}
-		}
-	},
-	{
-		MonsterInfo = ChiefMountCrag,
-		MonsterPos = 
-		{
-			{63,113},
-			{58,110},
-			{67,110},
-			{59,105}
-		}
-	},
-	{
-		MonsterInfo = NodCopila,
-		MonsterPos = 
-		{
-			{57,110},
-			{66,110},
-			{59,106},
-			{66,106}
-		}
-	},
-	{
-		MonsterInfo = HellGrouper,
-		MonsterPos = 
-		{
-			{59,110},
-			{58,111},
-			{60,106},
-			{65,106}
-		}
-	}
+	{ MonsterInfo = CloneGussion,     MonsterPos = { {62,114} } },
+	{ MonsterInfo = CloneMorgothInfo, MonsterPos = { {59,111} } },
+	{ MonsterInfo = ChiefMumRimmon,   MonsterPos = { {66,105} } },
+	{ MonsterInfo = ChiefMountCrag,   MonsterPos = { {67,110} } }
 }
 
-NoneOusters_MonsterPos = 
+NoneOusters_MonsterPos =
 {
-	{
-		MonsterInfo = CloneGussion,
-		MonsterPos = 
-		{
-			{82,72},
-			{82,78},
-			{88,79},
-			{88,71}
-		}
-	},
-	{
-		MonsterInfo = CloneMorgothInfo,
-		MonsterPos = 
-		{
-			{81,71},
-			{87,78}
-		}
-	},
-	{
-		MonsterInfo = ChiefShamanOaf,
-		MonsterPos = 
-		{
-			{82,73},
-			{81,77},
-			{89,78},
-			{87,70}
-		}
-	},
-	{
-		MonsterInfo = ChiefMountCrag,
-		MonsterPos = 
-		{
-			{83,71},
-			{83,79},
-			{87,80},
-			{89,72}
-		}
-	},
-	{
-		MonsterInfo = ChiefLichJel,
-		MonsterPos = 
-		{
-			{82,80},
-			{81,79},
-			{80,78},
-			{87,72},
-			{88,73}
-		}
-	},
-	{
-		MonsterInfo = RuinGuardian,
-		MonsterPos = 
-		{
-			{80,72},
-			{81,73},
-			{82,74},
-			{86,79},
-			{87,81}
-		}
-	}
+	{ MonsterInfo = CloneGussion,     MonsterPos = { {82,72} } },
+	{ MonsterInfo = CloneMorgothInfo, MonsterPos = { {87,78} } },
+	{ MonsterInfo = ChiefMumRimmon,   MonsterPos = { {81,77} } },
+	{ MonsterInfo = ChiefMountCrag,   MonsterPos = { {89,72} } }
 }
 
 	STAGE_STATE_INIT				= 0
@@ -309,6 +95,7 @@ NoneOusters_MonsterPos =
 	STAGE_STATE_RACE_WAR			= 2
 	STAGE_STATE_OPEN_ONIBLA_ROOM	= 30
 	STAGE_STATE_ATTACK_ONIBLA		= 31
+	STAGE_STATE_GATE_WAVES		= 32
 	STAGE_STATE_WARP_TO_GET_OUT		= 4
 	STAGE_STATE_FINISH				= 5
 	
@@ -352,6 +139,10 @@ NoneOusters_MonsterPos =
 	NoneOusters_MonsterList = {}
 	BossStage_BossList = {}
 	BossStage_MonsterList = {}
+	WaveMonsterList = {}
+	WaveIndex = 0
+	WaveInProgress = false
+	WaveDelay = 10							-- seconds before each gate wave (after the race war or a cleared wave)
 	
 function OnInitializeVariables(ZoneCreateInfo)
 
@@ -371,6 +162,13 @@ function OnInitializeVariables(ZoneCreateInfo)
 --	ZoneCreateInfo.EmptyTimeOut = 10 -- unit : seconds
 	
 	DEScriptZone:SetTimer(1, 1000 * DoungeonFirstStartTime, 1)
+
+	-- *command openEisen / eisenStatus (CGSayHandler.cpp) reach this zone only through these
+	-- whiteboard keys. They are created here, before any C++ access, so the C++ side only
+	-- updates existing keys. Timer 101 publishes the stage and serves open requests.
+	DEScript:WriteIntegerOnWhiteBoard("Eisen.OpenRequest", 0)
+	DEScript:WriteIntegerOnWhiteBoard("Eisen.Stage", StageStat)
+	DEScriptZone:SetTimer(101, 1000 * 5, 1)
 end 
 
 function OnInitialize()
@@ -486,6 +284,23 @@ function OnKillCreature(AttackerCreature, DeadCreature)
 		if NoneRaceCheck() == 1 and MonsterCount == 0  then
 			
 			StartMisssionOniblaRoom()
+		end
+	end
+
+	if StageStat == STAGE_STATE_GATE_WAVES or StageStat == STAGE_STATE_FINISH then
+		CheckMissionAllKill(DeadCreature.ObjectID, WaveMonsterList)
+	end
+
+	if StageStat == STAGE_STATE_GATE_WAVES then
+		for i, G in ipairs(VillaninLadyGhostList) do
+			if G == DeadCreature.ObjectID then
+				table.remove(VillaninLadyGhostList, i)
+				break
+			end
+		end
+
+		if WaveInProgress and table.maxn(WaveMonsterList) == 0 then
+			GateWaveCleared()
 		end
 	end
 
@@ -744,6 +559,17 @@ function OnTimer(TimerID)
 		OustersCount = 0
 		
 		BossDeadStat = false
+
+		-- every run starts with empty monster lists (object IDs from the previous run are gone)
+		NoneSlayer_MonsterList = {}
+		NoneVampire_MonsterList = {}
+		NoneOusters_MonsterList = {}
+		BossStage_BossList = {}
+		BossStage_MonsterList = {}
+		WaveMonsterList = {}
+		VillaninLadyGhostList = {}
+		WaveIndex = 0
+		WaveInProgress = false
 		
 		CloseBossRoom()
 		CloseBossRoomExit()
@@ -754,12 +580,13 @@ function OnTimer(TimerID)
 		DEScriptZone:SetPKZone(false)
 		
 		-- DEScriptZone:BroadcastSystemMessage(0, "아이센 지하  4층이 오픈 되었습니다.") by viva
-		DEScriptZone:BroadcastSystemMessage(0, "Eisen dungeon 4F is open now.")
+		EisenReminderCount = 0
+		DEScriptZone:BroadcastSystemMessage(0, "Eisen Dungeon B4F is now open! Enter through the hidden door on Eisen Dungeon B3F within " .. math.floor(DoungeonWaitTime / 60) .. " minutes.")
 		
 		DoungeonStartTime = DEScript:GetCurrentTime()
 		DEScriptZone:SetTimer(2, 1000 * DoungeonWaitTime, 1)
 				
-		DEScriptZone:SetTimer(100, 1000 * 10, 1)	-- 입구 오픈 알림 
+		DEScriptZone:SetTimer(100, 1000 * 120, 1)	-- world reminder while entry is open
 	end
 	
 	if TimerID == 2 then
@@ -806,6 +633,8 @@ function OnTimer(TimerID)
 		DEScriptZone:KillTimer(4)
 		
 		StageStat = STAGE_STATE_WARP_TO_GET_OUT
+		DEScriptZone:KillTimer(6)
+		WaveInProgress = false
 		
 		DEScript:WriteFileLog(LogFileName, "Warp To Get Out")
 		WriteCurrentUser()
@@ -827,16 +656,40 @@ function OnTimer(TimerID)
 		DEScriptZone:SetTimer(1, 1000 * DoungeonReStartTime, 1)
 	end
 	
+	if TimerID == 6 then
+		DEScriptZone:KillTimer(6)
+		SpawnGateWave()
+	end
+
+	if TimerID == 101 then
+		DEScript:WriteIntegerOnWhiteBoard("Eisen.Stage", StageStat)
+		if DEScript:ReadIntegerOnWhiteBoard("Eisen.OpenRequest", 0) == 1 then
+			DEScript:WriteIntegerOnWhiteBoard("Eisen.OpenRequest", 0)
+			if StageStat == STAGE_STATE_INIT or StageStat == STAGE_STATE_FINISH then
+				DEScript:WriteFileLog(LogFileName, "Opened by *command openEisen")
+				OnTimer(1)
+				DEScript:WriteIntegerOnWhiteBoard("Eisen.Stage", StageStat)
+			end
+		end
+	end
+	
 	if TimerID == 100 then
 	
 		if StageStat == STAGE_STATE_WAIT_TIME then
-			DEScriptZone:BroadcastSystemMessage(0, "아이센 지하  4층이 오픈 되었습니다.") -- by viva
-			-- DEScriptZone:BroadcastSystemMessage(0, "Eisen dungeon 4F is open now.")
+			EisenReminderCount = (EisenReminderCount or 0) + 1
+			local MinutesLeft = math.floor(DoungeonWaitTime / 60) - 2 * EisenReminderCount
+			if MinutesLeft > 0 then
+				DEScriptZone:BroadcastSystemMessage(0, "Eisen Dungeon B4F closes to new entry in " .. MinutesLeft .. " minutes.")
+			end
 		end
 	end
 end
 
 function OnSay(CreatureInfo, Mesg)
+	-- English client dialogue gives the door spells in English; accept those too,
+	-- ignoring case, surrounding spaces and a trailing . or !
+	local Phrase = string.lower((string.gsub(Mesg, "^%s*(.-)[%s%.!]*$", "%1")))
+
 
 	HaveItemInfo1 = 
 	{
@@ -852,7 +705,7 @@ function OnSay(CreatureInfo, Mesg)
 		ItemCount = 1
 	}
 	
-	if Mesg == "피와 육체가 하나의 줄기를 이룬다" then	
+	if Mesg == "피와 육체가 하나의 줄기를 이룬다" or Phrase == "blood and flesh form a single stem" then
 		if IsOpenLeftSecretRoom == false and DEScriptZone:HaveItem(CreatureInfo, HaveItemInfo1) and CanDoorOpen(LeftDoorPosX, LeftDoorPosY, CreatureInfo.X, CreatureInfo.Y) then
 			TakeItemInfo1 = {}
 			TakeItemInfo1 = HaveItemInfo1
@@ -863,7 +716,7 @@ function OnSay(CreatureInfo, Mesg)
 		end
 	end
 	
-	if Mesg == "암흑과 어둠의 비밀이 그대를 비춘다" then		
+	if Mesg == "암흑과 어둠의 비밀이 그대를 비춘다" or Phrase == "the secret of blackness and darkness shines upon you" then
 		if IsOpenRightSecretRoom == false and DEScriptZone:HaveItem(CreatureInfo, HaveItemInfo2) and CanDoorOpen(RightDoorPosX, RightDoorPosY, CreatureInfo.X, CreatureInfo.Y) then
 			TakeItemInfo2 = {}
 			TakeItemInfo2 = HaveItemInfo2
@@ -1286,12 +1139,67 @@ function StartMisssionOniblaRoom()
 	if StageStat ~= STAGE_STATE_RACE_WAR then
 		return
 	end
-	
+
+	-- The race war is over: three waves attack in front of the green gates before they open to Onibla.
+	DEScript:WriteFileLog(LogFileName, "Start Gate Waves")
+	WriteCurrentUser()
+
+	StageStat = STAGE_STATE_GATE_WAVES
+	WaveIndex = 0
+	WaveInProgress = false
+	WaveMonsterList = {}
+
+	DEScriptZone:BroadcastSystemMessageInZone(4, "Onibla's servants gather before the green gates...")
+	DEScriptZone:SetTimer(6, 1000 * WaveDelay, 1)
+end
+
+function SpawnGateWave()
+	if StageStat ~= STAGE_STATE_GATE_WAVES or WaveInProgress then
+		return
+	end
+
+	WaveIndex = WaveIndex + 1
+	local Wave = OniblaWaves[WaveIndex]
+	if Wave == nil then
+		GateWavesDone()
+		return
+	end
+
+	DEScript:WriteFileLog(LogFileName, "Gate Wave "..WaveIndex)
+	WriteCurrentUser()
+
+	DEScriptZone:BroadcastSystemMessageInZone(4, Wave.Message)
+
+	WaveMonsterList = {}
+	MonsterDispose(Wave.Groups, WaveMonsterList)
+	WaveInProgress = true
+
+	-- Nothing could be placed: go straight on instead of waiting on an empty wave. This must not re-arm timer 6,
+	-- because the KillTimer(6) queued by the running timer 6 handler would cancel it on the next heartbeat.
+	if table.maxn(WaveMonsterList) == 0 then
+		WaveInProgress = false
+		SpawnGateWave()
+	end
+end
+
+function GateWaveCleared()
+	WaveInProgress = false
+
+	if WaveIndex < table.maxn(OniblaWaves) then
+		DEScriptZone:BroadcastSystemMessageInZone(4, "The wave is broken, but more are coming!")
+		DEScriptZone:SetTimer(6, 1000 * WaveDelay, 1)
+	else
+		GateWavesDone()
+	end
+end
+
+function GateWavesDone()
 	DEScript:WriteFileLog(LogFileName, "Start To Attack Onibla")
 	WriteCurrentUser()
-	
+
 	StageStat = STAGE_STATE_OPEN_ONIBLA_ROOM
-	
+
+	DEScriptZone:BroadcastSystemMessageInZone(4, "The green gates are open!")
 	OpenBossRoom()
 	BossRoomAction()
 end

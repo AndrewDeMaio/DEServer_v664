@@ -106,8 +106,9 @@ SkillResultType VenomCircle::execute(Vampire* pVampire, VampireSkillSlot* pVampi
 							}
 
 							int success = 0;
+							// monsters are always hit (v9); the level roll below only applies to players
 							if(pTargetCreature->isMonster())
-								success = max( 0, ( 110 - ( pMonster->getLevel() - pVampire->getLevel() ) * 5 ) );
+								success = 100;
 							else if(pTargetCreature->isSlayer())
 							{
 								Slayer* pSlayer = dynamic_cast<Slayer*>(pTargetCreature);
@@ -153,7 +154,7 @@ SkillResultType VenomCircle::execute(Vampire* pVampire, VampireSkillSlot* pVampi
 								GCAddEffect gcAddEffect;
 								gcAddEffect.setObjectID(pTargetCreature->getObjectID());
 								gcAddEffect.setEffectID( Effect::EFFECT_CLASS_POISON);
-								gcAddEffect.setDuration(output.Duration);
+								gcAddEffect.setDuration(25);	// the green blink on the hit creature: 2.5 s
 								pZone->broadcastPacket( pTargetCreature->getX(), pTargetCreature->getY(), &gcAddEffect);
 							}
 						}

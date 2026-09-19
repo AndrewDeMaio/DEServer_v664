@@ -179,6 +179,11 @@
 
 #include "ActionEnterPVPSystem.h"
 #include "ActionPVPSystemSignUp.h"
+
+// Ruper Island
+#include "ActionMonsterSummon.h"
+// Dracula Castle
+#include "ActionEnterWithItem.h"
 ////////////////////////////////////////////////////////////////////////////////
 // constructor
 ////////////////////////////////////////////////////////////////////////////////
@@ -190,10 +195,10 @@ ActionFactoryManager::ActionFactoryManager ()
 
 	Assert(m_Size > 0);
 	
-	// ¾×¼ÇÆÑÅä¸®¹è¿­À» »ý¼ºÇÑ´Ù.
+	// ï¿½×¼ï¿½ï¿½ï¿½ï¿½ä¸®ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 	m_Factories = new ActionFactory*[ m_Size ];
 	
-	// ÆÑÅä¸®¿¡ ´ëÇÑ Æ÷ÀÎÅÍµéÀ» NULL ·Î ÃÊ±âÈ­ÇÑ´Ù.
+	// ï¿½ï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ NULL ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½Ñ´ï¿½.
 	for (int i = 0 ; i < m_Size ; i ++) 
 		m_Factories[i] = NULL;
 			
@@ -211,7 +216,7 @@ ActionFactoryManager::~ActionFactoryManager ()
 		
 	Assert(m_Factories != NULL);
 
-	// °¢°¢ÀÇ ¾×¼ÇÆÑÅä¸®µéÀ» »èÁ¦ÇÑ´Ù.
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¼ï¿½ï¿½ï¿½ï¿½ä¸®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 	for (int i = 0 ; i < m_Size ; i ++) {
 		if (m_Factories[i] != NULL) {
 			delete m_Factories[i];
@@ -219,7 +224,7 @@ ActionFactoryManager::~ActionFactoryManager ()
 		}
 	}
 	
-	// ¾×¼ÇÆÑÅä¸®¹è¿­À» »èÁ¦ÇÑ´Ù.
+	// ï¿½×¼ï¿½ï¿½ï¿½ï¿½ä¸®ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 	delete [] m_Factories;
 	m_Factories = NULL;
 			
@@ -228,7 +233,7 @@ ActionFactoryManager::~ActionFactoryManager ()
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// Á¤ÀÇµÈ ¸ðµç ¾×¼ÇÆÑÅä¸®µéÀ» ¿©±â¿¡ Ãß°¡ÇÑ´Ù.
+// ï¿½ï¿½ï¿½Çµï¿½ ï¿½ï¿½ï¿½ ï¿½×¼ï¿½ï¿½ï¿½ï¿½ä¸®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½ß°ï¿½ï¿½Ñ´ï¿½.
 ////////////////////////////////////////////////////////////////////////////////
 void ActionFactoryManager::init ()
 	 throw (Error)
@@ -329,8 +334,8 @@ void ActionFactoryManager::init ()
 	addFactory(new ActionStartPetQuestFactory());
 
 	addFactory(new ActionPetDepositFactory());
-	/* Æê º¸°üÇÔ : ¾×¼ÇÅëÇÕ PetDeposit¸¸ ¾²±â·Î ÇÑ´Ù. Withdraw´Â ¾²Áö ¾Ê´Â´Ù. */
-	/* 2004³â 5¿ù 13ÀÏ - ½Â¸í, ¿ë±Ù */
+	/* ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : ï¿½×¼ï¿½ï¿½ï¿½ï¿½ï¿½ PetDepositï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½. Withdrawï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Â´ï¿½. */
+	/* 2004ï¿½ï¿½ 5ï¿½ï¿½ 13ï¿½ï¿½ - ï¿½Â¸ï¿½, ï¿½ï¿½ï¿½ */
 	/* addFactory(new ActionPetWithdrawFactory());	*/
 
 	addFactory(new ActionEnterEventZoneFactory());
@@ -409,12 +414,18 @@ void ActionFactoryManager::init ()
 	// 20080829
 	addFactory(new ActionBlitzRegisterFactory() );
 	addFactory(new ActionBlitzRewardFactory() );
-	// 20080925 - °¡À»ÀÌº¥Æ® (¸ÞÀÌÇÃ ÀÌº¥Æ®)
+	// 20080925 - ï¿½ï¿½ï¿½ï¿½ï¿½Ìºï¿½Æ® (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ®)
 	addFactory(new ActionMapleRegisterFactory() );
 	addFactory(new ActionMapleRewardFactory() );
 	
 	addFactory(new ActionEnterPVPSystemFactory());
 	addFactory(new ActionPVPSystemSignUpFactory());
+
+	// Ruper Island
+	addFactory(new ActionMonsterSummonFactory());
+
+	// Dracula Castle
+	addFactory(new ActionEnterWithItemFactory());
 	__END_CATCH
 }
 
@@ -437,7 +448,7 @@ void ActionFactoryManager::addFactory (ActionFactory * pFactory)
 
 	cout << "ActionInfo : " << pFactory->getActionName() << endl;
 	
-	// ¾×¼ÇÆÑÅä¸®¸¦ µî·ÏÇÑ´Ù.
+	// ï¿½×¼ï¿½ï¿½ï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 	m_Factories[ pFactory->getActionType() ] = pFactory;
 			
 	__END_CATCH
@@ -452,8 +463,8 @@ Action * ActionFactoryManager::createAction (ActionType_t actionType) const
 {
 	__BEGIN_TRY
 
-	// ¾×¼Ç Å¸ÀÔÀÌ ¹üÀ§¸¦ ³Ñ¾î¼¶À¸·Î ÀÎÇØ¼­ Seg.Fault °¡ ¹ß»ýÇÏÁö ¾Êµµ·Ï.
-	// ÀÌ·± »ç¿ëÀÚ´Â ´çÀå Â©¶ó¾ß ÇÑ´Ù.
+	// ï¿½×¼ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾î¼¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ Seg.Fault ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½.
+	// ï¿½Ì·ï¿½ ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ ï¿½ï¿½ï¿½ï¿½ Â©ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
 	if (actionType >= m_Size || m_Factories[actionType] == NULL) 
 	{
 		StringStream msg;
@@ -476,8 +487,8 @@ string ActionFactoryManager::getActionName (ActionType_t actionType) const
 {
 	__BEGIN_TRY
 
-	// ¾×¼Ç Å¸ÀÔÀÌ ¹üÀ§¸¦ ³Ñ¾î¼¶À¸·Î ÀÎÇØ¼­ Seg.Fault °¡ ¹ß»ýÇÏÁö ¾Êµµ·Ï.
-	// ÀÌ·± »ç¿ëÀÚ´Â ´çÀå Â©¶ó¾ß ÇÑ´Ù.
+	// ï¿½×¼ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾î¼¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ Seg.Fault ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½.
+	// ï¿½Ì·ï¿½ ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ ï¿½ï¿½ï¿½ï¿½ Â©ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
 	if (actionType >= m_Size || m_Factories[actionType] == NULL) 
 	{
 		StringStream msg;

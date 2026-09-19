@@ -81,6 +81,12 @@
 #include "skill/EffectSharpChakram.h"
 #include "skill/EffectWhitsuntide.h"
 #include "skill/EffectIntimateGrail.h"
+#include "skill/EffectIntimateGrail2.h"
+#include "skill/EffectBless2.h"
+#include "skill/EffectStriking2.h"
+#include "skill/EffectHolyArmor2.h"
+#include "skill/EffectGladiator.h"
+#include "skill/EffectAllysterWind.h"
 #include "skill/EffectPartyAura.h"
 #include "skill/EffectBloodsSymposionAttack.h"
 #include "skill/EffectBloodyShout.h"
@@ -244,6 +250,16 @@ void Slayer::initAllStat(int numPartyMember) throw()
 			m_INT[ATTR_CURRENT] += getPercentValue( m_INT[ATTR_CURRENT], pBless->getINTBonus() );
 			cout << "BLESS효과 적용후 - STR =" << m_STR[ATTR_CURRENT] << ", DEX = " << m_DEX[ATTR_CURRENT] << ", INT = " << m_INT[ATTR_CURRENT] << endl;
 			//-
+		}
+	}
+	if (isFlag(Effect::EFFECT_CLASS_BLESS_2))
+	{
+		EffectBless2* pBless2 = dynamic_cast<EffectBless2*>(findEffect(Effect::EFFECT_CLASS_BLESS_2));
+		if (pBless2 != NULL)
+		{
+			m_STR[ATTR_CURRENT] += getPercentValue( m_STR[ATTR_CURRENT], pBless2->getSTRBonus() );
+			m_DEX[ATTR_CURRENT] += getPercentValue( m_DEX[ATTR_CURRENT], pBless2->getDEXBonus() );
+			m_INT[ATTR_CURRENT] += getPercentValue( m_INT[ATTR_CURRENT], pBless2->getINTBonus() );
 		}
 	}
 	if (isFlag(Effect::EFFECT_CLASS_POTENTIAL_EXPLOSION))
@@ -799,6 +815,35 @@ void Slayer::initAllStat(int numPartyMember) throw()
 		}
 	}
 
+	if (isFlag(Effect::EFFECT_CLASS_STRIKING_2))
+	{
+		EffectStriking2* pStriking2 = dynamic_cast<EffectStriking2*>(findEffect(Effect::EFFECT_CLASS_STRIKING_2));
+		if (pStriking2 != NULL)
+		{
+			Damage_t   DamageBonus  = pStriking2->getDamageBonus();
+
+			if (pWeapon != NULL && pStriking2->isTargetItem( pWeapon ) )
+			{
+				m_Damage[ATTR_CURRENT] = min(SLAYER_MAX_DAMAGE, m_Damage[ATTR_CURRENT] + DamageBonus);
+				m_Damage[ATTR_MAX]     = min(SLAYER_MAX_DAMAGE, m_Damage[ATTR_MAX] + DamageBonus);
+
+				// same as Striking: re-show the effect when the buffed weapon is (re)equipped
+				GCAddEffect gcAddEffect;
+				gcAddEffect.setObjectID(m_ObjectID);
+				gcAddEffect.setEffectID(Effect::EFFECT_CLASS_STRIKING_2);
+				gcAddEffect.setDuration(pStriking2->getRemainDuration());
+				m_pZone->broadcastPacket(m_X, m_Y, &gcAddEffect);
+			}
+			else
+			{
+				GCRemoveEffect gcRemoveEffect;
+				gcRemoveEffect.setObjectID(m_ObjectID);
+				gcRemoveEffect.addEffectList(Effect::EFFECT_CLASS_STRIKING_2);
+				m_pZone->broadcastPacket(getX(), getY(), &gcRemoveEffect);
+			}
+		}
+	}
+
 	if (isFlag(Effect::EFFECT_CLASS_BLOOD_DRAIN))
 	{
 		int DefensePenalty    = getPercentValue(m_Defense[ATTR_CURRENT],    20);
@@ -995,6 +1040,20 @@ void Slayer::initAllStat(int numPartyMember) throw()
 			m_Defense[ATTR_CURRENT]    = max(0, m_Defense[ATTR_CURRENT] - DefensePenalty);
 		}
 	}
+	if (isFlag(Effect::EFFECT_CLASS_GLADIATOR))
+	{
+		EffectGladiator* pGladiator = dynamic_cast<EffectGladiator*>(findEffect(Effect::EFFECT_CLASS_GLADIATOR));
+		if ( pGladiator != NULL )
+		{
+			// Gladiator: the caster gets protection + bonus% and max HP + bonus; the caster and the party
+			// members it was shared with get weapon damage + flat bonus (shared copies carry only that)
+			int ProtectionBonus = getPercentValue(m_Protection[ATTR_CURRENT], pGladiator->getProtectionBonus());
+			m_Protection[ATTR_CURRENT] = max(0, (int)m_Protection[ATTR_CURRENT] + ProtectionBonus);
+			m_HP[ATTR_MAX] += pGladiator->getHPBonus();
+			m_Damage[ATTR_CURRENT] = min(SLAYER_MAX_DAMAGE, m_Damage[ATTR_CURRENT] + pGladiator->getDamageBonus());
+			m_Damage[ATTR_MAX]     = min(SLAYER_MAX_DAMAGE, m_Damage[ATTR_MAX] + pGladiator->getDamageBonus());
+		}
+	}
 	if (isFlag(Effect::EFFECT_CLASS_HOLY_ARMOR))
 	{
 		EffectHolyArmor* pHolyArmor = dynamic_cast<EffectHolyArmor*>(findEffect(Effect::EFFECT_CLASS_HOLY_ARMOR));
@@ -1002,6 +1061,16 @@ void Slayer::initAllStat(int numPartyMember) throw()
 		if ( pHolyArmor != NULL )
 		{
 			m_Defense[ATTR_CURRENT] = m_Defense[ATTR_CURRENT] + pHolyArmor->getDefBonus();
+		}
+	}
+
+	if (isFlag(Effect::EFFECT_CLASS_HOLY_ARMOR_2))
+	{
+		EffectHolyArmor2* pHolyArmor2 = dynamic_cast<EffectHolyArmor2*>(findEffect(Effect::EFFECT_CLASS_HOLY_ARMOR_2));
+
+		if ( pHolyArmor2 != NULL )
+		{
+			m_Defense[ATTR_CURRENT] = m_Defense[ATTR_CURRENT] + pHolyArmor2->getDefBonus();
 		}
 	}
 
@@ -1040,6 +1109,20 @@ void Slayer::initAllStat(int numPartyMember) throw()
 
 			m_Defense[ATTR_CURRENT] += pIntimateGrail->getDefenseBonus();
 			m_Protection[ATTR_CURRENT] += pIntimateGrail->getDefenseBonus();
+		}
+	}
+
+	if (isFlag(Effect::EFFECT_CLASS_INTIMATE_GRAIL_2))
+	{
+		EffectIntimateGrail2* pIntimateGrail2 = dynamic_cast<EffectIntimateGrail2*>(findEffect(Effect::EFFECT_CLASS_INTIMATE_GRAIL_2));
+
+		if ( pIntimateGrail2 != NULL )
+		{
+			m_HP[ATTR_MAX] += pIntimateGrail2->getHPBonus();
+			m_MP[ATTR_MAX] += pIntimateGrail2->getHPBonus();
+
+			m_Defense[ATTR_CURRENT] += pIntimateGrail2->getDefenseBonus();
+			m_Protection[ATTR_CURRENT] += pIntimateGrail2->getDefenseBonus();
 		}
 	}
 
@@ -3265,6 +3348,18 @@ void Vampire::initAllStat(int numPartyMember)
 		}
 	}
 
+	if (isFlag(Effect::EFFECT_CLASS_INTIMATE_GRAIL_2))
+	{
+		EffectIntimateGrail2* pIntimateGrail2 = dynamic_cast<EffectIntimateGrail2*>(findEffect(Effect::EFFECT_CLASS_INTIMATE_GRAIL_2));
+		if ( pIntimateGrail2 != NULL )
+		{
+			int ratio =  10 + ( pIntimateGrail2->getSkillLevel()/10);
+			m_Defense[ATTR_CURRENT]	-= getPercentValue(m_Defense[ATTR_CURRENT] , ratio );
+			m_HP[ATTR_CURRENT]		-= getPercentValue(m_HP[ATTR_CURRENT] , ratio );
+			m_HP[ATTR_MAX]		-= getPercentValue(m_HP[ATTR_MAX] , ratio );
+		}
+	}
+
 	if ( isFlag( Effect::EFFECT_CLASS_PARTY_AURA ) )
 	{
 		EffectPartyAura* pPartyAura = dynamic_cast<EffectPartyAura*>(findEffect(Effect::EFFECT_CLASS_PARTY_AURA));
@@ -4528,6 +4623,22 @@ void Monster::initAllStat(void)
 		}
 	}
 
+	if (isFlag(Effect::EFFECT_CLASS_BLOODS_SYMPOSION_ATTACK))
+	{
+		// The penalties hold what BloodsSymposionAttack actually took from this monster,
+		// so a recalculation while the effect is on keeps the same loss.
+		EffectBloodsSymposionAttack* pEffect = dynamic_cast<EffectBloodsSymposionAttack*>(findEffect(Effect::EFFECT_CLASS_BLOODS_SYMPOSION_ATTACK));
+		if ( pEffect != NULL )
+		{
+			m_Defense      = max(0, m_Defense - pEffect->getDefensePenalty());
+			m_Protection   = max(0, m_Protection - pEffect->getProtectionPenalty());
+			m_HP[ATTR_MAX] = max(1, m_HP[ATTR_MAX] - pEffect->getHPPenalty());
+
+			if ( m_HP[ATTR_CURRENT] > m_HP[ATTR_MAX] )
+				m_HP[ATTR_CURRENT] = m_HP[ATTR_MAX];
+		}
+	}
+
 	for (int i=0; i<MAGIC_DOMAIN_MAX; i++)
 	{
 		if ( m_Resist[i] < 0 ) m_Resist[i] = 0;
@@ -5142,6 +5253,24 @@ void Ousters::initAllStat(int numPartyMember)
 		}
 	}
 
+	if (isFlag(Effect::EFFECT_CLASS_INTIMATE_GRAIL_2))
+	{
+		EffectIntimateGrail2* pIntimateGrail2 = dynamic_cast<EffectIntimateGrail2*>(findEffect(Effect::EFFECT_CLASS_INTIMATE_GRAIL_2));
+		if ( pIntimateGrail2 != NULL )
+		{
+			int ratio =  10 + ( pIntimateGrail2->getSkillLevel()/10);
+			m_Defense[ATTR_CURRENT]	-= getPercentValue(m_Defense[ATTR_CURRENT] , ratio );
+			m_HP[ATTR_CURRENT]		-= getPercentValue(m_HP[ATTR_CURRENT] , ratio );
+			m_HP[ATTR_MAX]		-= getPercentValue(m_HP[ATTR_MAX] , ratio );
+		}
+	}
+
+	// Breath of Dryad (v9): max HP + 300
+	if ( isFlag( Effect::EFFECT_CLASS_BREATH_OF_DRYAD ) )
+	{
+		m_HP[ATTR_MAX] = min( OUSTERS_MAX_HP, m_HP[ATTR_MAX] + 300 );
+	}
+
 	if ( isFlag( Effect::EFFECT_CLASS_PARTY_AURA ) )
 	{
 		EffectPartyAura* pPartyAura = dynamic_cast<EffectPartyAura*>(findEffect(Effect::EFFECT_CLASS_PARTY_AURA));
@@ -5525,6 +5654,23 @@ void Ousters::initAllStat(int numPartyMember)
 		{
 			int bonus = pEffect->getBonus();
 			m_ToHit[ATTR_CURRENT] += getPercentValue( m_ToHit[ATTR_CURRENT], bonus );
+		}
+	}
+
+	// Allyster Wind (v9): ToHit + bonus%, min damage + bonus*8.5%, max damage + bonus*5%
+	if ( isFlag( Effect::EFFECT_CLASS_ALLYSTER_WIND ) )
+	{
+		EffectAllysterWind* pEffect = dynamic_cast<EffectAllysterWind*>(findEffect(Effect::EFFECT_CLASS_ALLYSTER_WIND));
+
+		if ( pEffect != NULL )
+		{
+			int bonus = pEffect->getBonus();
+			m_ToHit[ATTR_CURRENT] += getPercentValue( m_ToHit[ATTR_CURRENT], bonus );
+
+			int MinDamage = m_Damage[ATTR_CURRENT] + getPercentValue( m_Damage[ATTR_CURRENT], (int)(bonus * 8.5) );
+			int MaxDamage = m_Damage[ATTR_MAX] + getPercentValue( m_Damage[ATTR_MAX], bonus * 5 );
+			m_Damage[ATTR_MAX]     = min( OUSTERS_MAX_DAMAGE, MaxDamage );
+			m_Damage[ATTR_CURRENT] = min( (int)m_Damage[ATTR_MAX], MinDamage );
 		}
 	}
 

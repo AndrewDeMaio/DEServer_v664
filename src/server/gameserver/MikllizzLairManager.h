@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 // Filename    : MikllizzLairManager.h 
-// Written by  : ½­
+// Written by  : ï¿½ï¿½
 // Description : 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -24,8 +24,8 @@ public :
 	enum MikllizzLairState
 	{ 
 		STATE_CLOSE,
-		STATE_TANTACLE_COMBAT,	// ÃË¼ö¿ÍÀÇ ÀüÅõ. ÀÔÀå ½Ã°£
-		STATE_MIKLLIZZ_COMBAT,	// ¹ÌÅ¬¸®Áî¿ÍÀÇ ½Î¿ò
+		STATE_TANTACLE_COMBAT,	// ï¿½Ë¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+		STATE_MIKLLIZZ_COMBAT,	// ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¿ï¿½
 
 		STATE_MAX
 	}; 
@@ -39,8 +39,8 @@ public:
 
 	bool isSummonTiming() throw(Error);
 
-	bool enterPC(PlayerCreature* pPC) throw(Error);  // Á¸¿¡ ÃâÀÔÀÌ °¡´ÉÇÑ°¡? 
-	bool leaveCreature(Creature* pCreature) throw(Error);  // Á¸¿¡¼­ ³ª°£ °æ¿ì
+	bool enterPC(PlayerCreature* pPC) throw(Error);  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ°ï¿½? 
+	bool leaveCreature(Creature* pCreature) throw(Error);  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 
 	void resetStateTime() { m_StateTime.tv_sec = 0; }
 
@@ -60,14 +60,14 @@ protected :
 	void processTantacleCombatState() throw (Error);
 	void processMikllizzCombatState() throw (Error);
 
-	void summonTantacle() throw (Error);	// ÅÄÅ¸Å¬ ¼ÒÈ¯
-	void addMikllizzCorpse() throw (Error);	// ¹ÌÅ¬¸®Áî ½ÃÃ¼ Ãß°¡
-	void removeMikllizzCorpse() throw (Error);	// ¹ÌÅ¬¸®Áî ½ÃÃ¼ »èÁ¦
-	void activeMikllizz() throw (Error);	// ¹ÌÅ¬¸®Áî È°¼ºÈ­
-	void kickOutAllPC() throw (Error);		// ÇÃ·¹ÀÌ¾î ¸ðµÎ ÂÑ¾Æ³»±â
-	void setStateClose() throw (Error);		// State Close »óÅÂ·Î ¸¸µç´Ù.
-	void giveKillingReward() throw (Error);		// ¸¶½ºÅÍ Á×¿´À» ¶§ ¹Þ´Â º¸»ó
-	void decreaseSealingStone() throw (Error); // Á¸¿¡ ÀÖ´Â À¯ÀúµéÀÇ ºÀÀÎ¼®À» ÇØÁ¦
+	void summonTantacle() throw (Error);	// ï¿½ï¿½Å¸Å¬ ï¿½ï¿½È¯
+	void addMikllizzCorpse() throw (Error);	// ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ß°ï¿½
+	void removeMikllizzCorpse() throw (Error);	// ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
+	void activeMikllizz() throw (Error);	// ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
+	void kickOutAllPC() throw (Error);		// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ ï¿½Ñ¾Æ³ï¿½ï¿½ï¿½
+	void setStateClose() throw (Error);		// State Close ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.
+	void giveKillingReward() throw (Error);		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¿ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½ï¿½
+	void decreaseSealingStone() throw (Error); // ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	void broadcastClosingMessage( int minute ) throw (Error);
 	void broadcastResurrectMikllizMessage( int minute ) throw (Error);
 
@@ -82,15 +82,23 @@ private :
 	int					m_ClosingMessageStep;
 	int					m_ResurrectMikllizzMessageStep;
 
-	int					m_nMaxPassPlayer;	   // ÃÖ´ë ÃâÀÔ »ç¿ëÀÚ ¼ö
-	int					m_nPassPlayer;       // Pass¸¦ ¹ÞÀº »ç¶÷ ¼ö 
+	int					m_nMaxPassPlayer;	   // ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+	int					m_nPassPlayer;       // Passï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ 
 
 	Timeval				m_SummonNextTime;
 
-	MikllizzLairState	m_State;             // ÇöÀçÀÇ State
-	Timeval				m_StateTime;         // ÇöÀçÀÇ State Áö¼ÓµÉ ½Ã°£
+	MikllizzLairState	m_State;             // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ State
+	Timeval				m_StateTime;         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ State ï¿½ï¿½ï¿½Óµï¿½ ï¿½Ã°ï¿½
 
-	mutable Mutex		m_Mutex;				// m_nPassPlayer¸¦ È®½ÇÈ÷ Ã¼Å©ÇÒ·Á°í..
+	mutable Mutex		m_Mutex;				// m_nPassPlayerï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ Ã¼Å©ï¿½Ò·ï¿½ï¿½ï¿½..
+
+public:
+	// B5F normal monster regen is held from the moment the lair opens until it has closed AND the last player has
+	// left the zone (players are kicked to B4F on close). Kept last so existing member offsets do not move.
+	bool isRegenPaused() const { return m_bRegenPaused; }
+
+private:
+	bool				m_bRegenPaused;
 };
 
 #endif

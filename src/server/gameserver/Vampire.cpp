@@ -2823,13 +2823,15 @@ void Vampire::heartbeat(const Timeval& currentTime)
 			// 3. Mephisto 이펙트가 붙어있지 않다면.
 			if (isAlive() 
 				&& !isFlag(Effect::EFFECT_CLASS_COMA)
-				&& ( !isFlag(Effect::EFFECT_CLASS_MEPHISTO) || isFlag(Effect::EFFECT_CLASS_CASKET) )
+				&& ( !isFlag(Effect::EFFECT_CLASS_MEPHISTO) || isFlag(Effect::EFFECT_CLASS_CASKET) || isFlag(Effect::EFFECT_CLASS_RAGE_OF_BLOOD) )
 				&& !isFlag(Effect::EFFECT_CLASS_STONE_SKIN)
 			)
 			{
 
 				// by sigi. 2002.6.19
-				bool bInCasket = isFlag(Effect::EFFECT_CLASS_CASKET);
+				// Rage of Blood (v9): regenerates (and heals silver damage) like the casket, much faster
+				bool bRageOfBlood = isFlag(Effect::EFFECT_CLASS_RAGE_OF_BLOOD);
+				bool bInCasket = isFlag(Effect::EFFECT_CLASS_CASKET) || bRageOfBlood;
 
 				HP_t CurHP = m_HP[ATTR_CURRENT];
 				HP_t NewHP = 0;
@@ -2838,7 +2840,7 @@ void Vampire::heartbeat(const Timeval& currentTime)
 				// SilverDamage를 먼저 치료한다.
 				if (bInCasket && m_SilverDamage > 0)
 				{
-					NewHP = ( 10 + m_HPRegenBonus ) * diffTime.tv_sec;
+					NewHP = ( (bRageOfBlood ? 159 : 10) + m_HPRegenBonus ) * diffTime.tv_sec;
 					if ( isFlag( Effect::EFFECT_CLASS_HAS_BLOOD_BIBLE ) ) NewHP/=2;
 
 					int remainSilver = (int)m_SilverDamage - (int)NewHP;
@@ -2875,6 +2877,10 @@ void Vampire::heartbeat(const Timeval& currentTime)
 					{
 						NewHP = 0;
 					}
+					else if (bRageOfBlood)
+					{
+						NewHP = ( 159 + m_HPRegenBonus ) * diffTime.tv_sec;	// v9 Rage of Blood
+					}
 					// by sigi. 2002.6.19
 					else if (isFlag(Effect::EFFECT_CLASS_CASKET))
 					{
@@ -2889,6 +2895,15 @@ void Vampire::heartbeat(const Timeval& currentTime)
 					m_HP[ATTR_CURRENT] = min((int)MaxHP, (int)(CurHP + NewHP));
 				}
 				
+				// Rage of Blood heals much faster than the client predicts, so send the real values
+				if ( bRageOfBlood && m_pPlayer != NULL )
+				{
+					GCModifyInformation gcMI;
+					gcMI.addShortData(MODIFY_CURRENT_HP, m_HP[ATTR_CURRENT]);
+					gcMI.addShortData(MODIFY_SILVER_DAMAGE, m_SilverDamage);
+					m_pPlayer->sendPacket(&gcMI);
+				}
+
 				/*
 				 * 2009.01.06 rappi76
 				 * 

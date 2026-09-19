@@ -152,7 +152,7 @@ bool Monster::isRealEnemy(Creature* pEnemy)
 		// 공중 공격을 못하면 박쥐 상태의 적은 적으로 인식하지 않는다.
 		|| ( !m_pBrain->canAttackAir() && pEnemy->isFlag(Effect::EFFECT_CLASS_TRANSFORM_TO_BAT) )
 		// 스나이핑 모드의 적도 적으로 인식하지 않는다.
-		|| !pEnemy->isFlag(Effect::EFFECT_CLASS_PARALYZE)	// 석화 걸리면 보인다고 하자
+		|| !pEnemy->isFlag(Effect::EFFECT_CLASS_PARALYZE) && !pEnemy->isFlag(Effect::EFFECT_CLASS_CHAIN_OF_DEMON)	// 석화 걸리면 보인다고 하자
 			&& !pZone->isMasterLair()						// 마스터 레어에서는 다 보인다. 2002.10.16.by sigi
 			&& (!isFlag(Effect::EFFECT_CLASS_OBSERVING_EYE) 
 					&& pEnemy->isFlag(Effect::EFFECT_CLASS_SNIPING_MODE)
@@ -833,6 +833,7 @@ void Monster::act(const Timeval& currentTime)
 		|| isFlag(Effect::EFFECT_CLASS_EXPLOSION_WATER)
 		|| isFlag(Effect::EFFECT_CLASS_LOSE_SIGHT)
 		|| isFlag(Effect::EFFECT_CLASS_STUN)
+		|| isFlag(Effect::EFFECT_CLASS_CHAIN_OF_DEMON)
 		|| isFlag(Effect::EFFECT_CLASS_FREEZE)
 		|| isFlag(Effect::EFFECT_CLASS_CURSE_OF_BLOOD)
 		|| isFlag(Effect::EFFECT_CLASS_MIST_OF_SOUL)

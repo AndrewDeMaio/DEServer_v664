@@ -21,6 +21,7 @@
 #include "MasterLairInfoManager.h"
 #include "MasterLairManager.h"
 #include "MikllizzLairManager.h"
+#include "RodinBossManager.h"
 #include "EventSurvivalZoneManager.h"
 #include "WarScheduler.h"
 #include "WarSystem.h"
@@ -9128,6 +9129,11 @@ void Zone::heartbeat ()
 		//	m_pCombatMonsterManager->processCreatures(); // 전투용 몬스터의 AI를 처리하는 부분, 김경석
 		//else
 		//{
+			// Rodin (41-44): Genuine Bathory / Genuine Tepez roaming spawns. Checked before the PC-count
+			// gate below so a boss can appear in, and be tracked for, a Rodin zone nobody is in.
+			if ( RodinBossManager::isRodinZone( m_ZoneID ) )
+				g_RodinBossManager.heartbeat( this );
+
 			if ( getPCCount() > 0 || ( isDynamicZone() && ( m_pDynamicZone->getStatus() == DYNAMIC_ZONE_STATUS_RUNNING ) ) )
 			{
 				beginProfileEx("Z_MONSTER");

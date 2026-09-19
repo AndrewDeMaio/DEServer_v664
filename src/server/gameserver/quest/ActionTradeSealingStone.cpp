@@ -1,7 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Filename    : ActionTradeSealingStone.cpp
-// Written By  : 
-// Description :
+// Written By  :
+// Description : Trades a Master's bijous (beads) and pendant for a Sealing Stone
+//               (QuestItem 10), the entry item for the Raohm B5F Mikllizz lair.
+//
+//               Recipe (2026-09-14): 5 bijous + 1 pendant of the SAME Master,
+//               checked in the order Bathory (QuestItem 0/1), Tepez (2/3),
+//               Gilles de Rais (8/9). No gold and no Blue Drops (the original
+//               recipe was 7 Bathory bijous, 2 pendants, 10 Blue Drops and
+//               600,000 gold, and no trigger ever used it).
 ////////////////////////////////////////////////////////////////////////////////
 #include "ActionTradeSealingStone.h"
 #include "Item.h"
@@ -24,31 +31,33 @@
 #include "Gpackets/GCCreateItem.h"
 #include "Gpackets/GCNPCResponse.h"
 #include "Gpackets/GCNPCAsk.h"
+#include "Gpackets/GCSystemMessage.h"
 
 #include <list>
 
-struct ITEM_TEMPLATE
+namespace
 {
-	Item::ItemClass		ItemClass;
-	ItemType_t			ItemType;
-	string				ItemName;
-	int					ItemNum;
-};
+	struct MasterNecklaceSet
+	{
+		ItemType_t	BijouType;
+		ItemType_t	PendantType;
+		const char*	MasterName;
+	};
 
-const int NEED_ITEM_MAX = 3;
-const ITEM_TEMPLATE NeedItemTemplate[NEED_ITEM_MAX] = 
-{
-	{ Item::ITEM_CLASS_EVENT_STAR, 7, "블루 드롭", 10},
-	{ Item::ITEM_CLASS_QUEST_ITEM, 0, "바토리 비쥬", 7},
-	{ Item::ITEM_CLASS_QUEST_ITEM, 1, "바토리 팬던트", 2},
-};
+	const int MASTER_SET_MAX = 3;
+	const MasterNecklaceSet MasterSets[MASTER_SET_MAX] =
+	{
+		{ 0, 1, "Bathory" },
+		{ 2, 3, "Tepez" },
+		{ 8, 9, "Gilles de Rais" },
+	};
 
-const ITEM_TEMPLATE ExchangeItemTemplate[1] =
-{
-	{ Item::ITEM_CLASS_QUEST_ITEM, 10, "봉인석", 1},
-};
+	const int NEED_BIJOU_NUM   = 5;
+	const int NEED_PENDANT_NUM = 1;
 
-const unsigned int NEED_MONEY = 600000;
+	const ItemType_t SEALING_STONE_TYPE = 10;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // ActionTradeSealingStone
 ////////////////////////////////////////////////////////////////////////////////
@@ -57,7 +66,7 @@ ActionTradeSealingStone::ActionTradeSealingStone()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// 
+//
 ////////////////////////////////////////////////////////////////////////////////
 ActionTradeSealingStone::~ActionTradeSealingStone()
 	throw()
@@ -65,29 +74,19 @@ ActionTradeSealingStone::~ActionTradeSealingStone()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// 
+// no properties
 ////////////////////////////////////////////////////////////////////////////////
 void ActionTradeSealingStone::read(PropertyBuffer & propertyBuffer)
     throw (Error)
 {
     __BEGIN_TRY
-
-	try
-	{
-		// read script id
-	}
-	catch (NoSuchElementException & nsee)
-	{
-		throw Error(nsee.toString());
-	}
-
 	__END_CATCH
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// 액션을 실행한다.
+// execute
 ////////////////////////////////////////////////////////////////////////////////
-void ActionTradeSealingStone::execute(Creature * pCreature1 , Creature * pCreature2) 
+void ActionTradeSealingStone::execute(Creature * pCreature1 , Creature * pCreature2)
 	throw (Error)
 {
 	__BEGIN_TRY
@@ -109,44 +108,28 @@ void ActionTradeSealingStone::execute(Creature * pCreature1 , Creature * pCreatu
 	Zone* pZone = pPC->getZone();
 	Assert( pZone != NULL );
 
-	bool			bSlayer = pPC->isSlayer();
-	bool			bVampire = pPC->isVampire();
-	bool			bOusters = pPC->isOusters();
-
-	int		tradeitemNum[3] = { 0, 0, 0 };
-	unsigned int	playerGold = 0;
-	bool	bTradeOK = true;
-
-	if( bSlayer )
+	// the first Master whose bijous and pendant the player has enough of
+	const MasterNecklaceSet* pSet = NULL;
+	for ( int i = 0; i < MASTER_SET_MAX; ++i )
 	{
-		Slayer* pSlayer = dynamic_cast<Slayer*>(pCreature2);
-		playerGold = pSlayer->getGold();
-	}
-	else if( bVampire )
-	{
-		Vampire* pVampire = dynamic_cast<Vampire*>(pCreature2);
-		playerGold = pVampire->getGold();
-	}
-	else if( bOusters )
-	{
-		Ousters* pOusters = dynamic_cast<Ousters*>(pCreature2);
-		playerGold = pOusters->getGold();
+		if ( pPC->getItemClassTypeNum( Item::ITEM_CLASS_QUEST_ITEM, MasterSets[i].BijouType ) >= NEED_BIJOU_NUM
+			&& pPC->getItemClassTypeNum( Item::ITEM_CLASS_QUEST_ITEM, MasterSets[i].PendantType ) >= NEED_PENDANT_NUM )
+		{
+			pSet = &MasterSets[i];
+			break;
+		}
 	}
 
-	for( int i = 0; i < 3; ++i )
+	GCNPCResponse gcNPCResponse;
+
+	if ( pSet == NULL )
 	{
-		tradeitemNum[i] = pPC->getItemClassTypeNum( NeedItemTemplate[i].ItemClass, NeedItemTemplate[i].ItemType );
+		GCSystemMessage gcMessage;
+		gcMessage.setMessage( "A Sealing Stone needs 5 bijous and 1 pendant from the same Master (Bathory, Tepez or Gilles de Rais)." );
+		pPlayer->sendPacket( &gcMessage );
 
-		if( tradeitemNum[i] < NeedItemTemplate[i].ItemNum )
-			bTradeOK = false;
-	}
-
-	GCNPCResponse	gcNPCResponse;
-
-	if( !bTradeOK || playerGold < NEED_MONEY )
-	{
 		gcNPCResponse.setCode( NPC_NOT_ENOUGH_EXCHANGE_SEALING_STONE );
-		pPlayer->sendPacket(&gcNPCResponse);
+		pPlayer->sendPacket( &gcNPCResponse );
 
 		gcNPCResponse.setCode( NPC_RESPONSE_QUIT_DIALOGUE );
 		pPlayer->sendPacket( &gcNPCResponse );
@@ -154,12 +137,10 @@ void ActionTradeSealingStone::execute(Creature * pCreature1 , Creature * pCreatu
 		return;
 	}
 
-	string			itemOption; 
-	
-	ItemInfo* pItemInfo = g_pItemInfoManager->getItemInfo( ExchangeItemTemplate[0].ItemClass, ExchangeItemTemplate[0].ItemType );
+	ItemInfo* pItemInfo = g_pItemInfoManager->getItemInfo( Item::ITEM_CLASS_QUEST_ITEM, SEALING_STONE_TYPE );
 	Assert( pItemInfo != NULL );
 
-	// 인벤토리의 공간을 체크
+	// room in the inventory?
 	_TPOINT	pt;
 	if( !pInventory->getEmptySlot(pItemInfo->getVolumeWidth(), pItemInfo->getVolumeHeight(), pt) )
 	{
@@ -172,23 +153,15 @@ void ActionTradeSealingStone::execute(Creature * pCreature1 , Creature * pCreatu
 
 	list<OptionType_t> options;
 
-	Item* pItem = g_pItemFactoryManager->createItem( pItemInfo->getItemClass(), pItemInfo->getItemType(), options );
+	Item* pItem = g_pItemFactoryManager->createItem( Item::ITEM_CLASS_QUEST_ITEM, SEALING_STONE_TYPE, options );
 	Assert( pItem != NULL );
 
 	pZone->registerObject( pItem );
 
 	if( pInventory->addItem( pItem, pt) )
 	{
-//		pPC->decreaseItemClassTypeNum( Item::ITEM_CLASS_COMMON_QUEST_ITEM, itemType, m_QuestItemNum );
-		GCModifyInformation	gcMI;
-
-		for( int i = 0; i < 3;  ++i )
-		{
-			pPC->decreaseItemClassTypeNum( NeedItemTemplate[i].ItemClass, NeedItemTemplate[i].ItemType, NeedItemTemplate[i].ItemNum );
-		}
-		pPC->decreaseGoldEx( NEED_MONEY );
-		gcMI.addLongData( MODIFY_GOLD, pPC->getGold() );
-		pPlayer->sendPacket( &gcMI );
+		pPC->decreaseItemClassTypeNum( Item::ITEM_CLASS_QUEST_ITEM, pSet->BijouType, NEED_BIJOU_NUM );
+		pPC->decreaseItemClassTypeNum( Item::ITEM_CLASS_QUEST_ITEM, pSet->PendantType, NEED_PENDANT_NUM );
 
 		pItem->create( pPC->getName(), STORAGE_INVENTORY, 0, pt.x, pt.y );
 
@@ -196,8 +169,11 @@ void ActionTradeSealingStone::execute(Creature * pCreature1 , Creature * pCreatu
 
 		GCCreateItem gcCreateItem;
 		makeGCCreateItem(&gcCreateItem, pItem, pt.x, pt.y);
-
 		pPlayer->sendPacket( &gcCreateItem );
+
+		GCSystemMessage gcMessage;
+		gcMessage.setMessage( string("You traded 5 ") + pSet->MasterName + " bijous and a pendant for a Sealing Stone." );
+		pPlayer->sendPacket( &gcMessage );
 	}
 	else
 	{
@@ -207,10 +183,9 @@ void ActionTradeSealingStone::execute(Creature * pCreature1 , Creature * pCreatu
 
 		gcNPCResponse.setCode( NPC_NOT_ENOUGH_EXCHANGE_SEALING_STONE );
 		pPlayer->sendPacket( &gcNPCResponse );
-
 	}
 
-	// 대화창 닫기
+	// close the dialogue
 	GCNPCResponse response;
 	response.setCode( NPC_RESPONSE_GIVE_EVENT_ITEM_OK );
 	pPlayer->sendPacket( &response );
@@ -225,7 +200,7 @@ void ActionTradeSealingStone::execute(Creature * pCreature1 , Creature * pCreatu
 ////////////////////////////////////////////////////////////////////////////////
 // get debug string
 ////////////////////////////////////////////////////////////////////////////////
-string ActionTradeSealingStone::toString () const 
+string ActionTradeSealingStone::toString () const
 	throw ()
 {
 	__BEGIN_TRY

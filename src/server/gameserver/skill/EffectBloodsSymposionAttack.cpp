@@ -63,12 +63,21 @@ void EffectBloodsSymposionAttack::unaffect(Creature* pCreature)
 	// 능력치를 정상적으로 되돌리기 위해서는 플래그를 끄고,
 	// initAllStat을 불러야 한다.
 	pCreature->removeFlag(Effect::EFFECT_CLASS_BLOODS_SYMPOSION_ATTACK);
-	
+
 	if( pCreature->isPC() )
 	{
 		PlayerCreature *pPC = dynamic_cast<PlayerCreature *>(pCreature);
-		
-		pPC->initAllStatAndSend();	
+
+		pPC->initAllStatAndSend();
+	}
+	else if( pCreature->isMonster() )
+	{
+		// Give back exactly what BloodsSymposionAttack took.
+		Monster* pMonster = dynamic_cast<Monster*>(pCreature);
+
+		pMonster->setDefense( pMonster->getDefense() + m_DefensePenalty );
+		pMonster->setProtection( pMonster->getProtection() + m_ProtectionPenalty );
+		pMonster->setHP( pMonster->getHP(ATTR_MAX) + m_HPPenalty, ATTR_MAX );
 	}
 
 	Zone* pZone = pCreature->getZone();

@@ -146,6 +146,9 @@ public:
 	void shareActivation(Creature* pCaster, int Duration) throw (Error);
 	void shareGnomesWhisper(Creature* pCaster, int Duration, int SkillLevel) throw (Error);
 	void shareHolyArmor(Creature* pCaster, int DefBonus, int SkillLevel) throw (Error);
+	void shareHolyArmor2(Creature* pCaster, int DefBonus, int SkillLevel) throw (Error);
+	void shareGladiator(Creature* pCaster, int DamageBonus, int Range, int Duration) throw (Error);
+	void shareFlameSight(Creature* pCaster, int Duration) throw (Error);
 	bool shareWaterElementalHeal(Creature* pCaster, int HealPoint) throw (Error);
 	void shareGDRLairEnter(Creature* pLeader) throw(Error);
 
@@ -240,6 +243,9 @@ public:
 	void shareActivation(int PartyID, Creature* pCaster, int Duration) throw (Error);
 	void shareGnomesWhisper(int PartyID, Creature* pCaster, int Duration, int SkillLevel) throw (Error);
 	void shareHolyArmor(int PartyID, Creature* pCaster, int DefBonus, int SkillLevel) throw (Error);
+	void shareHolyArmor2(int PartyID, Creature* pCaster, int DefBonus, int SkillLevel) throw (Error);
+	void shareGladiator(int PartyID, Creature* pCaster, int DamageBonus, int Range, int Duration) throw (Error);
+	void shareFlameSight(int PartyID, Creature* pCaster, int Duration) throw (Error);
 	bool shareWaterElementalHeal(int PartyID, Creature* pCaster, int HealPoint) throw (Error);
 	void shareGDRLairEnter(int PartyID, Creature* pLeader) throw(Error);
 	

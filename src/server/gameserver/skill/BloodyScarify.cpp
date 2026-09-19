@@ -26,7 +26,6 @@ SkillResultType BloodyScarify::execute(Vampire* pVampire, ObjectID_t TargetObjec
 	Assert(pZone != NULL);
 
 	Creature* pTargetCreature = pZone->getCreature(TargetObjectID);
-	Inventory *pInventory = pVampire->getInventory();
 
 	if( pTargetCreature == NULL )
 	{
@@ -66,10 +65,8 @@ SkillResultType BloodyScarify::execute(Vampire* pVampire, ObjectID_t TargetObjec
 	*/
 	skillResult = g_SimpleMissileSkill.execute(pVampire, TargetObjectID, pVampireSkillSlot, param, result, CEffectID, HitBonus);
 
-	if( pInventory->hasEnoughNumItem( Item::ITEM_CLASS_SERUM, 6, 3)  && result.bSuccess )
+	if( result.bSuccess )
 	{
-		pInventory->decreaseNumItem( Item::ITEM_CLASS_SERUM, 6, 3, pVampire->getPlayer());
-
 		ZoneCoord_t tx = pTargetCreature->getX();
 		ZoneCoord_t ty = pTargetCreature->getY();
 

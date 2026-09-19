@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "OptionInfo.h"
 #include "SkillInfo.h"
+#include "RareBookSkill.h"
 #include "ItemLoaderManager.h"
 #include "EffectLoaderManager.h"
 #include "SkillParentInfo.h"
@@ -1060,6 +1061,8 @@ bool Ousters::load ()
 				pOustersSkillSlot->setName(m_Name);
 				pOustersSkillSlot->setSkillType(SkillType);
 				pOustersSkillSlot->setExpLevel(pResult->getInt(++i));
+				if (isRareBookSkill(SkillType))	// book skills never level: always mastered
+					pOustersSkillSlot->setExpLevel(RARE_BOOK_OUSTERS_SKILL_LEVEL);
 				pOustersSkillSlot->setInterval (99999999);
 				pOustersSkillSlot->setCastingTime (pResult->getInt(++i));
 				pOustersSkillSlot->setRunTime();
@@ -1307,7 +1310,7 @@ void Ousters::addSkill(SkillType_t SkillType)
 		pOustersSkillSlot->setSkillType(SkillType);
 		pOustersSkillSlot->setInterval(Delay);
 		pOustersSkillSlot->setRunTime();
-		pOustersSkillSlot->setExpLevel(1);
+		pOustersSkillSlot->setExpLevel(isRareBookSkill(SkillType) ? RARE_BOOK_OUSTERS_SKILL_LEVEL : 1);	// book skills never level
 		pOustersSkillSlot->create(m_Name);
 
 		m_SkillSlot[SkillType] = pOustersSkillSlot;
@@ -3648,6 +3651,9 @@ void Ousters::checkSkillRequiredCondition()
 	checkReactiveArmor();
 	checkFrozenArmor();
 	checkPassiveSkill( SKILL_WATER_BARRIER, Effect::EFFECT_CLASS_WATER_BARRIER );
+	// Breath of Dryad ends when its requirement is gone (v9 Ousters::checkBreathofDryad)
+	if ( isFlag( Effect::EFFECT_CLASS_BREATH_OF_DRYAD ) )
+		checkPassiveSkill( SKILL_BREATH_OF_DRYAD, Effect::EFFECT_CLASS_BREATH_OF_DRYAD );
 }
 
 void Ousters::ChangeGearSlotID(GearSlotID_t GearSlotID)

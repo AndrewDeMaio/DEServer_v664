@@ -2,7 +2,7 @@
 // Filename    : Action.h
 // Written By  : 
 // Description :
-// Æ®¸®°ÅÀÇ Á¶°ÇÀÌ ¸¸Á·ÇÒ °æ¿ì ½ÇÇàµÇ¾î¾ß ÇÏ´Â ¾×¼ÇÀ» ³ªÅ¸³»´Â Å¬·¡½º
+// Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½×¼ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
 //////////////////////////////////////////////////////////////////////////////
 
 #ifndef __ACTION_H__
@@ -24,43 +24,43 @@ public:
 
 	enum ActionTypes 
 	{
-		ACTION_SET_POSITION,             // À§Ä¡¸¦ ÁöÁ¤ÇÑ´Ù.
-		ACTION_WANDER,                   // ÀÏÁ¤ ¹üÀ§¸¦ ¹æÈ²ÇÑ´Ù.
-		ACTION_SAY,                      // ÀÏÁ¤ ½ºÅ©¸³Æ®¸¦ ¸»ÇÑ´Ù.
-		ACTION_RANDOM_SAY,               // ÀÏÁ¤ ½ºÅ©¸³Æ®¸¦ ºê·ÎµåÄ³½ºÆÃÇÑ´Ù.
-		ACTION_ASK,                      // ÇÃ·¹ÀÌ¾î¿¡°Ô Áú¹®À» ÇÑ´Ù.
-		ACTION_QUIT_DIALOGUE,            // Å¬¶óÀÌ¾ðÆ®·Î ÇÏ¿©±Ý ´ëÈ­Ã¢À» ´Ý°Ô ÇÑ´Ù.
-		ACTION_PREPARE_SHOP,             // »óÁ¡À» ÁØºñÇÑ´Ù.
-		ACTION_SELL,                     // ÇÃ·¹ÀÌ¾î¿¡°Ô ¾ÆÀÌÅÛÀ» ÆÇ´Ù.
-		ACTION_BUY,                      // ÇÃ·¹ÀÌ¾î·ÎºÎÅÍ ¹°°ÇÀ» »çµéÀÎ´Ù.
-		ACTION_REGEN_SHOP,               // »óÁ¡ ¾È¿¡ ÀÖ´Â ¾ÆÀÌÅÛÀ» ÀçÁ¤¸®ÇÑ´Ù.
-		ACTION_PREPARE_TEACH,            // ±â¼úÀ» °¡¸£Ä¥ ÁØºñ¸¦ ÇÑ´Ù.
-		ACTION_TEACH_SKILL,              // ÇÃ·¹ÀÌ¾î¿¡°Ô ±â¼úÀ» °¡¸£ÃÄÁØ´Ù.
-		ACTION_HEAL,                     // ÇÃ·¹ÀÌ¾î¸¦ Ä¡·áÇØÁØ´Ù.
-		ACTION_REDEEM_MOTORCYCLE,        // ¸ðÅÍ»çÀÌÅ¬À» ¹ÝÈ¯ÇØÁØ´Ù.
-		ACTION_SEARCH_MOTORCYCLE,        // ÇÃ·¹ÀÌ¾îÀÇ ¿ÀÅä¹ÙÀÌ À§Ä¡¸¦ ¸»ÇØÁØ´Ù.
-		ACTION_REPAIR,                   // ÇÃ·¹ÀÌ¾îÀÇ ¾ÆÀÌÅÛÀ» ¼ö¸®ÇØÁØ´Ù.
-		ACTION_STASH_SELL,               // º¸°üÇÔ »ç±â ÀÎÅÍÆäÀÌ½º¸¦ ¿­µµ·Ï ÇÑ´Ù.
-		ACTION_STASH_OPEN,               // º¸°üÇÔ ÀÎÅÍÆäÀÌ½º¸¦ ¿­µµ·Ï ÇÑ´Ù.
-		ACTION_RESTORE,                  // ¹ìÆÄÀÌ¾î¸¦ ½½·¹ÀÌ¾î·Î º¯È¯ÇØ ÁØ´Ù.
-		ACTION_SET_RESURRECT_ZONE,       // ºÎÈ° À§Ä¡¸¦ ÁöÁ¤ÇÑ´Ù.
-		ACTION_SILVER_COATING,           // ¾ÆÀÌÅÛ¿¡´Ù Àº µµ±ÝÀ» ÇØÁØ´Ù.
-		ACTION_CREATE_GUILD,             // ±æµå »ý¼º ÀÎÅÍÆäÀÌ½º¸¦ ¿­°Ô ÇÑ´Ù.
-		ACTION_DESTROY_GUILD,            // ±æµå ÇØÃ¼ ÀÎÅÍÆäÀÌ½º¸¦ ¿­°Ô ÇÑ´Ù.
-		ACTION_TUTORIAL,                 // Æ©Åä¸®¾ó ÀÎÅÍÆäÀÌ½º¸¦ ¿­°Ô ÇÑ´Ù.
-		ACTION_GIVE_NEWBIE_ITEM,         // ÃÊº¸ÀÚ¿ë ¾ÆÀÌÅÛ ¼±ÅÃ ÀÎÅÍÆäÀÌ½º¸¦ ¿­°Ô ÇÑ´Ù.
-		ACTION_ACTIVATE_PORTAL,          // Æ÷Å»À» ÀÛµ¿½ÃÅ²´Ù.
-		ACTION_TURN_ON_FLAG,             // ÇÃ·¡±×¸¦ ÄÑ°í ÀúÀåÇÑ´Ù.
-		ACTION_TURN_OFF_FLAG,            // ÇÃ·¡±×¸¦ ²ô°í ÀúÀåÇÑ´Ù.
-		ACTION_SYSTEM_MESSAGE,           // ½Ã½ºÅÛ ¸Þ½ÃÁö¸¦ ³¯¸°´Ù.
-		ACTION_TAKE_DONATION,            // ±âºÎ¸¦ ¹Þ´Â´Ù.
-		ACTION_CALL_HELICOPTER,          // Çï±â ÀÎÅÍÆäÀÌ½º¸¦ ¿­°Ô ÇÑ´Ù.
-		ACTION_REGEN_EVENT_SHOP,         // ÀÌº¥Æ®¿ë »óÁ¡À» °»½ÅÇÑ´Ù.
-		ACTION_SAY_DYNAMIC,              // ÀÏÁ¤ ½ºÅ©¸³Æ®¸¦ ¸»ÇÑ´Ù.
-		ACTION_ASK_DYNAMIC,              // ÇÃ·¹ÀÌ¾î¿¡°Ô Áú¹®À» ÇÑ´Ù.
+		ACTION_SET_POSITION,             // ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+		ACTION_WANDER,                   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È²ï¿½Ñ´ï¿½.
+		ACTION_SAY,                      // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½Ñ´ï¿½.
+		ACTION_RANDOM_SAY,               // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½Îµï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+		ACTION_ASK,                      // ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
+		ACTION_QUIT_DIALOGUE,            // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½Ï¿ï¿½ï¿½ï¿½ ï¿½ï¿½È­Ã¢ï¿½ï¿½ ï¿½Ý°ï¿½ ï¿½Ñ´ï¿½.
+		ACTION_PREPARE_SHOP,             // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½ï¿½Ñ´ï¿½.
+		ACTION_SELL,                     // ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½.
+		ACTION_BUY,                      // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Î´ï¿½.
+		ACTION_REGEN_SHOP,               // ï¿½ï¿½ï¿½ï¿½ ï¿½È¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+		ACTION_PREPARE_TEACH,            // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¥ ï¿½Øºï¿½ ï¿½Ñ´ï¿½.
+		ACTION_TEACH_SKILL,              // ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
+		ACTION_HEAL,                     // ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ Ä¡ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
+		ACTION_REDEEM_MOTORCYCLE,        // ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½Å¬ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ï¿½Ø´ï¿½.
+		ACTION_SEARCH_MOTORCYCLE,        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
+		ACTION_REPAIR,                   // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
+		ACTION_STASH_SELL,               // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
+		ACTION_STASH_OPEN,               // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
+		ACTION_RESTORE,                  // ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½Ø´ï¿½.
+		ACTION_SET_RESURRECT_ZONE,       // ï¿½ï¿½È° ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+		ACTION_SILVER_COATING,           // ï¿½ï¿½ï¿½ï¿½ï¿½Û¿ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø´ï¿½.
+		ACTION_CREATE_GUILD,             // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
+		ACTION_DESTROY_GUILD,            // ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
+		ACTION_TUTORIAL,                 // Æ©ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
+		ACTION_GIVE_NEWBIE_ITEM,         // ï¿½Êºï¿½ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
+		ACTION_ACTIVATE_PORTAL,          // ï¿½ï¿½Å»ï¿½ï¿½ ï¿½Ûµï¿½ï¿½ï¿½Å²ï¿½ï¿½.
+		ACTION_TURN_ON_FLAG,             // ï¿½Ã·ï¿½ï¿½×¸ï¿½ ï¿½Ñ°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+		ACTION_TURN_OFF_FLAG,            // ï¿½Ã·ï¿½ï¿½×¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+		ACTION_SYSTEM_MESSAGE,           // ï¿½Ã½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
+		ACTION_TAKE_DONATION,            // ï¿½ï¿½Î¸ï¿½ ï¿½Þ´Â´ï¿½.
+		ACTION_CALL_HELICOPTER,          // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
+		ACTION_REGEN_EVENT_SHOP,         // ï¿½Ìºï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+		ACTION_SAY_DYNAMIC,              // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½Ñ´ï¿½.
+		ACTION_ASK_DYNAMIC,              // ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
 		ACTION_GIVE_SPECIAL_EVENT_ITEM,  // 
 		ACTION_REDISTRIBUTE_ATTR,        // 
-		ACTION_GIVE_GARBAGE_ITEM,        // °¡ºñÁö ¾ÆÀÌÅÛÀ» ÁØ´Ù.
+		ACTION_GIVE_GARBAGE_ITEM,        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½.
 
 		//ACTION_TALK ,
 		//ACTION_RANDOM_TALK ,
@@ -99,27 +99,27 @@ public:
 
 		ACTION_GIVE_TEST_SERVER_REWARD,
 
-		// ¼º¿¡ µé¾î°¡´Â Action
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¡ï¿½ï¿½ Action
 		// 2003. 1.20. by bezz,Sequoia
 		ACTION_ENTER_CASTLE_WITH_FEE,
 
-		// ¼º¿¡ ½×¿©ÀÖ´Â ¼¼±ÝÀÇ ÀÜ¾×À» º¸¿©ÁØ´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½×¿ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ü¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 		ACTION_SHOW_TAX_BALANCE,
 
 		ACTION_ASK_VARIABLE,
 
-		// ÀüÀï ½ÅÃ» °ü·Ã ¾×¼Çµé
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½ ï¿½×¼Çµï¿½
 		ACTION_WAR_REGISTRATION,
 		ACTION_SHOW_WAR_SCHEDULE,
 
-		// Á¾Á· ÀüÀï ½ÅÃ»
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»
 		ACTION_JOIN_RACE_WAR,
 
-		// ÀÌº¥Æ® ¼±¹° ¾ÆÀÌÅÛ
-		ACTION_GIVE_EVENT_ITEM,				// Ä³¸¯º°·Î ÁÙ ¶§
-		ACTION_GIVE_ACCOUNT_EVENT_ITEM,		// °èÁ¤º°·Î ÁÙ ¶§
+		// ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		ACTION_GIVE_EVENT_ITEM,				// Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
+		ACTION_GIVE_ACCOUNT_EVENT_ITEM,		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
 
-		// Ä¿ÇÃ ¸Å´ÏÀú °ü·Ã ÃÊ±âÈ­ ¾×¼Ç
+		// Ä¿ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½×¼ï¿½
 		ACTION_INIT_PARTNER_WAITING_MANAGER,
 		ACTION_WAIT_FOR_MEET_COUPLE,
 		ACTION_WAIT_FOR_APART_COUPLE,
@@ -163,40 +163,40 @@ public:
 		ACTION_ACTIVATE_MAZE_ENTER,
 		ACTION_ACTIVATE_MAZE_RETURN,
 
-		ACTION_SYSTEM_MESSAGE_PER_RACE,           // ½Ã½ºÅÛ ¸Þ½ÃÁö¸¦ ³¯¸°´Ù.
+		ACTION_SYSTEM_MESSAGE_PER_RACE,           // ï¿½Ã½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 
 		ACTION_WARP_LEVEL_WAR_ZONE,
 
-		ACTION_CHECK_PARTNER_NAME,				// ÆÄÆ®³Ê ÀÌ¸§ È®ÀÎ
+		ACTION_CHECK_PARTNER_NAME,				// ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ì¸ï¿½ È®ï¿½ï¿½
 
-		ACTION_START_PET_QUEST,					// 2Â÷ Æê Äù½ºÆ®¸¦ ½ÃÀÛÇÑ´Ù.
+		ACTION_START_PET_QUEST,					// 2ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 
-		ACTION_PET_WITHDRAW,					// Æê Ã£À»·¡¿ä
-		ACTION_PET_DEPOSIT,						// Æê ¸Ã±æ·¡¿ä
+		ACTION_PET_WITHDRAW,					// ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		ACTION_PET_DEPOSIT,						// ï¿½ï¿½ ï¿½Ã±æ·¡ï¿½ï¿½
 
-		ACTION_ENTER_EVENT_ZONE,				// ÀÌº¥Æ® Á¸À¸·Î µé¾î°¥·¡¿ä.
-		ACTION_ENTER_GDR_LAIR,					// ÀÏ·çÁ¯½º ¿þÀÌ¿¡¼­ Áúµå·¹ ·¹¾î·Î µé¾î°¡±â
+		ACTION_ENTER_EVENT_ZONE,				// ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¥ï¿½ï¿½ï¿½ï¿½.
+		ACTION_ENTER_GDR_LAIR,					// ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½å·¹ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¡ï¿½ï¿½
 
-		ACTION_TRADE_GQUEST_EVENT_ITEM,			// ÀÌº¥Æ® Äù½ºÆ® ¾ÆÀÌÅÛ
+		ACTION_TRADE_GQUEST_EVENT_ITEM,			// ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-		ACTION_ENTER_SIEGE,						// °ø¼ºÀü Âü°¡(°ø¼º Áö¿ªÀ¸·Î ÀÌµ¿)
+		ACTION_ENTER_SIEGE,						// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½)
 
-		ACTION_REGISTER_SIEGE,					// °ø¼º ½ÅÃ»
-		ACTION_REGISTER_REINFORCE,				// ¼öºñÃø ÂüÀü ½ÅÃ»
-		ACTION_ACCEPT_REINFORCE,				// ¼öºñÃø ÂüÀü ½ÅÃ» ¼ö¶ô
-		ACTION_DENY_REINFORCE,					// ¼öºñÃø ÂüÀü ½ÅÃ» °ÅºÎ
+		ACTION_REGISTER_SIEGE,					// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»
+		ACTION_REGISTER_REINFORCE,				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»
+		ACTION_ACCEPT_REINFORCE,				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½
+		ACTION_DENY_REINFORCE,					// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã» ï¿½Åºï¿½
 
-		ACTION_RECALL_SIEGE,					// °ø¼ºÀü¿¡ ±æµå¿ø µ¥·Á¿À±â
-		ACTION_SELECT_BLOOD_BIBLE,				// ÇÇÀÇ ¼º¼­ ´ë¿©
-		ACTION_CLEAR_BLOOD_BIBLE,				// ÇÇÀÇ ¼º¼­ Á¦°Å
+		ACTION_RECALL_SIEGE,					// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		ACTION_SELECT_BLOOD_BIBLE,				// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ë¿©
+		ACTION_CLEAR_BLOOD_BIBLE,				// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-		ACTION_MODIFY_TAX_RATIO,				// ¼¼À² Á¶Àý
-		ACTION_SWAP_ADVANCEMENT_ITEM,			// ½ÂÁ÷ ¾ÆÀÌÅÛ ±³È¯
+		ACTION_MODIFY_TAX_RATIO,				// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		ACTION_SWAP_ADVANCEMENT_ITEM,			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 
-		ACTION_SHOW_DONATION_DIALOG,			// ±âºÎÃ¢ º¸¿©ÁÖ±â
-		ACTION_ENTER_QUEST_ZONE,				// DynamicZone ÀÔÀå
-		ACTION_SHOW_CONFIRM_GET_EVENT_ITEM_DIALOG,	// ÀÌº¥Æ® ¾ÆÀÌÅÛ ¹Þ±â È®ÀÎÃ¢
-		ACTION_GIVE_COMMON_EVENT_ITEM,			// °ø¿ë ÀÌº¥Æ® ¾ÆÀÌÅÛ ÁÖ±â
+		ACTION_SHOW_DONATION_DIALOG,			// ï¿½ï¿½ï¿½Ã¢ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
+		ACTION_ENTER_QUEST_ZONE,				// DynamicZone ï¿½ï¿½ï¿½ï¿½
+		ACTION_SHOW_CONFIRM_GET_EVENT_ITEM_DIALOG,	// ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½ È®ï¿½ï¿½Ã¢
+		ACTION_GIVE_COMMON_EVENT_ITEM,			// ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½
 		// 2006.03.13
 		ACTION_GIVE_COMMON_QUEST_ITEM,
 		ACTION_CHECK_COMMON_QUEST_ITEM,
@@ -248,14 +248,17 @@ public:
 
 		ACTION_INIT_INSTANCEDOUNGEON,
 		
-		ACTION_BLITZ_REGISTER, 	// 20080829 ºí¸®Ã÷ ¹®¾ç µî·Ï
-		ACTION_BLITZ_REWARD,	// 20080829 ºí¸®Ã÷ ÀÌº¥Æ® º¸»ó
+		ACTION_BLITZ_REGISTER, 	// 20080829 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+		ACTION_BLITZ_REWARD,	// 20080829 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 
-		ACTION_MAPLE_REGISTER, 	// 20080925 ¸ÞÀÌÇÃ ¹®¾ç µî·Ï
-		ACTION_MAPLE_REWARD,	// 20080925 ¸ÞÀÌÇÃ ÀÌº¥Æ® º¸»ó
+		ACTION_MAPLE_REGISTER, 	// 20080925 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+		ACTION_MAPLE_REWARD,	// 20080925 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 		
 		ACTION_ENTER_PVP_SYSTEM,
 		ACTION_PVP_SYSTEM_SIGN_UP,
+
+		ACTION_MONSTER_SUMMON,		// Ruper Island: Altar of Heroes wakes Sius
+		ACTION_ENTER_WITH_ITEM,		// Dracula Castle: Marcus lets players in for a Forbidden Blood
 		ACTION_MAX
 	};
 

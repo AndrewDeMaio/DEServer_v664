@@ -402,7 +402,8 @@ bool Creature::hasRelicItem() const
 Sight_t Creature::getEffectedSight()
 	throw()
 {
-	if ( isFlag( Effect::EFFECT_CLASS_LIGHTNESS ) )
+	// Flame Sight (Ousters) works like Lightness
+	if ( isFlag( Effect::EFFECT_CLASS_LIGHTNESS ) || isFlag( Effect::EFFECT_CLASS_FLAME_SIGHT ) )
 		return LIGHTNESS_SIGHT;
 
 	if ( isFlag( Effect::EFFECT_CLASS_YELLOW_POISON_TO_CREATURE ) )

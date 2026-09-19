@@ -143,6 +143,16 @@ Result * Statement::executeQuery ()
 		}
 	}
 
+	// A CALL answers with one more status result after its last result set.
+	// Left unread, the next query on this connection fails with "Commands out
+	// of sync". Nothing here reads extra result sets, so drop them. For an
+	// ordinary statement this is one call that returns -1 at once.
+	while (mysql_next_result(m_pConnection->getMYSQL()) == 0)
+	{
+		MYSQL_RES* pExtra = mysql_store_result(m_pConnection->getMYSQL());
+		if (pExtra != NULL) mysql_free_result(pExtra);
+	}
+
 	endProfileEx("ZPM_QUERY");
 
 	return m_pResult;

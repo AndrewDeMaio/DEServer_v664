@@ -431,7 +431,13 @@ SKILL_OBJS = \
 	MagmaDetonation2.o \
 	SquallyBarrier1.o \
 	SquallyBarrier2.o \
-	BifronzeMagic.o PalusMiddleRangeMagic.o PalusLongRangeMagic.o GarumMagic.o ClavieMagic.o
+	BifronzeMagic.o PalusMiddleRangeMagic.o PalusLongRangeMagic.o GarumMagic.o ClavieMagic.o \
+	SiusCrash.o LycanHowl.o WideWildWolf.o SmileofDeath.o \
+	LivingDeadBEchoEsper.o TsarBlueRoseDevil.o FolletPoisonFrame.o FueFolletRedRoseDevil.o \
+	DraculeTalonOfDracule.o DraculeBloodyScarify2.o DraculeBloodyCarpe.o EffectFolletFlame.o \
+	BlazeWalk2.o Gladiator.o CrushingStorm.o SatelliteBomb2.o IntimateGrail2.o HolyArmor2.o Striking2.o Bless2.o GloryGround.o PassingHeal2.o GreatHeal2.o DragonHurricane.o LarStroke.o GaeBulga.o ViciousGuidance.o SpectorInverse.o DragonHurricane2.o \
+	ChainOfDemon.o BloodySkull.o RageOfBlood.o BatBreaker.o ShadyDouble.o \
+	AllysterWind.o FlameSight.o SpiralMegalith.o Radchia.o BreathOfDryad.o ChakramHail.o FlameSpike.o Blizzard.o Demolisher.o Blizzard2.o ChakramHail2.o
 
 EFFECT_OBJS = \
 	EffectAcidSwamp.o \
@@ -658,7 +664,10 @@ EFFECT_OBJS = \
 	EffectMagmaDetonation.o \
 	EffectMagmaDetonation2.o \
 	EffectSquallyBarrier1.o \
-	EffectSquallyBarrier2.o
+	EffectSquallyBarrier2.o \
+	EffectGladiator.o EffectCrushingStorm.o EffectSatelliteBombAim2.o EffectSatelliteBombPoint2.o EffectSatelliteBombFire2.o EffectIntimateGrail2.o EffectHolyArmor2.o EffectStriking2.o EffectBless2.o EffectGloryGround.o EffectPassingHeal2.o EffectDragonHurricane.o EffectDragonHurricane2.o EffectViciousGuidance.o EffectSpectorInverse.o \
+	EffectChainOfDemon.o EffectBloodySkull.o EffectRageOfBlood.o EffectBatBreaker.o EffectShadyDouble.o \
+	EffectAllysterWind.o EffectFlameSight.o EffectRadchia.o EffectBreathOfDryad.o EffectChakramHail.o EffectBlizzard.o EffectDemolisher.o
 
 
 OBJS = $(HANDLER_OBJS) $(SKILL_OBJS) $(EFFECT_OBJS)

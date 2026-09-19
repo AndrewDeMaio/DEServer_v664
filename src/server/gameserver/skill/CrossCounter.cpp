@@ -153,7 +153,7 @@ bool CheckCrossCounter(Creature* pAttacker, Creature* pTargetCreature, Damage_t 
 	bool bSuccess = false;	
 
 	// 기술이 걸려있고, 현재 마비 상태가 아니라면...
-	if (pTargetCreature->isFlag(Effect::EFFECT_CLASS_CROSS_COUNTER) && !pTargetCreature->isFlag(Effect::EFFECT_CLASS_PARALYZE))
+	if (pTargetCreature->isFlag(Effect::EFFECT_CLASS_CROSS_COUNTER) && !pTargetCreature->isFlag(Effect::EFFECT_CLASS_PARALYZE) && !pTargetCreature->isFlag(Effect::EFFECT_CLASS_CHAIN_OF_DEMON))
 	{
 		Slayer*           pTargetSlayer          = dynamic_cast<Slayer*>(pTargetCreature);
 		SlayerSkillSlot *pCrossCounterSkillSlot = pTargetSlayer->hasSkill(SKILL_CROSS_COUNTER);

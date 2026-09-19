@@ -26,14 +26,12 @@ void CGAddMouseToGear::read (SocketInputStream & iStream)
 {
 	__BEGIN_TRY
 		
-	// m_GearSlotID is deliberately not on the wire. The client compiles it out
-	// of both write() and getPacketSize() under __CONTENTS(__GEAR_SWAP_CHANGE),
-	// which is __OFF for this build, so it sends ObjectID + SlotID only.
-	// Reading it here over-ran the packet by 2 bytes, desynced the input stream,
-	// and got the player logged out on every equip. The constructor leaves it 0,
-	// which matches PlayerCreature::m_CurrentGearSlotID's default.
-	iStream.read(m_ObjectID);
-	iStream.read(m_SlotID);
+	// The client writes the gear set first under __CONTENTS(__GEAR_SWAP_CHANGE),
+	// __ON again for the gear swap UI (2026-09-17). The handler compares this
+	// with the creature's current gear set, so equipping into set II needs it.
+	iStream.read(m_GearSlotID);
+	iStream.read(m_ObjectID);
+	iStream.read(m_SlotID);
 
 	__END_CATCH
 }
@@ -43,9 +41,10 @@ void CGAddMouseToGear::write (SocketOutputStream & oStream) const
 {
 	__BEGIN_TRY
 
-	// see read() -- m_GearSlotID is not on the wire for this build.
-	oStream.write(m_ObjectID);
-	oStream.write(m_SlotID);
+	// see read() -- the gear set goes first
+	oStream.write(m_GearSlotID);
+	oStream.write(m_ObjectID);
+	oStream.write(m_SlotID);
 
 	__END_CATCH
 }

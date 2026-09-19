@@ -1935,7 +1935,13 @@ ItemType_t getUpgradeItemType(Item::ItemClass IClass, ItemType_t itemType, ItemT
 		ItemInfo* pItemInfo = pInfoClass->getItemInfo( newItemType );
 		Assert(pItemInfo!=NULL);
 
-		newItemType = pItemInfo->getNextItemType();
+		// NextItemType can point at a tier that is not in the DB yet (Wristlet of
+		// Indra -> the Guardian wristlets). Stop at the last type that exists;
+		// an item with no ItemInfo crashes the drop code.
+		ItemType_t nextItemType = pItemInfo->getNextItemType();
+		if ( pInfoClass->getItemInfo( nextItemType ) == NULL ) break;
+
+		newItemType = nextItemType;
 	}
 
 	//cout << "ItemType Upgrade By Luck: " << itemType << " --[+" << upgradeCount << "]--> ";

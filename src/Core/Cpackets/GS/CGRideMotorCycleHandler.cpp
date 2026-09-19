@@ -54,6 +54,7 @@ void CGRideMotorCycleHandler::execute (CGRideMotorCycle* pPacket , Player* pPlay
 			Assert (pCreature != NULL);
 
 			if ( pCreature->isFlag( Effect::EFFECT_CLASS_INSTALL_TURRET ) ) return ;
+			if ( pCreature->isFlag( Effect::EFFECT_CLASS_CHAIN_OF_DEMON ) ) return ;
 			if ( pCreature->isFlag( Effect::EFFECT_CLASS_BURNING_SOL_CHARGE_1 ) )
 			{
 				Effect* pEffect = pCreature->findEffect(Effect::EFFECT_CLASS_BURNING_SOL_CHARGE_1);

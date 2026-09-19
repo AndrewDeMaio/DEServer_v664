@@ -437,6 +437,29 @@ void CLDeletePCHandler::execute (CLDeletePC* pPacket , Player* pPlayer)
 		////////////////////////////////////////////////////////////
 		// 클라이언트에게 PC 삭제 성공 패킷을 날린다.
 		////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////
+		// Schema 1.1.0: give the name back. The character is kept, INACTIVE,
+		// and from here on is known by its CharID alone: sp_RetireCharacter
+		// re-keys everything it still owns to `~<CharID>` and keeps the name
+		// it had in Slayer.RetiredName, so a new character of this name
+		// inherits nothing. Last on purpose: the purges above find their rows
+		// by the real name.
+		//
+		// A failure here must not fail the delete. CLCreatePCHandler retires a
+		// dead character that is still holding a name before it reuses it.
+		////////////////////////////////////////////////////////////
+#if !defined(__CHINA_SERVER__) && !defined(__THAILAND_SERVER__) && !defined(__NETMARBLE_SERVER__)
+		try
+		{
+			pStmt->executeQuery("CALL sp_RetireCharacter('%s')", pPacket->getName().c_str());
+		}
+		catch (SQLQueryException & sqe)
+		{
+			filelog("NameReuse.log", "retire on delete failed for [%s]: %s",
+				pPacket->getName().c_str(), sqe.toString().c_str());
+		}
+#endif
+
 		LCDeletePCOK lcDeletePCOK;
 		pLoginPlayer->sendPacket(&lcDeletePCOK);
 	

@@ -25,8 +25,8 @@ public:
 
 	uint getSize () throw ()
 	{ 
-		// no sizeof(bool): m_bActiveSlot is not on the wire, see write()
-		return PCItemInfo::getSize() + szSlotID;
+		// m_bActiveSlot is on the wire again, see write()
+		return PCItemInfo::getSize() + szSlotID + sizeof(bool);
 	}
 
 	static uint getMaxSize () throw ()
