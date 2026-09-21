@@ -3349,8 +3349,7 @@ HP_t setDamage(Creature* pTargetCreature, Damage_t Damage,
 		pMonster->setHP(Result,  ATTR_CURRENT);
 		// Tell the player who hit it how hard, for the floating damage number
 		// over the monster. GCGetDamage already exists on both sides with this
-		// layout. 0xFFFF stays reserved (it once meant a miss; the client
-		// ignores it), so real damage is capped below it.
+		// layout; 0xFFFF is kept back for a miss (executeSkillFailNormal).
 		if (pAttacker != NULL && pAttacker->isPC() && pAttacker->getPlayer() != NULL)
 		{
 			GCGetDamage gcGetDamage;
@@ -7869,7 +7868,16 @@ void executeSkillFailNormal(Creature* pCreature, SkillType_t SkillType, Creature
 		GCSkillFailed1 gcSkillFailed1;
 		gcSkillFailed1.setSkillType(SkillType);
 		gcSkillFailed1.setGrade(Grade);
-		(pCreature->getPlayer())->sendPacket(&gcSkillFailed1);	}
+		(pCreature->getPlayer())->sendPacket(&gcSkillFailed1);
+		// a miss on a monster: the floating number shows "Miss" (0xFFFF)
+		if (pTargetCreature != NULL && pTargetCreature->isMonster())
+		{
+			GCGetDamage gcMiss;
+			gcMiss.setObjectID(pTargetCreature->getObjectID());
+			gcMiss.setDamage(0xFFFF);
+			(pCreature->getPlayer())->sendPacket(&gcMiss);
+		}
+	}
 
 	GCSkillFailed2 gcSkillFailed2;
 	gcSkillFailed2.setSkillType(SkillType);

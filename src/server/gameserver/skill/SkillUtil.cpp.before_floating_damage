@@ -110,7 +110,6 @@
 #include "Gpackets/GCAddEffectToTile.h"
 #include "Gpackets/GCAddInjuriousCreature.h"
 #include "Gpackets/GCSkillFailed1.h"
-#include "Gpackets/GCGetDamage.h"	// floating damage numbers
 #include "Gpackets/GCSkillFailed2.h"
 #include "Gpackets/GCSystemMessage.h"
 #include "Gpackets/GCOtherModifyInfo.h"
@@ -3347,17 +3346,6 @@ HP_t setDamage(Creature* pTargetCreature, Damage_t Damage,
 			Result = max(1, (int)pMonster->getHP(ATTR_CURRENT) - (int)Damage);
 
 		pMonster->setHP(Result,  ATTR_CURRENT);
-		// Tell the player who hit it how hard, for the floating damage number
-		// over the monster. GCGetDamage already exists on both sides with this
-		// layout. 0xFFFF stays reserved (it once meant a miss; the client
-		// ignores it), so real damage is capped below it.
-		if (pAttacker != NULL && pAttacker->isPC() && pAttacker->getPlayer() != NULL)
-		{
-			GCGetDamage gcGetDamage;
-			gcGetDamage.setObjectID(pMonster->getObjectID());
-			gcGetDamage.setDamage((WORD)min((int)Damage, 0xFFFE));
-			pAttacker->getPlayer()->sendPacket(&gcGetDamage);
-		}
 
 		if ( pMonster->isFlag( Effect::EFFECT_CLASS_SHARE_HP ) )
 		{
@@ -7869,7 +7857,8 @@ void executeSkillFailNormal(Creature* pCreature, SkillType_t SkillType, Creature
 		GCSkillFailed1 gcSkillFailed1;
 		gcSkillFailed1.setSkillType(SkillType);
 		gcSkillFailed1.setGrade(Grade);
-		(pCreature->getPlayer())->sendPacket(&gcSkillFailed1);	}
+		(pCreature->getPlayer())->sendPacket(&gcSkillFailed1);
+	}
 
 	GCSkillFailed2 gcSkillFailed2;
 	gcSkillFailed2.setSkillType(SkillType);
