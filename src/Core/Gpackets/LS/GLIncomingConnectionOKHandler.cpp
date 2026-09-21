@@ -16,6 +16,7 @@
 	#include "Assert.h"
 
 	#include "Lpackets/LCReconnect.h"
+	#include "Properties.h"
 
 #endif
 
@@ -45,8 +46,17 @@ void GLIncomingConnectionOKHandler::execute ( GLIncomingConnectionOK * pPacket )
 		if ( pLoginPlayer->getPlayerStatus() == LPS_AFTER_SENDING_LG_INCOMING_CONNECTION ) 
 		{
 	        // 클라이언트에게 게임 서버로 재접속하라고 알려준다.
+			// The game server answered from the address the two servers reach each
+			// other on, which is loopback when they share a host. That is no use to
+			// a client on another machine: it is given PublicGameServerIP (a dotted
+			// IPv4 address, LCReconnect carries 15 characters) when that is set.
+			string gameServerIP = pPacket->getHost();
+			if ( g_pConfig->hasKey("PublicGameServerIP")
+				&& pLoginPlayer->getSocket()->getHost() != "127.0.0.1" )
+				gameServerIP = g_pConfig->getProperty("PublicGameServerIP");
+
 			LCReconnect lcReconnect;
-			lcReconnect.setGameServerIP( pPacket->getHost() );
+			lcReconnect.setGameServerIP( gameServerIP );
 			lcReconnect.setGameServerPort( pPacket->getTCPPort() );
 			lcReconnect.setKey( pPacket->getKey() );
 

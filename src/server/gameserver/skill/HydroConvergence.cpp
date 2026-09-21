@@ -30,7 +30,6 @@ SkillResultType HydroConvergence::execute(Ousters* pOusters, ObjectID_t TargetOb
 	Creature* pTargetCreature = pZone->getCreature(TargetObjectID);
 	Assert(pTargetCreature != NULL);
 	
-	Inventory *pInventory = pOusters->getInventory();
 
 	ZoneCoord_t		X = pTargetCreature->getX();
 	ZoneCoord_t		Y = pTargetCreature->getY();
@@ -58,12 +57,8 @@ SkillResultType HydroConvergence::execute(Ousters* pOusters, ObjectID_t TargetOb
 
 	skillResult = g_SimpleMissileSkill.execute( pOusters, TargetObjectID, pOustersSkillSlot, param, result );
 	
-	bool bSummonItem = pInventory->hasEnoughNumItem( Item::ITEM_CLASS_PUPA, 5, 3);
-
-	if( result.bSuccess && bSummonItem )
+	if( result.bSuccess )
 	{
-		pInventory->decreaseNumItem( Item::ITEM_CLASS_PUPA, 5, 3, pOusters->getPlayer());
-
 		Damage_t dotDamage = 0;
 		Damage_t effectDamage = 0;
 		Level_t	advenceLevel = 0;

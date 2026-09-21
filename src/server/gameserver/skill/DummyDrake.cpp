@@ -30,7 +30,6 @@ SkillResultType DummyDrake::execute(Ousters* pOusters, ObjectID_t TargetObjectID
 	Creature* pTargetCreature = pZone->getCreature(TargetObjectID);
 	Assert(pTargetCreature != NULL);
 	
-	Inventory *pInventory = pOusters->getInventory();
 
 	ZoneCoord_t		X = pTargetCreature->getX();
 	ZoneCoord_t		Y = pTargetCreature->getY();
@@ -58,12 +57,8 @@ SkillResultType DummyDrake::execute(Ousters* pOusters, ObjectID_t TargetObjectID
 
 	skillResult = g_SimpleMissileSkill.execute( pOusters, TargetObjectID, pOustersSkillSlot, param, result );
 
-	bool bSummonItem = pInventory->hasEnoughNumItem( Item::ITEM_CLASS_PUPA, 5, 3);
-	
-	if( result.bSuccess && bSummonItem )
+	if( result.bSuccess )
 	{
-		pInventory->decreaseNumItem( Item::ITEM_CLASS_PUPA, 5, 3, pOusters->getPlayer());
-		
 		EffectDummyDrake* pEffect = new EffectDummyDrake(pTargetCreature);
 		pEffect->setDamage(Damage_t(output.Damage*0.9));
 		pEffect->setUserObjectID( pOusters->getObjectID() );
@@ -75,7 +70,7 @@ SkillResultType DummyDrake::execute(Ousters* pOusters, ObjectID_t TargetObjectID
 		GCAddEffect	gcAddEffect;
 		gcAddEffect.setObjectID( pTargetCreature->getObjectID() );
 		gcAddEffect.setEffectID( Effect::EFFECT_CLASS_DUMMY_DRAKE );
-		gcAddEffect.setDuration(NULL);
+		gcAddEffect.setDuration(output.Duration);	// the client can show the fuse; it used to be sent as 0
 
 		pZone->broadcastPacket(pTargetCreature->getX(), pTargetCreature->getY(), &gcAddEffect);
 	}

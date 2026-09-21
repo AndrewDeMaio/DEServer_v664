@@ -75,7 +75,6 @@ SkillResultType SummonClay::execute(Ousters* pOusters, ZoneCoord_t X, ZoneCoord_
 		Assert(pPlayer != NULL);
 		Assert(pZone != NULL);
 		
-		Inventory *pInventory = pOusters->getInventory();
 
 		GCSkillToTileOK1 _GCSkillToTileOK1;
 		GCSkillToTileOK2 _GCSkillToTileOK2;
@@ -95,16 +94,12 @@ SkillResultType SummonClay::execute(Ousters* pOusters, ZoneCoord_t X, ZoneCoord_
 		bool bTimeCheck  = verifyRunTime(pSkillSlot);
 		bool bRangeCheck = verifyDistance(pOusters, X, Y, pSkillInfo->getRange()) && checkZoneLevelToUseSkill(pOusters);
 		bool bHitRoll    = HitRoll::isSuccessMagic(pOusters, pSkillInfo, pSkillSlot);
-		bool bSummonItem = pInventory->hasEnoughNumItem( Item::ITEM_CLASS_PUPA, 5, 3);
-
 		bool bTileCheck = false;
 		VSRect rect(0, 0, pZone->getWidth()-1, pZone->getHeight()-1);
 		if (rect.ptInRect(X, Y)) bTileCheck = true;
 
-		if (bManaCheck && bTimeCheck && bRangeCheck && bHitRoll && bTileCheck && bSummonItem)
+		if (bManaCheck && bTimeCheck && bRangeCheck && bHitRoll && bTileCheck)
 		{
-			pInventory->decreaseNumItem( Item::ITEM_CLASS_PUPA, 5, 3, pPlayer );
-			
 			// 이펙트의 지속시간을 계산한다.
 			SkillInput input(pOusters, pSkillSlot);
 			SkillOutput output;
