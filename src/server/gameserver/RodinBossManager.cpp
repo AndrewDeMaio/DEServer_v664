@@ -212,13 +212,13 @@ void RodinBossManager::heartbeat(Zone* pZone)
 				filelog("RodinBoss.log", "%s (OID %d) is gone from %s (zone %d)",
 					boss.name, (int)boss.objectID, zoneName(zoneID), (int)zoneID);
 
-				announcements.push_back(string(boss.name) + " has been defeated in Rodin!");
+				announcements.push_back(string(boss.name) + " has been defeated in " + zoneName(zoneID) + "!");
 				schedule(boss, now, RESPAWN_MIN, RESPAWN_MAX);
 			}
 			else if (boss.zoneID == 0 && boss.targetZoneID == zoneID && now >= boss.spawnTime)
 			{
 				if (spawn(boss, pZone))
-					announcements.push_back(string(boss.name) + " has appeared somewhere in Rodin!");
+					announcements.push_back(string(boss.name) + " has appeared in " + zoneName(boss.zoneID) + "!");
 				else
 					schedule(boss, now, RETRY_DELAY, RETRY_DELAY);
 			}
