@@ -50,7 +50,7 @@ void CGSkillToSelfHandler::execute (CGSkillToSelf* pPacket , Player* pPlayer)
 	
 		// 완전 안전지대라면 기술 사용 불가. by sigi. 2002.11.14
 		ZoneLevel_t ZoneLevel = pZone->getZoneLevel(pCreature->getX(), pCreature->getY());
-		if (ZoneLevel & COMPLETE_SAFE_ZONE)
+		if ((ZoneLevel & COMPLETE_SAFE_ZONE) && !isSkillAllowedInSafeZone(pCreature, SkillType))
 		{
 			executeSkillFailException(pCreature, SkillType);
 

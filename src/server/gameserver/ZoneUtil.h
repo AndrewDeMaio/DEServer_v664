@@ -285,6 +285,15 @@ void addMonstersToZone(
 bool isInSafeZone(Creature* pCreature);
 
 //////////////////////////////////////////////////////////////////////////////
+// Ousters Village carries ZoneInfo.Level 4 == COMPLETE_SAFE_ZONE, so every
+// tile in it normally forbids all skills.  Teleport is the one exception,
+// letting Ousters cross their home town; GOD/DM keep full access there.
+//////////////////////////////////////////////////////////////////////////////
+const ZoneID_t OUSTERS_VILLAGE_ZONE_ID = 1311;
+
+bool isSkillAllowedInSafeZone(Creature* pCreature, SkillType_t SkillType);
+
+//////////////////////////////////////////////////////////////////////////////
 // 좌표가 존의 범위 안인지를 체크한다.
 //////////////////////////////////////////////////////////////////////////////
 bool isValidZoneCoord(Zone* pZone, ZoneCoord_t x, ZoneCoord_t y, int offset=0);

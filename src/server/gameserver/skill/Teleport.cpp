@@ -10,6 +10,7 @@
 #include "Gpackets/GCStatusCurrentHP.h"
 #include "Gpackets/GCSkillToTileOK1.h"
 #include "Gpackets/GCSkillToTileOK5.h"
+#include "ZoneUtil.h"
 
 //////////////////////////////////////////////////////////////////////////////
 // 뱀파이어 타일 핸들러 
@@ -70,7 +71,19 @@ SkillResultType Teleport::execute(Ousters* pOusters, ZoneCoord_t X, ZoneCoord_t 
 		int  RequiredMP  = (int)pSkillInfo->getConsumeMP() + pOustersSkillSlot->getExpLevel()/10;
 		bool bManaCheck  = hasEnoughMana(pOusters, RequiredMP);
 		bool bTimeCheck  = verifyRunTime(pOustersSkillSlot);
-		bool bRangeCheck = verifyDistance(pOusters, X, Y, output.Range);
+		// verifyDistance() refuses any skill cast from a COMPLETE_SAFE_ZONE tile, and
+		// all of Ousters Village is one.  Teleport is allowed there, so fall back to a
+		// plain range test for that zone.
+		bool bRangeCheck;
+		if (pZone->getZoneID() == OUSTERS_VILLAGE_ZONE_ID)
+		{
+			bRangeCheck = abs((int)pOusters->getX() - (int)X) <= (int)output.Range
+					   && abs((int)pOusters->getY() - (int)Y) <= (int)output.Range;
+		}
+		else
+		{
+			bRangeCheck = verifyDistance(pOusters, X, Y, output.Range);
+		}
 		bool bEffected	 = !isAbleToUseSelfSkill(pOusters) // 20071228
 							|| pOusters->isFlag(Effect::EFFECT_CLASS_HAS_FLAG) 
 							|| pOusters->isFlag(Effect::EFFECT_CLASS_HAS_SWEEPER);
@@ -78,7 +91,7 @@ SkillResultType Teleport::execute(Ousters* pOusters, ZoneCoord_t X, ZoneCoord_t 
 		if (bManaCheck && bTimeCheck && bRangeCheck && !bEffected )
 		{
 			// 빠르게 PC를 움직여준다.
-			if (pZone->moveFastPC(pOusters, pOusters->getX(), pOusters->getY(), X, Y, getSkillType())) 
+			if (pZone->moveFastPC(pOusters, pOusters->getX(), pOusters->getY(), X, Y, getSkillType()))
 			{
 				decreaseMana(pOusters, RequiredMP, _GCSkillToTileOK1);
 

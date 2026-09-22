@@ -37,6 +37,7 @@
 #include "EventTransport.h"
 #include "MonsterCorpse.h"
 #include "RelicUtil.h"
+#include "skill/Skill.h"
 #include "ZoneUtil.h"
 #include "CastleInfoManager.h"
 #include "TimeManager.h"
@@ -2594,6 +2595,27 @@ void addMonstersToZone(Zone* pZone, const SUMMON_INFO2& summonInfo, list<Monster
 	__END_CATCH
 }
 
+
+//////////////////////////////////////////////////////////////////////////////
+// Ousters Village (zone 1311) has ZoneInfo.Level 4 == COMPLETE_SAFE_ZONE, and
+// Zone::initLevel() stamps that onto every tile, so the COMPLETE_SAFE_ZONE
+// check in the skill handlers rejects every skill in the zone -- Teleport
+// included.  Return true for the skills that are allowed through anyway.
+// GOD/DM keep full skill access there so the zone stays testable.
+//////////////////////////////////////////////////////////////////////////////
+bool isSkillAllowedInSafeZone(Creature* pCreature, SkillType_t SkillType)
+{
+	if (pCreature == NULL) return false;
+
+	Zone* pZone = pCreature->getZone();
+	if (pZone == NULL) return false;
+
+	if (pZone->getZoneID() != OUSTERS_VILLAGE_ZONE_ID) return false;
+
+	if (pCreature->isGOD() || pCreature->isDM()) return true;
+
+	return SkillType == SKILL_TELEPORT;
+}
 
 //////////////////////////////////////////////////////////////////////////////
 // 특정 크리쳐가 현재 안전 지대 내부에 있는가를 검사하는 함수
