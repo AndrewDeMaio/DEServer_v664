@@ -63,7 +63,7 @@
 #include <sstream>
 
 //////////////////////////////////////////////////////////////////////////////
-// ½×ÀÏ ¼ö ÀÖ´Â ¾ÆÀÌÅÛÀÎ°¡?
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isStackable(Item::ItemClass IClass)
 {
@@ -103,7 +103,7 @@ bool isStackable(Item::ItemClass IClass)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ½×ÀÏ ¼ö ÀÖ´Â ¾ÆÀÌÅÛÀÎ°¡?
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isStackable(const Item* pItem)
 {
@@ -135,7 +135,7 @@ bool isStackable(const Item* pItem)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// °°Àº Å¬·¡½º, Å¸ÀÔÀÇ ¾ÆÀÌÅÛÀÎ°¡?
+// ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½, Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isSameItem(Item::ItemClass IClass1, Item::ItemClass IClass2, ItemType_t type1, ItemType_t type2)
 {
@@ -144,7 +144,7 @@ bool isSameItem(Item::ItemClass IClass1, Item::ItemClass IClass2, ItemType_t typ
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// °°Àº Å¬·¡½º, Å¸ÀÔÀÇ ¾ÆÀÌÅÛÀÎ°¡?
+// ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½, Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isSameItem(const Item* pItem1, const Item* pItem2)
 {
@@ -154,7 +154,7 @@ bool isSameItem(const Item* pItem1, const Item* pItem2)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// µÎ ¾ÆÀÌÅÛÀ» ½×À» ¼ö ÀÖ´Â°¡?
+// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´Â°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool canStack(const Item* pItem1, const Item* pItem2)
 {	
@@ -163,7 +163,7 @@ bool canStack(const Item* pItem1, const Item* pItem2)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// µÎ ¼Õ ¹«±âÀÎ°¡?
+// ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isTwohandWeapon(const Item* pItem)
 {
@@ -191,7 +191,7 @@ bool isTwohandWeapon(const Item* pItem)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// Á¢±ÙÀü ¹«±âÀÎ°¡?
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isMeleeWeapon(const Item* pItem)
 {
@@ -215,7 +215,7 @@ bool isMeleeWeapon(const Item* pItem)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// Àü»ç, ±ºÀÎ ¼ºÁ÷ÀÚ ¹«±âÀÎ°¡?
+// ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isFighterWeapon(const Item* pItem)
 {
@@ -270,7 +270,7 @@ bool isClericWeapon(const Item* pItem)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ÃÑ¿¡ ¸Â´Â ÅºÃ¢ÀÎ°¡?
+// ï¿½Ñ¿ï¿½ ï¿½Â´ï¿½ ÅºÃ¢ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isSuitableMagazine(const Item* pGun, const Item* pMagazine, bool hasVivid)
 {
@@ -320,7 +320,7 @@ bool isSuitableMagazine(const Item* pGun, const Item* pMagazine, bool hasVivid)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ½½·¹ÀÌ¾î¿ë ¹«±âÀÎ°¡?
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isSlayerWeapon(Item::ItemClass IClass)
 {
@@ -343,7 +343,7 @@ bool isSlayerWeapon(Item::ItemClass IClass)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ¹ìÆÄÀÌ¾î¿ë ¹«±âÀÎ°¡?
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isVampireWeapon(Item::ItemClass IClass)
 {
@@ -359,7 +359,7 @@ bool isVampireWeapon(Item::ItemClass IClass)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ¾Æ¿ì½ºÅÍ½º¿ë ¹«±âÀÎ°¡?
+// ï¿½Æ¿ì½ºï¿½Í½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isOustersWeapon(Item::ItemClass IClass)
 {
@@ -376,7 +376,7 @@ bool isOustersWeapon(Item::ItemClass IClass)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ½½·¹ÀÌ¾î¿ë ¹æ¾î±¸ÀÎ°¡?
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½î±¸ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isSlayerArmor(Item::ItemClass IClass)
 {
@@ -399,7 +399,7 @@ bool isSlayerArmor(Item::ItemClass IClass)
 	return false;
 }
 //////////////////////////////////////////////////////////////////////////////
-// ¹ìÆÄÀÌ¾î¿ë ¹æ¾î±¸ÀÎ°¡?
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½î±¸ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isVampireArmor(Item::ItemClass IClass)
 {
@@ -417,7 +417,7 @@ bool isVampireArmor(Item::ItemClass IClass)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ¾Æ¿ì½ºÅÍ½º ¹æ¾î±¸ÀÎ°¡?
+// ï¿½Æ¿ì½ºï¿½Í½ï¿½ ï¿½ï¿½î±¸ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isOustersArmor(Item::ItemClass IClass)
 {
@@ -438,7 +438,7 @@ bool isOustersArmor(Item::ItemClass IClass)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ½½·¹ÀÌ¾î ½ÂÁ÷¿ë ¹æ¾î±¸ÀÎ°¡?
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î±¸ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isSlayerAdvancedArmor(Item::ItemClass IClass)
 {
@@ -454,7 +454,7 @@ bool isSlayerAdvancedArmor(Item::ItemClass IClass)
 	return false;
 }
 //////////////////////////////////////////////////////////////////////////////
-// ¹ìÆÄÀÌ¾î ½ÂÁ÷¿ë ¹æ¾î±¸ÀÎ°¡?
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î±¸ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isVampireAdvancedArmor(Item::ItemClass IClass)
 {
@@ -471,7 +471,7 @@ bool isVampireAdvancedArmor(Item::ItemClass IClass)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ¾Æ¿ì½ºÅÍ½º ½ÂÁ÷¿ë ¹æ¾î±¸ÀÎ°¡?
+// ï¿½Æ¿ì½ºï¿½Í½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î±¸ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isOustersAdvancedArmor(Item::ItemClass IClass)
 {
@@ -488,7 +488,7 @@ bool isOustersAdvancedArmor(Item::ItemClass IClass)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ½½·¹ÀÌ¾î¿ë ¾Ç¼¼»ç¸®ÀÎ°¡?
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½Ç¼ï¿½ï¿½ç¸®ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isSlayerAccessory(Item::ItemClass IClass)
 {
@@ -508,7 +508,7 @@ bool isSlayerAccessory(Item::ItemClass IClass)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ¹ìÆÄÀÌ¾î¿ë ¾Ç¼¼»ç¸®ÀÎ°¡?
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½Ç¼ï¿½ï¿½ç¸®ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isVampireAccessory(Item::ItemClass IClass)
 {
@@ -530,7 +530,7 @@ bool isVampireAccessory(Item::ItemClass IClass)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ¾Æ¿ì½ºÅÍ½º¿ë ¾Ç¼¼»ç¸®ÀÎ°¡?
+// ï¿½Æ¿ì½ºï¿½Í½ï¿½ï¿½ï¿½ ï¿½Ç¼ï¿½ï¿½ç¸®ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isOustersAccessory(Item::ItemClass IClass)
 {
@@ -552,11 +552,11 @@ bool isOustersAccessory(Item::ItemClass IClass)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// ¼ö¸®°¡´ÉÇÑ ¾ÆÀÌÅÛÀÎ°¡?
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isRepairableItem(const Item* pItem)
 {
-	// À¯´ÏÅ© ¾ÆÀÌÅÛÀº ¼ö¸®ÇÒ ÇÊ¿ä°¡ ¾ø´Ù.
+	// ï¿½ï¿½ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ä°¡ ï¿½ï¿½ï¿½ï¿½.
 	if (pItem == NULL
 		|| pItem->isUnique()
 		|| pItem->isTimeLimitItem()) return false;
@@ -589,7 +589,7 @@ bool isRepairableItem(const Item* pItem)
 		case Item::ITEM_CLASS_BLOOD_BIBLE:
 		case Item::ITEM_CLASS_CASTLE_SYMBOL:
 		case Item::ITEM_CLASS_COUPLE_RING:
-		// 2006.05.22 ¾Æ¿ì½ºÅÍ½º °á¼ÓÀÇ ¸ñ°É¸® Ãß°¡
+		// 2006.05.22 ï¿½Æ¿ì½ºï¿½Í½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½É¸ï¿½ ï¿½ß°ï¿½
 		case Item::ITEM_CLASS_OUSTERS_HARMONIC_PENDENT:
 		case Item::ITEM_CLASS_VAMPIRE_COUPLE_RING:
 		case Item::ITEM_CLASS_EVENT_ITEM:
@@ -610,7 +610,7 @@ bool isRepairableItem(const Item* pItem)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// ¾ÆÀÌÅÛÀ» ¼ö¸®ÇÑ´Ù.
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 //////////////////////////////////////////////////////////////////////////////
 void repairItem(Item* pItem)
 {
@@ -655,7 +655,7 @@ void repairItem(Item* pItem)
 			Durability_t maxDurability = computeMaxDurability(pItem);
 			
 			oldDurability = pItem->getDurability();
-			pItem->setDurability(maxDurability);	// ¼ö¸®ÇÑ´Ù.
+			pItem->setDurability(maxDurability);	// ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 			
 			if ( pItem->getDurability() != oldDurability )
 			{
@@ -667,7 +667,7 @@ void repairItem(Item* pItem)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ¾ÆÀÌÅÛÀÇ ÃÖ´ë ³»±¸µµ¸¦ ¾ò¾î³½´Ù.
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î³½ï¿½ï¿½.
 //////////////////////////////////////////////////////////////////////////////
 Durability_t computeMaxDurability(Item* pItem)
 {
@@ -678,7 +678,7 @@ Durability_t computeMaxDurability(Item* pItem)
 
 	unsigned long maxDurability = pItem->getMaxDurability();
 
-	// 100%¿¡¼­ ½ÃÀÛ
+	// 100%ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	unsigned long plusPoint = 100;
 
 	const list<OptionType_t>& optionTypes = pItem->getOptionTypeList();
@@ -702,7 +702,7 @@ Durability_t computeMaxDurability(Item* pItem)
 	}
 
 	maxDurability = (maxDurability * plusPoint / 100);
-	// 65000 ³Ñ¾î°¡¸é »à»ç¸®³­´Ù -_-;;;
+	// 65000 ï¿½Ñ¾î°¡ï¿½ï¿½ ï¿½ï¿½ç¸®ï¿½ï¿½ï¿½ï¿½ -_-;;;
 	maxDurability = min( (unsigned long)65000, maxDurability );
 	if (maxDurability > 65000)
 		cout << "MaxDurability Over 65000 --> set 65000" << endl;
@@ -710,14 +710,14 @@ Durability_t computeMaxDurability(Item* pItem)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ÅºÃ¢À» °¥¾Æ³¢¿öÁØ´Ù. 
+// ÅºÃ¢ï¿½ï¿½ ï¿½ï¿½ï¿½Æ³ï¿½ï¿½ï¿½ï¿½Ø´ï¿½. 
 //////////////////////////////////////////////////////////////////////////////
 Bullet_t reloadArmsItem(Item* pGun, Item* pMagazine)
 {
 	Assert(pGun != NULL);
 	Assert(pMagazine != NULL);
 
-	// vivid magazine Ã¼Å©´Â ¿©±â µé¾î¿À±â Àü¿¡ ÇÑ´Ù. ÀÌ ÇÔ¼ö´Â ¹«Á¶°Ç reloadÇØÁØ´Ù.
+	// vivid magazine Ã¼Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½. ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ reloadï¿½ï¿½ï¿½Ø´ï¿½.
 	if (isSuitableMagazine(pGun, pMagazine, true) == false) return false;
 
 	Item::ItemClass IClass        = pGun->getItemClass();
@@ -759,7 +759,7 @@ Bullet_t reloadArmsItem(Item* pGun, Item* pMagazine)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ÃÑ¾ËÀ» »©ÁØ´Ù.
+// ï¿½Ñ¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø´ï¿½.
 //////////////////////////////////////////////////////////////////////////////
 Bullet_t decreaseBullet(Item* pWeapon) 
 	throw()
@@ -777,7 +777,7 @@ Bullet_t decreaseBullet(Item* pWeapon)
 	Bullet_t        bullet = 0;
 	Silver_t        silver = 0;
 
-	// Gun class¸¦ Ãß°¡Çß´Ù. by sigi. 2002.5.8
+	// Gun classï¿½ï¿½ ï¿½ß°ï¿½ï¿½ß´ï¿½. by sigi. 2002.5.8
 	/*
 	if (IClass == Item::ITEM_CLASS_AR
 		|| IClass == Item::ITEM_CLASS_SMG
@@ -850,7 +850,7 @@ Bullet_t decreaseBullet(Item* pWeapon)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// ³²Àº ÃÑ¾ËÀÇ °¹¼ö¸¦ ¸®ÅÏ
+// ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 //////////////////////////////////////////////////////////////////////////////
 Bullet_t getRemainBullet(Item* pWeapon) 
 	throw()
@@ -905,7 +905,7 @@ Bullet_t getRemainBullet(Item* pWeapon)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ÁÖÀ» ¼ö ÀÖ´Â ¾ÆÀÌÅÛÀÎ°¡? 
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½? 
 //////////////////////////////////////////////////////////////////////////////
 bool isPortableItem(Item* pItem)
 {
@@ -928,16 +928,16 @@ bool isPortableItem(Item* pItem)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// »ç¿ëÇÒ ¼ö ÀÖ´Â ¾ÆÀÌÅÛÀÎ°¡?
-// ¿©±â¼­ÀÇ »ç¿ëÀÌ¶õ, »ç¿ëÇØ¼­ »ç¶óÁö´Â ¼Ò¸ð¼º ¾ÆÀÌÅÛÀ» ¸»ÇÑ´Ù.
+// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?
+// ï¿½ï¿½ï¿½â¼­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ì¶ï¿½, ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ñ´ï¿½.
 //////////////////////////////////////////////////////////////////////////////
 bool isUsableItem(Item* pItem, Creature* pUser)
 {
 	Assert(pItem != NULL);
 	Assert(pUser != NULL);
 
-	// ³ªÁß¿¡ °°Àº Å¬·¡½ºÁö¸¸, ¾î¶² °ÍÀº »ç¿ëÇÒ ¼ö ÀÖ°í,
-	// ¾î¶² °ÍÀº »ç¿ëÇÒ ¼ö ¾ø´Â °ÍÀÌ ³ª¿ÀÁö ¾ÊÀ»±î?
+	// ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½î¶² ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö°ï¿½,
+	// ï¿½î¶² ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?
 	//ItemType_t IType = pItem->getItemType();
 
 	switch (pItem->getItemClass())
@@ -964,7 +964,7 @@ bool isUsableItem(Item* pItem, Creature* pUser)
 			if (pUser->isSlayer()) return true;
 			break;
 		case Item::ITEM_CLASS_EVENT_TREE:
-			if ( pItem->getItemType() == 12 || pItem->getItemType() == 54 || ( pItem->getItemType() >= 26 && pItem->getItemType() <=28 ) ) return true;	// ¿Ï¼ºµÈ Æ®¸®
+			if ( pItem->getItemType() == 12 || pItem->getItemType() == 54 || ( pItem->getItemType() >= 26 && pItem->getItemType() <=28 ) ) return true;	// ï¿½Ï¼ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½
 			break;
 
 		case Item::ITEM_CLASS_EVENT_ETC:
@@ -1013,17 +1013,17 @@ bool isUsableItem(Item* pItem, Creature* pUser)
 			if ( pItem->getItemType() >= 19 && pItem->getItemType() <= 21 ) return true;
 			if ( pItem->getItemType() == 27 ) return true;
 			if ( pItem->getItemType() == 28 ) return true; 
-			if ( pItem->getItemType() == 30 ) return true; // 20080424 ¼¼ÀÙ ³×ÀÙ ÀÌº¥Æ® 
+			if ( pItem->getItemType() == 30 ) return true; // 20080424 ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® 
 			if ( pItem->getItemType() == 31 ) return true; 
 			if ( pItem->getItemType() == 32 ) return true;
 			if ( pItem->getItemType() == 33 ) return true;
 			if ( pItem->getItemType() == 34 ) return true;
 			if ( pItem->getItemType() == 35 ) return true;
-			if ( pItem->getItemType() == 36 ) return true; // 081021 wlzzi - ÇÁ¸®¹Ì¾ö º¹±Ç - 35´Â Àè¿À·£ÅÏ
-			if ( pItem->getItemType() == 37 || pItem->getItemType() == 38) return true; // 081112 wlzzi - NPCÈ£Ãâ ¾ÆÀÌÅÛ ±³È¯±Ç
-			if ( pItem->getItemType() == 39 ) return true; //1219 wlzzi - 12¿ù ÀÌº¥Æ® -- ¾ç¸»¹®¾ç
-			if ( pItem->getItemType() == 40 ) return true; //090429 kim seong yong - ÇÁ¸®¹Ì¾ö º¹±Ç A
-			if ( pItem->getItemType() == 41 ) return true; //090429 kim seong yong - ÇÁ¸®¹Ì¾ö º¹±Ç B
+			if ( pItem->getItemType() == 36 ) return true; // 081021 wlzzi - ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ - 35ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			if ( pItem->getItemType() == 37 || pItem->getItemType() == 38) return true; // 081112 wlzzi - NPCÈ£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½
+			if ( pItem->getItemType() == 39 ) return true; //1219 wlzzi - 12ï¿½ï¿½ ï¿½Ìºï¿½Æ® -- ï¿½ç¸»ï¿½ï¿½ï¿½ï¿½
+			if ( pItem->getItemType() == 40 ) return true; //090429 kim seong yong - ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ A
+			if ( pItem->getItemType() == 41 ) return true; //090429 kim seong yong - ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ B
 			if ( pItem->getItemType() == 42 ) return true;
 			if ( pItem->getItemType() == 43 ) return true;
 			if ( pItem->getItemType() == 44 ) return true;
@@ -1033,12 +1033,12 @@ bool isUsableItem(Item* pItem, Creature* pUser)
 			if ( pItem->getItemType() == 48 ) return true;
 			if ( pItem->getItemType() == 49 ) return true;
 			if ( pItem->getItemType() == 50 ) return true;
-			if ( pItem->getItemType() == 51 ) return true; //´Þºû °áÁ¤
-			if ( pItem->getItemType() == 52 ) return true; //µ¥ºô ¹Ì½ºÅÍ¸® ÀÎÁ§¼Ç
-			if ( pItem->getItemType() == 53 ) return true; //Å©¸²½¼ÀÇ ¼±¹°»óÀÚ
-			if ( pItem->getItemType() == 54 ) return true; //¹Ì½ºÅÍ¸® ÆÒ½Ã ÀÎÁ§¼Ç
-			if ( pItem->getItemType() == 55 ) return true; //½Ã»ù´ÞÀÇ ¼±¹°»óÀÚ
-			if ( pItem->getItemType() == 56 ) return true; //»ç¶ûÀÇ ¼±¹°»óÀÚ
+			if ( pItem->getItemType() == 51 ) return true; //ï¿½Þºï¿½ ï¿½ï¿½ï¿½ï¿½
+			if ( pItem->getItemType() == 52 ) return true; //ï¿½ï¿½ï¿½ï¿½ ï¿½Ì½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			if ( pItem->getItemType() == 53 ) return true; //Å©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			if ( pItem->getItemType() == 54 ) return true; //ï¿½Ì½ï¿½ï¿½Í¸ï¿½ ï¿½Ò½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			if ( pItem->getItemType() == 55 ) return true; //ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			if ( pItem->getItemType() == 56 ) return true; //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			
 			break;
 
@@ -1081,7 +1081,7 @@ bool isUsableItem(Item* pItem, Creature* pUser)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ¾ÆÀÌÅÛÀÇ ¼ýÀÚ¸¦ ÁÙÀÎ´Ù.
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½Î´ï¿½.
 //////////////////////////////////////////////////////////////////////////////
 ItemNum_t decreaseItemNum(Item* pItem, Inventory* pInventory, 
 	const string& OwnerID, Storage storage, StorageID_t storageID, BYTE x, BYTE y)
@@ -1098,21 +1098,21 @@ ItemNum_t decreaseItemNum(Item* pItem, Inventory* pInventory,
 	
 	if (iBeforeCount > 1)
 	{
-		pItem->setNum(iBeforeCount - 1); // ¾ÆÀÌÅÛÀÇ °¹¼ö¸¦ ÇÏ³ª ÁÙÀÎ´Ù.
-		pInventory->decreaseItemNum(); // ÀÎº¥Åä¸® ÃÑ °¹¼ö¸¦ ÁÙÀÎ´Ù.
-		pInventory->decreaseWeight(pItem->getWeight()); // ÀÎº¥Åä¸® ÃÑ ¹«°Ô¸¦ ÁÙÀÎ´Ù.
+		pItem->setNum(iBeforeCount - 1); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ ï¿½ï¿½ï¿½Î´ï¿½.
+		pInventory->decreaseItemNum(); // ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î´ï¿½.
+		pInventory->decreaseWeight(pItem->getWeight()); // ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ ï¿½ï¿½ï¿½Ô¸ï¿½ ï¿½ï¿½ï¿½Î´ï¿½.
 		
 		iRemainCount = pItem->getNum();
 		
-		//pItem->save(OwnerID, storage, storageID, x, y); // ¾ÆÀÌÅÛ Á¤º¸¸¦ ÀúÀåÇÑ´Ù.
-		// ¾ÆÀÌÅÛ ÀúÀå ÃÖÀûÈ­. 2002.7.25 by sigi
+		//pItem->save(OwnerID, storage, storageID, x, y); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­. 2002.7.25 by sigi
 		char pField[80];
 		sprintf(pField, "Num=%d", iRemainCount);
 		pItem->tinysave(pField);
 	}
 	else
 	{
-		// 1°³¿¡¼­ »ç¿ëÀ» ÇßÀ¸¹Ç·Î ³²Àº °³¼ö´Â 0°³°¡ µÈ´Ù.
+		// 1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½È´ï¿½.
 		iRemainCount = 0;
 	}
 	
@@ -1141,7 +1141,7 @@ ItemNum_t decreaseItemNum(Item* pItem, Inventory* pInventory,
 		END_DB(pStmt)
 	}
 	
-	 // ³²Àº °³¼ö°¡ ¾øÀ¸¸é »èÁ¦
+	 // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if ( iRemainCount == 0 )
 	{
 		pInventory->deleteItem(x, y);
@@ -1213,7 +1213,7 @@ bool hasOptionClass(const list<OptionType_t>& optionTypes, OptionType_t optionTy
 				return true;
 		}
 	} catch (Throwable& t) {
-		// ¹«½Ã..
+		// ï¿½ï¿½ï¿½ï¿½..
 		filelog("hasOptionClassBug.txt", "%s", t.toString().c_str());
 	}
 
@@ -1248,7 +1248,7 @@ void setOptionTypeToField(const list<OptionType_t>& optionTypes, string& optionF
 	{
 		ch = *itr;
 
-		// Æ¯¼ö~¹®ÀÚÀÎ °æ¿ì¿¡´Â ÀÌ°Å ÇØÁà¾ßµÈ´ç.
+		// Æ¯ï¿½ï¿½~ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ßµÈ´ï¿½.
 		if (ch=='\'' || ch=='\\')
 		{
 			optionField += '\\';
@@ -1285,19 +1285,19 @@ string getOptionTypeToString(const list<OptionType_t>& optionTypes)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// ·¹¾î ¾ÆÀÌÅÛ : ´ÙÀ½ ¿É¼ÇÀ» ºÙÀÏ±î?
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : ï¿½ï¿½ï¿½ï¿½ ï¿½É¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isPossibleNextOption(ITEM_TEMPLATE* pTemplate)
 {
-	// ÇöÀç´Â ¿É¼ÇÀÌ 2°³±îÁö¹Û¿¡ ¾È ºÙ´Â´Ù.
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½É¼ï¿½ï¿½ï¿½ 2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û¿ï¿½ ï¿½ï¿½ ï¿½Ù´Â´ï¿½.
 	if (pTemplate->OptionType.size()>=2)
 		return false;
 
-	// ¾Æ¹«°Íµµ ¾ø´Ù¸é ¹«Á¶°Ç ºÙÀÎ´Ù...°í ÇÏ´Â°Ç ¾Æ´ÏÁö¸¸ ¾îÂ¶µç ±×·¸´Ù - -;
+	// ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î´ï¿½...ï¿½ï¿½ ï¿½Ï´Â°ï¿½ ï¿½Æ´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¶ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ - -;
 	if (pTemplate->OptionType.empty())
 		return true;
 
-	// ¾ÆÀÌÅÛ¿¡ Æ¯º°È÷ Àû¿ëµÇ¾î ÀÖ´Â ¿É¼Ç È®·üÀ» Àû¿ë½ÃÅ²´Ù.
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Û¿ï¿½ Æ¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½Ö´ï¿½ ï¿½É¼ï¿½ È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Å²ï¿½ï¿½.
 	if (pTemplate->NextOptionRatio!=0)
 	{
 		int dice = rand()%100;
@@ -1306,13 +1306,13 @@ bool isPossibleNextOption(ITEM_TEMPLATE* pTemplate)
 	}
 
 	try {
-		// ¾ÆÀÌÅÛ Á¾·ùº°·Î.. ´ÙÀ½ ¿É¼ÇÀÌ ºÙÀ» È®·üÀ» ±¸ÇÑ´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.. ï¿½ï¿½ï¿½ï¿½ ï¿½É¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ñ´ï¿½.
 		ItemInfo* pItemInfo = g_pItemInfoManager->getItemInfo(pTemplate->ItemClass, pTemplate->ItemType);
 		Ratio_t nextItemRatio = pItemInfo->getNextOptionRatio();
 
-		// ÇöÀç ºÙÀº ¿É¼Ç¿¡ ´ëÇØ¼­.. ´ÙÀ½ ¿É¼ÇÀÌ ºÙÀ» È®·üÀ» ±¸ÇÑ´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½É¼Ç¿ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½.. ï¿½ï¿½ï¿½ï¿½ ï¿½É¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ñ´ï¿½.
 		list<OptionType_t>::const_iterator itr = pTemplate->OptionType.begin();
-		Ratio_t nextOptionRatio = nextItemRatio;	// °è»ê ÁÙÀÏ·Á°í..
+		Ratio_t nextOptionRatio = nextItemRatio;	// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½..
 		Ratio_t baseMultiplier = 100;				// 100%
 		for (; itr!=pTemplate->OptionType.end(); itr++)
 		{
@@ -1323,8 +1323,8 @@ bool isPossibleNextOption(ITEM_TEMPLATE* pTemplate)
 			baseMultiplier *= 100;
 		}
 
-		// [¿¹Á¦] ¿É¼ÇÀÌ µÎ °³ ºÙ¾î ÀÖ´Â ¾ÆÀÌÅÛ¿¡¼­ 
-		//        ¼¼¹øÂ° ¿É¼ÇÀÌ ºÙÀ» È®·üÀÌ¶ó¸é..
+		// [ï¿½ï¿½ï¿½ï¿½] ï¿½É¼ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ù¾ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Û¿ï¿½ï¿½ï¿½ 
+		//        ï¿½ï¿½ï¿½ï¿½Â° ï¿½É¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½..
 		//
 		// nextItemRatio = 10 %
 		// nextOptionRatio1 = 20 %
@@ -1333,7 +1333,7 @@ bool isPossibleNextOption(ITEM_TEMPLATE* pTemplate)
 		// total nextOptionRatio = nextItemRatio * nextOptionRatio1 * nextOptionRatio2
 		//                       = 10 * 20 * 30 = 6000
 		//
-		// baseMultiplier = 100(ÃÊ±â°ª) * 100(option1) * 100(option2)
+		// baseMultiplier = 100(ï¿½Ê±â°ª) * 100(option1) * 100(option2)
 		//                = 1000000
 		//
 		// selectRatio = 0~baseMultiplier = 0~1000000
@@ -1345,14 +1345,14 @@ bool isPossibleNextOption(ITEM_TEMPLATE* pTemplate)
 
 		Ratio_t selectRatio = rand()%baseMultiplier;
 
-		// ·¹¾î ¾ÆÀÌÅÛ ·çÆÃ È®·üÀ» Àû¿ë½ÃÅ²´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Å²ï¿½ï¿½.
 		nextOptionRatio = getPercentValue( nextOptionRatio, g_pVariableManager->getRareItemRatio() );
 
-		// È®·ü Ã¼Å©
+		// È®ï¿½ï¿½ Ã¼Å©
 		return selectRatio < nextOptionRatio;
 
 	} catch (Throwable& t) {
-		// ÀÏ´Ü ¹«½ÃÇÑ´Ù.
+		// ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 		filelog("nextOptionBug.txt", "%s", t.toString().c_str());
 	}
 
@@ -1360,7 +1360,7 @@ bool isPossibleNextOption(ITEM_TEMPLATE* pTemplate)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// °·ºí ¾ÆÀÌÅÛ »ý¼º
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 //////////////////////////////////////////////////////////////////////////////
 Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, int maxLevel)
 	throw(Error)
@@ -1378,7 +1378,7 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 	ItemInfo* pItemInfo = NULL;
 
 	//----------------------------------------------------------------------
-	// SlayerÀÎ °æ¿ì
+	// Slayerï¿½ï¿½ ï¿½ï¿½ï¿½
 	//----------------------------------------------------------------------
 	if (pCreature->isSlayer())
 	{
@@ -1395,29 +1395,29 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 		Attr_t    ReqSum, ReqSum2;
 		Attr_t    ReqGender;
 
-		// gambleÇÒ ¼ö ÀÖ´Â ÇÑ°è¸¦ Á» ´õ ³ôÇôº»´Ù.
+		// gambleï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ñ°è¸¦ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 		CSTR += 3;
 		CDEX += 3;
 		CINT += 3;
 		CSUM += 5;
 
-		// levelÁ¦ÇÑ
+		// levelï¿½ï¿½ï¿½ï¿½
 		if (maxLevel!=0)
 		{
-			int maxAttr = maxLevel * 2 / 3;	// attrÀº SUMÀÇ 2/3À¸·Î º»´Ù.
+			int maxAttr = maxLevel * 2 / 3;	// attrï¿½ï¿½ SUMï¿½ï¿½ 2/3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 			CSTR = min((int)maxAttr, (int)CSTR);
 			CDEX = min((int)maxAttr, (int)CDEX);
 			CINT = min((int)maxAttr, (int)CINT);
 			CSUM = min((int)maxLevel, (int)CSUM);
 		}
 
-		// 10¹ø¸¸ µ¹·Áº»´Ù.
+		// 10ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 		int i = 10;
 		do
 		{
 			itemType = pInfoClass->getRandomItemType();
 
-			// ÀÌ itemTypeÀ» »ý¼ºÇØµµ µÇ´Â levelÀÎÁö È®ÀÎÇÑ´Ù.
+			// ï¿½ï¿½ itemTypeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ ï¿½Ç´ï¿½ levelï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ñ´ï¿½.
 			pItemInfo = g_pItemInfoManager->getItemInfo(itemClass, itemType);
 
 			ReqSTR2 = ReqSTR    = pItemInfo->getReqSTR();
@@ -1434,7 +1434,7 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 					|| pSlayer->getSex() == MALE && ReqGender == GENDER_MALE
 					|| pSlayer->getSex() == FEMALE && ReqGender == GENDER_FEMALE))
 			{
-				// ÀÌ item typeÀ¸·Î °áÁ¤ÇÑ´Ù.
+				// ï¿½ï¿½ item typeï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 				break;
 			}
 
@@ -1442,7 +1442,7 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 
 		if (i==0)
 		{
-			// ¿©ÀÚÀÎ °æ¿ì´Â ±âº» item typeÀÌ ´Ù¸£´Ù.
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½âº» item typeï¿½ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½.
 			if ((itemClass==Item::ITEM_CLASS_COAT || itemClass==Item::ITEM_CLASS_TROUSER)
 				&& pSlayer->getSex()==FEMALE)
 			{
@@ -1453,13 +1453,13 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 				itemType = 0;
 			}
 
-			// ¹Ø¿¡¼­ Ã¼Å©ÇÒ¶§ ¹«½ÃÇÏ±â À§ÇØ¼­..
+			// ï¿½Ø¿ï¿½ï¿½ï¿½ Ã¼Å©ï¿½Ò¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½..
 			pItemInfo = NULL;
 		}
 
 
-		// ¾ÆÀÌÅÛÀÌ ¿É¼ÇÀ» °¡Áö°í ÀÖ´Ù¸é, 
-		// ¿É¼ÇÀÇ Á¾·ù¿¡ µû¶ó¼­ ´É·ÂÄ¡ Á¦ÇÑÀ» ¿Ã·ÁÁØ´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½É¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½, 
+		// ï¿½É¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½É·ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ø´ï¿½.
 		int maxOptionLevel = max(1, min(100, (int)(CSUM/3)));
 
 		const vector<OptionType_t>& optionVector = g_pOptionInfoManager->getPossibleGambleOptionVector((Item::ItemClass)itemClass, maxOptionLevel);
@@ -1475,17 +1475,17 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 		cout << endl;
 		*/
 
-		// Total OptionRatio¸¦ ±¸ÇÑ´Ù.
+		// Total OptionRatioï¿½ï¿½ ï¿½ï¿½ï¿½Ñ´ï¿½.
 		int itemOptionRatio = g_pOptionInfoManager->getTotalGambleRatio((Item::ItemClass)itemClass, maxOptionLevel);
 
 		if (optionVector.size()>0 && itemOptionRatio>0
 			&& (pItemInfo==NULL || !pItemInfo->isUnique()))
 		{
-			// 10¹ø¸¸ µ¹·Áº»´Ù.
+			// 10ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 			int i = 10;
 			
 			do {
-				// randomÀ¸·Î optionÀ» ¼±ÅÃÇÑ´Ù.
+				// randomï¿½ï¿½ï¿½ï¿½ optionï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 				int optionRatio = random()%itemOptionRatio;
 				int ratioSum      = 0;
 
@@ -1502,13 +1502,13 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 
 					if (optionRatio < ratioSum)
 					{
-						// ÀÌ optionÀ» ¼±ÅÃÇÑ´Ù.
+						// ï¿½ï¿½ optionï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 						//cout << "select : " << (int)optionType << endl;
 						break;
 					}
 				}
 
-				// optionÀÇ ¿ä±¸ ´É·ÂÄ¡¸¦ ´õÇØ¼­
+				// optionï¿½ï¿½ ï¿½ä±¸ ï¿½É·ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½
 				if (ReqSTR != 0) ReqSTR = ReqSTR2 + (pOptionInfo->getReqSum() * 2);
 				if (ReqDEX != 0) ReqDEX = ReqDEX2 + (pOptionInfo->getReqSum() * 2);
 				if (ReqINT != 0) ReqINT = ReqINT2 + (pOptionInfo->getReqSum() * 2);
@@ -1523,13 +1523,13 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 				//	<< "CDEX=" << CDEX << ", "
 				//	<< "CINT=" << CINT << endl;
 
-				// playerÀÇ ´É·ÂÄ¡¿¡ ¸Â´Â ¾ÆÀÌÅÛÀÎÁö È®ÀÎÇÑ´Ù.
+				// playerï¿½ï¿½ ï¿½É·ï¿½Ä¡ï¿½ï¿½ ï¿½Â´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ñ´ï¿½.
 				if (CSTR >= ReqSTR
 					&& CDEX >= ReqDEX
 					&& CINT >= ReqINT
 					&& CSUM >= ReqSum)
 				{
-					// ÀÌ option typeÀ¸·Î °áÁ¤ÇÑ´Ù.
+					// ï¿½ï¿½ option typeï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 					//cout << "OK!" << endl;
 					break;
 				}
@@ -1541,11 +1541,11 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 				optionType = 0;	//(rand()%3==0? 1: (rand()%2? 6:11));
 			}
 		}
-		// ¹«¿É 	// ÀûÀýÇÑ°Ô ¾øÀ¸¸é STR+1, DEX+1, INT+1 Áß¿¡¼­ ¾Ï°Å³ª..
+		// ï¿½ï¿½ï¿½ï¿½ 	// ï¿½ï¿½ï¿½ï¿½ï¿½Ñ°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ STR+1, DEX+1, INT+1 ï¿½ß¿ï¿½ï¿½ï¿½ ï¿½Ï°Å³ï¿½..
 		else optionType = 0;	//(rand()%3==0? 1: (rand()%2? 6:11));
 	}
 	//----------------------------------------------------------------------
-	// VampireÀÎ °æ¿ì
+	// Vampireï¿½ï¿½ ï¿½ï¿½ï¿½
 	//----------------------------------------------------------------------
 	else if (pCreature->isVampire())
 	{
@@ -1553,10 +1553,10 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 	
 		Level_t	CLevel = pVampire->getLevel();
 
-		// gambleÇÒ ¼ö ÀÖ´Â ÇÑ°è¸¦ Á» ´õ ³ôÇôº»´Ù.
+		// gambleï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ñ°è¸¦ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 		CLevel += 3;
 
-		// levelÁ¦ÇÑ
+		// levelï¿½ï¿½ï¿½ï¿½
 		if (maxLevel!=0)
 		{
 			CLevel = min((int)maxLevel, (int)CLevel);
@@ -1566,20 +1566,20 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 		Attr_t    ReqGender;
 
 
-		// 10¹ø¸¸ µ¹·Áº»´Ù.
+		// 10ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 		int i = 10;
 		do
 		{
 			itemType = pInfoClass->getRandomItemType();
 
-			// ÀÌ itemTypeÀ» »ý¼ºÇØµµ µÇ´Â levelÀÎÁö È®ÀÎÇÑ´Ù.
+			// ï¿½ï¿½ itemTypeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ ï¿½Ç´ï¿½ levelï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ñ´ï¿½.
 			pItemInfo = g_pItemInfoManager->getItemInfo(itemClass, itemType);
 
 			ReqLevel2 = ReqLevel  = pItemInfo->getReqLevel();
 			ReqGender = pItemInfo->getReqGender();
 
-			// ·¹º§ Á¦ÇÑÀÌ ¾ø°Å³ª Á¦ÇÑ ·¹º§ÀÌ ³ô°í
-			// ¼ºº°ÀÌ ¸Â¾Æ¾ß ÇÑ´Ù.
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Å³ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Â¾Æ¾ï¿½ ï¿½Ñ´ï¿½.
 			if ((ReqLevel <= 0 || CLevel >= ReqLevel)
 				&& (ReqGender==GENDER_BOTH
 					|| pVampire->getSex()==MALE && ReqGender==GENDER_MALE
@@ -1593,7 +1593,7 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 
 		if (i==0)
 		{
-			// ¿©ÀÚÀÎ °æ¿ì´Â ±âº» item typeÀÌ ´Ù¸£´Ù.
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½âº» item typeï¿½ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½.
 			if (Item::ITEM_CLASS_VAMPIRE_COAT && pVampire->getSex()==FEMALE)
 			{
 				itemType = 1;
@@ -1604,14 +1604,14 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 			}
 		}
 
-		// ¾ÆÀÌÅÛÀÌ ¿É¼ÇÀ» °¡Áö°í ÀÖ´Ù¸é, 
-		// ¿É¼ÇÀÇ Á¾·ù¿¡ µû¶ó¼­ ´É·ÂÄ¡ Á¦ÇÑÀ» ¿Ã·ÁÁØ´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½É¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½, 
+		// ï¿½É¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½É·ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ø´ï¿½.
 		int maxOptionLevel = max(1, min(100, (int)CLevel));
 
 		const vector<OptionType_t>& optionVector = g_pOptionInfoManager->getPossibleGambleOptionVector((Item::ItemClass)itemClass, maxOptionLevel);
 		vector<OptionType_t>::const_iterator iOption;
 
-		// Total OptionRatio¸¦ ±¸ÇÑ´Ù.
+		// Total OptionRatioï¿½ï¿½ ï¿½ï¿½ï¿½Ñ´ï¿½.
 		int itemOptionRatio = g_pOptionInfoManager->getTotalGambleRatio((Item::ItemClass)itemClass, maxOptionLevel);
 
 		/*
@@ -1628,11 +1628,11 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 		if (optionVector.size()>0 && itemOptionRatio>0
 			&& (pItemInfo==NULL || !pItemInfo->isUnique()))
 		{
-			// 10¹ø¸¸ µ¹·Áº»´Ù.
+			// 10ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 			int i = 10;
 			
 			do {
-				// randomÀ¸·Î optionÀ» ¼±ÅÃÇÑ´Ù.
+				// randomï¿½ï¿½ï¿½ï¿½ optionï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 				int optionRatio = random()%itemOptionRatio;
 				int ratioSum      = 0;
 
@@ -1649,18 +1649,18 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 
 					if (optionRatio < ratioSum)
 					{
-						// ÀÌ optionÀ» ¼±ÅÃÇÑ´Ù.
+						// ï¿½ï¿½ optionï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 						break;
 					}
 				}
 
-				// optionÀÇ ¿ä±¸ ´É·ÂÄ¡¸¦ ´õÇØ¼­
+				// optionï¿½ï¿½ ï¿½ä±¸ ï¿½É·ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½
 				ReqLevel = ReqLevel2 + pOptionInfo->getReqLevel();
 
-				// playerÀÇ ´É·ÂÄ¡¿¡ ¸Â´Â ¾ÆÀÌÅÛÀÎÁö È®ÀÎÇÑ´Ù.
+				// playerï¿½ï¿½ ï¿½É·ï¿½Ä¡ï¿½ï¿½ ï¿½Â´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ñ´ï¿½.
 				if (ReqLevel <= 0 || CLevel >= ReqLevel)
 				{
-					// ÀÌ option typeÀ¸·Î °áÁ¤ÇÑ´Ù.
+					// ï¿½ï¿½ option typeï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 					break;
 				}
 
@@ -1671,11 +1671,11 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 				optionType = 0;//(rand()%3==0? 1: (rand()%2? 6:11));
 			}
 		}
-		// ¹«¿É!  // ÀûÀýÇÑ°Ô ¾øÀ¸¸é STR+1, DEX+1, INT+1 Áß¿¡¼­ ¾Ï°Å³ª..
+		// ï¿½ï¿½ï¿½ï¿½!  // ï¿½ï¿½ï¿½ï¿½ï¿½Ñ°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ STR+1, DEX+1, INT+1 ï¿½ß¿ï¿½ï¿½ï¿½ ï¿½Ï°Å³ï¿½..
 		else optionType = 0;//(rand()%3==0? 1: (rand()%2? 6:11));
 	}
 	//----------------------------------------------------------------------
-	// OustersÀÎ °æ¿ì
+	// Oustersï¿½ï¿½ ï¿½ï¿½ï¿½
 	//----------------------------------------------------------------------
 	else if (pCreature->isOusters())
 	{
@@ -1683,10 +1683,10 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 	
 		Level_t	CLevel = pOusters->getLevel();
 
-		// gambleÇÒ ¼ö ÀÖ´Â ÇÑ°è¸¦ Á» ´õ ³ôÇôº»´Ù.
+		// gambleï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ñ°è¸¦ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 		CLevel += 3;
 
-		// levelÁ¦ÇÑ
+		// levelï¿½ï¿½ï¿½ï¿½
 		if (maxLevel!=0)
 		{
 			CLevel = min((int)maxLevel, (int)CLevel);
@@ -1694,19 +1694,19 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 
 		Attr_t    ReqLevel, ReqLevel2;
 
-		// 10¹ø¸¸ µ¹·Áº»´Ù.
+		// 10ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 		int i = 10;
 		do
 		{
 			itemType = pInfoClass->getRandomItemType();
 
-			// ÀÌ itemTypeÀ» »ý¼ºÇØµµ µÇ´Â levelÀÎÁö È®ÀÎÇÑ´Ù.
+			// ï¿½ï¿½ itemTypeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ ï¿½Ç´ï¿½ levelï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ñ´ï¿½.
 			pItemInfo = g_pItemInfoManager->getItemInfo(itemClass, itemType);
 
 			ReqLevel2 = ReqLevel  = pItemInfo->getReqLevel();
 
-			// ·¹º§ Á¦ÇÑÀÌ ¾ø°Å³ª Á¦ÇÑ ·¹º§ÀÌ ³ô°í
-			// ¼ºº°ÀÌ ¸Â¾Æ¾ß ÇÑ´Ù.
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Å³ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Â¾Æ¾ï¿½ ï¿½Ñ´ï¿½.
 			if ((ReqLevel <= 0 || CLevel >= ReqLevel))
 			{
 				break;
@@ -1719,14 +1719,14 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 			itemType = 0;
 		}
 
-		// ¾ÆÀÌÅÛÀÌ ¿É¼ÇÀ» °¡Áö°í ÀÖ´Ù¸é, 
-		// ¿É¼ÇÀÇ Á¾·ù¿¡ µû¶ó¼­ ´É·ÂÄ¡ Á¦ÇÑÀ» ¿Ã·ÁÁØ´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½É¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½, 
+		// ï¿½É¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½É·ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ø´ï¿½.
 		int maxOptionLevel = max(1, min(100, (int)CLevel));
 
 		const vector<OptionType_t>& optionVector = g_pOptionInfoManager->getPossibleGambleOptionVector((Item::ItemClass)itemClass, maxOptionLevel);
 		vector<OptionType_t>::const_iterator iOption;
 
-		// Total OptionRatio¸¦ ±¸ÇÑ´Ù.
+		// Total OptionRatioï¿½ï¿½ ï¿½ï¿½ï¿½Ñ´ï¿½.
 		int itemOptionRatio = g_pOptionInfoManager->getTotalGambleRatio((Item::ItemClass)itemClass, maxOptionLevel);
 
 		/*
@@ -1743,11 +1743,11 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 		if (optionVector.size()>0 && itemOptionRatio>0
 			&& (pItemInfo==NULL || !pItemInfo->isUnique()))
 		{
-			// 10¹ø¸¸ µ¹·Áº»´Ù.
+			// 10ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 			int i = 10;
 			
 			do {
-				// randomÀ¸·Î optionÀ» ¼±ÅÃÇÑ´Ù.
+				// randomï¿½ï¿½ï¿½ï¿½ optionï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 				int optionRatio = random()%itemOptionRatio;
 				int ratioSum      = 0;
 
@@ -1764,18 +1764,18 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 
 					if (optionRatio < ratioSum)
 					{
-						// ÀÌ optionÀ» ¼±ÅÃÇÑ´Ù.
+						// ï¿½ï¿½ optionï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 						break;
 					}
 				}
 
-				// optionÀÇ ¿ä±¸ ´É·ÂÄ¡¸¦ ´õÇØ¼­
+				// optionï¿½ï¿½ ï¿½ä±¸ ï¿½É·ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½
 				ReqLevel = ReqLevel2 + pOptionInfo->getReqLevel();
 
-				// playerÀÇ ´É·ÂÄ¡¿¡ ¸Â´Â ¾ÆÀÌÅÛÀÎÁö È®ÀÎÇÑ´Ù.
+				// playerï¿½ï¿½ ï¿½É·ï¿½Ä¡ï¿½ï¿½ ï¿½Â´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ñ´ï¿½.
 				if (ReqLevel <= 0 || CLevel >= ReqLevel)
 				{
-					// ÀÌ option typeÀ¸·Î °áÁ¤ÇÑ´Ù.
+					// ï¿½ï¿½ option typeï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 					break;
 				}
 
@@ -1786,11 +1786,11 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 				optionType = 0;//(rand()%3==0? 1: (rand()%2? 6:11));
 			}
 		}
-		// ¹«¿É!  // ÀûÀýÇÑ°Ô ¾øÀ¸¸é STR+1, DEX+1, INT+1 Áß¿¡¼­ ¾Ï°Å³ª..
+		// ï¿½ï¿½ï¿½ï¿½!  // ï¿½ï¿½ï¿½ï¿½ï¿½Ñ°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ STR+1, DEX+1, INT+1 ï¿½ß¿ï¿½ï¿½ï¿½ ï¿½Ï°Å³ï¿½..
 		else optionType = 0;//(rand()%3==0? 1: (rand()%2? 6:11));
 	}
 
-	// itemÀ» »ý¼ºÇØ¼­ ³Ñ°ÜÁØ´Ù.
+	// itemï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½Ñ°ï¿½ï¿½Ø´ï¿½.
 	list<OptionType_t> optionTypes;
 	if (optionType!=0)
 		optionTypes.push_back( optionType );
@@ -1804,7 +1804,7 @@ Item* getRandomMysteriousItem(Creature* pCreature, Item::ItemClass itemClass, in
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ¿É¼ÇÀÌ ºÙÀ» ¼ö ÀÖ´Â ¾ÆÀÌÅÛÀÎ°¡?
+// ï¿½É¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?
 //////////////////////////////////////////////////////////////////////////////
 bool isPossibleOptionItemClass(Item::ItemClass IClass)
 {
@@ -1867,7 +1867,7 @@ bool isPossibleOptionItemClass(Item::ItemClass IClass)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ´ÙÀ½ ´Ü°è·Î ¾÷±×·¹ÀÌµåµÉ ¼ö ÀÖ´Â ItemTypeÀÎ°¡
+// ï¿½ï¿½ï¿½ï¿½ ï¿½Ü°ï¿½ï¿½ ï¿½ï¿½ï¿½×·ï¿½ï¿½Ìµï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ItemTypeï¿½Î°ï¿½
 //////////////////////////////////////////////////////////////////////////////
 bool isPossibleUpgradeItemType(Item::ItemClass IClass)
 {
@@ -1927,7 +1927,7 @@ ItemType_t getUpgradeItemType(Item::ItemClass IClass, ItemType_t itemType, ItemT
 	InfoClassManager* pInfoClass = g_pItemInfoManager->getInfoManager(IClass);
 	Assert(pInfoClass!=NULL);
 
-	// ¾ÆÀÌÅÛ ¾÷±×·¹ÀÌµå Á¤º¸°¡ DB¿¡ µé¾î°£´Ù. ¿©±â¼­´Â ÁÖ¾îÁø È¸¼ö¸¸Å­ ´ÙÀ½ ItemTypeÀ¸·Î ¿Å°Ü°£´Ù.
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½×·ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ DBï¿½ï¿½ ï¿½ï¿½î°£ï¿½ï¿½. ï¿½ï¿½ï¿½â¼­ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½Å­ ï¿½ï¿½ï¿½ï¿½ ItemTypeï¿½ï¿½ï¿½ï¿½ ï¿½Å°Ü°ï¿½ï¿½ï¿½.
 	ItemType_t newItemType = itemType;
 
 	for ( int i=0; i<upgradeCount; i++ )
@@ -1948,7 +1948,7 @@ ItemType_t getUpgradeItemType(Item::ItemClass IClass, ItemType_t itemType, ItemT
 
 /*	int maxItemType = pInfoClass->getInfoCount()-1;
 
-	// ÀÌ¹Ì ÃÖ°í ¾ÆÀÌÅÛÀÎ °æ¿ì
+	// ï¿½Ì¹ï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	if (itemType==maxItemType)
 	{
 		//cout << itemType << "(max)" << endl;
@@ -1957,7 +1957,7 @@ ItemType_t getUpgradeItemType(Item::ItemClass IClass, ItemType_t itemType, ItemT
 
 	int itemTypeGap = 1;
 
-	// ¾ÆÀÌÅÛ ´Ü°è ¼ø¼­°¡ 2´Ü°è¾¿ µÇ¾î ÀÖ´Â ¾ÆÀÌÅÛ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ü°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 2ï¿½Ü°è¾¿ ï¿½Ç¾ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (IClass==Item::ITEM_CLASS_COAT
 		|| IClass==Item::ITEM_CLASS_TROUSER
 		|| IClass==Item::ITEM_CLASS_VAMPIRE_COAT)
@@ -1967,17 +1967,17 @@ ItemType_t getUpgradeItemType(Item::ItemClass IClass, ItemType_t itemType, ItemT
 
 	int newItemType = min(maxItemType, itemType + upgradeCount*itemTypeGap);
 
-	// 2´Ü°è¾¿ °Ç³Ê¶ç¾î¾ßÇÒ °æ¿ì
+	// 2ï¿½Ü°è¾¿ ï¿½Ç³Ê¶ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	if (itemTypeGap==2
 		&& (itemType & 0x01)!=(newItemType & 0x01)) newItemType -= 1;
 
-	// ÃÖ°í ¾ÆÀÌÅÛÀÌ À¯´ÏÅ©ÀÏ ¼öµµ ÀÖ´Âµ¥.. ÀÌ°Ç »©ÁÖÀÚ..
+	// ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Âµï¿½.. ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½..
 	while (newItemType > itemType)
 	{
 		ItemInfo* pItemInfo = pInfoClass->getItemInfo( newItemType );
 		Assert(pItemInfo!=NULL);
 
-		// À¯´ÏÅ©¶ó¸é.. ÇÑ ´Ü°è¾¿ ³·ÃçÁØ´Ù.
+		// ï¿½ï¿½ï¿½ï¿½Å©ï¿½ï¿½ï¿½.. ï¿½ï¿½ ï¿½Ü°è¾¿ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 		if (pItemInfo->isUnique()) newItemType-=itemTypeGap;
 		else break;
 	}
@@ -2005,9 +2005,9 @@ ItemType_t getDowngradeItemType(Item::ItemClass IClass, ItemType_t itemType)
 
 /*
 //////////////////////////////////////////////////////////////////////////////
-// Å©¸®½º¸¶½º Æ®¸® ÀÌº¥Æ®¿ë
+// Å©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ ï¿½Ìºï¿½Æ®ï¿½ï¿½
 //////////////////////////////////////////////////////////////////////////////
-// Æ®¸® Á¶°¢À» °Ë»ö
+// Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
 TPOINT checkEventTree( PlayerCreature* pPC, CoordInven_t iX, CoordInven_t iY )
 {
 	__BEGIN_TRY
@@ -2037,7 +2037,7 @@ TPOINT checkEventTree( PlayerCreature* pPC, CoordInven_t iX, CoordInven_t iY )
 	CoordInven_t curIX = 0, curIY = 0;
 	ItemType_t compType = 0;
 
-	// Æ®¸® Á¶°¢ÀÌ Á¦´ë·Î ¸ÂÃçÁ® ÀÖ´ÂÁö È®ÀÎÇÑ´Ù.
+	// Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ñ´ï¿½.
 	for ( curIY = startY; curIY < startY + 4; curIY++ )
 	{
 		for ( curIX = startX; curIX < startX + 3; curIX++ )
@@ -2062,7 +2062,7 @@ TPOINT checkEventTree( PlayerCreature* pPC, CoordInven_t iX, CoordInven_t iY )
 	__END_CATCH
 }
 
-// °í´ë¹®Çå
+// ï¿½ï¿½ï¿½ë¹®ï¿½ï¿½
 TPOINT checkEventDocument( PlayerCreature* pPC, CoordInven_t iX, CoordInven_t iY )
 {
 	__BEGIN_TRY
@@ -2081,7 +2081,7 @@ TPOINT checkEventDocument( PlayerCreature* pPC, CoordInven_t iX, CoordInven_t iY
 
 	ItemType_t		itemType		= pCurItem->getItemType();
 
-	// °í´ë¹®Çå Á¶°¢Àº 13ºÎÅÍ ½ÃÀÛÇÑ´Ù
+	// ï¿½ï¿½ï¿½ë¹®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 13ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½
 	itemType = itemType - 13;
 
 	CoordInven_t	startX = iX - itemType % 3; 
@@ -2094,10 +2094,10 @@ TPOINT checkEventDocument( PlayerCreature* pPC, CoordInven_t iX, CoordInven_t iY
 
 	CoordInven_t curIX = 0, curIY = 0;
 
-	// °í´ë¹®Çå Á¶°¢Àº 13ºÎÅÍ ½ÃÀÛÇÑ´Ù
+	// ï¿½ï¿½ï¿½ë¹®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 13ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½
 	ItemType_t compType = 13;
 
-	// °í´ë ¹«Çå Á¶°¢ÀÌ Á¦´ë·Î ¸ÂÃçÁ® ÀÖ´ÂÁö È®ÀÎÇÑ´Ù.
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ñ´ï¿½.
 	for ( curIY = startY; curIY < startY + 4; curIY++ )
 	{
 		for ( curIX = startX; curIX < startX + 3; curIX++ )
@@ -2122,8 +2122,8 @@ TPOINT checkEventDocument( PlayerCreature* pPC, CoordInven_t iX, CoordInven_t iY
 	__END_CATCH
 }
 
-// ÀÎÇü -_-;; ÀÌ°Å ÀÏ¹ÝÈ­ ±Ý¹æ ½ÃÅ³ °Í °°Àºµ¥ ;; ÀÎÀÚ¸¸ ÇÏ³ª ´õ ¹Þµµ·Ï ÇÏ¸é -_-;
-// ´ã¿¡ Äù½ºÆ® ¶§´Â ÀÏ¹ÝÈ­ ½ÃÅ°µµ·Ï ÇÏÀÚ. ¤Ñ.¤Ña
+// ï¿½ï¿½ï¿½ï¿½ -_-;; ï¿½Ì°ï¿½ ï¿½Ï¹ï¿½È­ ï¿½Ý¹ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ;; ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½Ï³ï¿½ ï¿½ï¿½ ï¿½Þµï¿½ï¿½ï¿½ ï¿½Ï¸ï¿½ -_-;
+// ï¿½ã¿¡ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¹ï¿½È­ ï¿½ï¿½Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½.ï¿½ï¿½a
 TPOINT checkEventDoll( PlayerCreature* pPC, CoordInven_t iX, CoordInven_t iY )
 {
 	__BEGIN_TRY
@@ -2142,7 +2142,7 @@ TPOINT checkEventDoll( PlayerCreature* pPC, CoordInven_t iX, CoordInven_t iY )
 
 	ItemType_t		itemType		= pCurItem->getItemType();
 
-	// ÀÎÇü Á¶°¢Àº 29ºÎÅÍ ½ÃÀÛÇÑ´Ù
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 29ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½
 	itemType = itemType - 29;
 
 	CoordInven_t	startX = iX - itemType % 3; 
@@ -2155,10 +2155,10 @@ TPOINT checkEventDoll( PlayerCreature* pPC, CoordInven_t iX, CoordInven_t iY )
 
 	CoordInven_t curIX = 0, curIY = 0;
 
-	// ÀÎÇü Á¶°¢Àº 29ºÎÅÍ ½ÃÀÛÇÑ´Ù
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 29ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½
 	ItemType_t compType = 29;
 
-	// °í´ë ¹«Çå Á¶°¢ÀÌ Á¦´ë·Î ¸ÂÃçÁ® ÀÖ´ÂÁö È®ÀÎÇÑ´Ù.
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ñ´ï¿½.
 	for ( curIY = startY; curIY < startY + 4; curIY++ )
 	{
 		for ( curIX = startX; curIX < startX + 3; curIX++ )
@@ -2184,8 +2184,8 @@ TPOINT checkEventDoll( PlayerCreature* pPC, CoordInven_t iX, CoordInven_t iY )
 }
 */
 
-//1219 wlzzi -- ÆÛÁñÅ©±â °ªÀ» ÀÎÀÚ·Î ¹Þµµ·Ï È®Àå
-// ÀÏ¹ÝÈ­ ½ÃÅ² °Å checkEventTree ¶û checkEventDocument ¶û checkEventDoll Àº Áö¿ìÀÚ
+//1219 wlzzi -- ï¿½ï¿½ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú·ï¿½ ï¿½Þµï¿½ï¿½ï¿½ È®ï¿½ï¿½
+// ï¿½Ï¹ï¿½È­ ï¿½ï¿½Å² ï¿½ï¿½ checkEventTree ï¿½ï¿½ checkEventDocument ï¿½ï¿½ checkEventDoll ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //TPOINT checkEventPuzzle( PlayerCreature* pPC, CoordInven_t iX, CoordInven_t iY, int start)
 TPOINT checkEventPuzzle( PlayerCreature* pPC, CoordInven_t iX, CoordInven_t iY, int start, int width, int height)
 {
@@ -2249,7 +2249,7 @@ TPOINT checkEventPuzzle( PlayerCreature* pPC, CoordInven_t iX, CoordInven_t iY, 
 	__END_CATCH
 }
 
-// ÀÎº¥Åä¸®ÀÇ (X0, Y0) - (X1, y1) ¹üÀ§ÀÇ ¾ÆÀÌÅÛÀ» Áö¿î´Ù.
+// ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ (X0, Y0) - (X1, y1) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.
 void deleteInventoryItem( Inventory* pInventory, CoordInven_t invenX0, CoordInven_t invenY0, CoordInven_t invenX1, CoordInven_t invenY1 )
 {
 	__BEGIN_TRY
@@ -2257,7 +2257,7 @@ void deleteInventoryItem( Inventory* pInventory, CoordInven_t invenX0, CoordInve
 	CoordInven_t curIX = 0, curIY = 0;
 	Item* pCurItem = 0;
 
-	// ¸ÂÃçÁø Æ®¸® Á¶°¢À» Áö¿î´Ù.
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.
 	for ( curIY = invenY0; curIY <= invenY1; curIY++ )
 	{
 		for ( curIX = invenX0; curIX <= invenX1; curIX++ )
@@ -2266,10 +2266,10 @@ void deleteInventoryItem( Inventory* pInventory, CoordInven_t invenX0, CoordInve
 
 			if ( pCurItem != NULL )
 			{
-				// ÀÎº¥Åä¸®¿¡¼­ Áö¿î´Ù.
+				// ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.
 				pInventory->deleteItem( pCurItem->getObjectID() );
 
-				// DB ¿¡¼­ ³¯¸°´Ù.
+				// DB ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 				pCurItem->destroy();
 
 				SAFE_DELETE( pCurItem );
@@ -2312,7 +2312,7 @@ const NewbieItem NewbieItems[maxNewbieItemNum] =
 		{ Item::ITEM_CLASS_POTION,	5, 9, 5, 9 },	
 };
 
-// ÀÎº¥Åä¸®¿¡ ÃÊº¸ÀÚ¿ë ¾ÆÀÌÅÛÀ» ³Ö¾îÁØ´Ù.
+// ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½Êºï¿½ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ø´ï¿½.
 bool addNewbieItemToInventory( Slayer* pSlayer, bool sendPacket )
 	throw(Error)
 {
@@ -3342,10 +3342,17 @@ Item::ItemClass getBestNewbieWeaponClass(Slayer* pSlayer)
 	Attr_t DEX = pSlayer->getDEX();
 	Attr_t INT = pSlayer->getINT();
 
+	// Deterministic, so the weapon matches the class picked at creation.
+	// CLCreatePC carries only stats; the client's class presets
+	// (VS_UI_NewTitle.cpp s_cc_classes) are
+	//   Sword 20/5/5, Blade 15/10/5, Gun 5/20/5, Heal 5/5/20, Enchant 5/10/15
+	// so DEX as the secondary stat is what separates Blade from Sword and
+	// Enchant (mace) from Heal (cross).
+
 	// STR
 	if (STR>=DEX && STR>=INT)
 	{
-		return (rand()%2? Item::ITEM_CLASS_SWORD : Item::ITEM_CLASS_BLADE);
+		return (DEX>INT ? Item::ITEM_CLASS_BLADE : Item::ITEM_CLASS_SWORD);
 	}
 	// DEX
 	else if (DEX>=STR && DEX>=INT)
@@ -3354,7 +3361,7 @@ Item::ItemClass getBestNewbieWeaponClass(Slayer* pSlayer)
 	}
 
 	// INT
-	return (rand()%2? Item::ITEM_CLASS_CROSS : Item::ITEM_CLASS_MACE);
+	return (DEX>STR ? Item::ITEM_CLASS_MACE : Item::ITEM_CLASS_CROSS);
 
 
 	__END_CATCH
@@ -3383,7 +3390,7 @@ void makeOptionList(const string& options, list<OptionType_t>& optionList)
 		try {
 			optionType = g_pOptionInfoManager->getOptionType(optionName);
 		} catch (NoSuchElementException&) {
-			throw Error("±×·± ¿É¼ÇÀÌ ¾ø´Ü´Ù.");
+			throw Error("ï¿½×·ï¿½ ï¿½É¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ü´ï¿½.");
 		}
 
 		optionList.push_back( optionType );
@@ -3402,13 +3409,13 @@ saveDissectionItem(Creature* pCreature, Item* pTreasure, int x, int y)
 	Assert(pCreature!=NULL);
 	Assert(pTreasure!=NULL);
 
-	// relicÀÌ ¾Æ´Ñ °æ¿ì¸¸.. DB¿¡ ¾ÆÀÌÅÛÀ» »ý¼ºÇÑ´Ù.
-	// ÇÇÀÇ ¼º¼­ÀÏ °æ¿ì ÀÌ¹Ì DB¿¡ ÀÖÀ¸¹Ç·Î DB¸¦ ¾÷µ¥ÀÌÆ®ÇØÁØ´Ù.
+	// relicï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ì¸¸.. DBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ DBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ DBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½Ø´ï¿½.
 	switch (pTreasure->getItemClass())
 	{	
 		case Item::ITEM_CLASS_RELIC:
 		{
-			// RelicÀº DB¿¡ ÀúÀåÇÒ ÇÊ¿ä ¾ø´Ù.
+			// Relicï¿½ï¿½ DBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½.
 		}
 		break;
 
@@ -3429,16 +3436,16 @@ saveDissectionItem(Creature* pCreature, Item* pTreasure, int x, int y)
 			ItemInfo* pItemInfo = g_pItemInfoManager->getItemInfo( pTreasure->getItemClass(), pTreasure->getItemType() );
 			Assert(pItemInfo!=NULL);
 
-			// À¯´ÏÅ© ¾ÆÀÌÅÛÀÎ °æ¿ì´Â
-			// ¾ÆÀÌÅÛ ÀÚÃ¼¿¡ À¯´ÏÅ© ¼³Á¤À» ÇØÁÖ°í
-			// DB¿¡ À¯´ÏÅ© ¾ÆÀÌÅÛÀÇ °³¼ö¸¦ º¯°æ½ÃÄÑÁØ´Ù.
+			// ï¿½ï¿½ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö°ï¿½
+			// DBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 			//
-			// (*) ¸ó½ºÅÍ°¡ Á×¾úÀ» ¶§,
-			//     ¸ó½ºÅÍ ¾È¿¡ ÀÖ´Â ¾ÆÀÌÅÛ¿¡´Â À¯´ÏÅ© ¼³Á¤µµ ¾ÈÇÏ°í
-			//     DB¿¡µµ °³¼ö º¯°æÀ» ¾ÈÇÑ´Ù. ±×·¡¼­, Áö¿öÁÙ¶§µµ ¹«½ÃÇÑ´Ù.
-			//     ÇöÀç À¯´ÏÅ© ¾ÆÀÌÅÛÀº ¸ó½ºÅÍ¸¦ ÅëÇØ¼­¸¸ ³ªÅ¸³ª°í
-			//     CGDissectionCorpse¸¦ ÅëÇØ¼­ »ý¼º(!)µÇ°í
-			//     EffectDecayItemÀ» ÅëÇØ¼­¸¸ Á¦°ÅµÈ´Ù.
+			// (*) ï¿½ï¿½ï¿½Í°ï¿½ ï¿½×¾ï¿½ï¿½ï¿½ ï¿½ï¿½,
+			//     ï¿½ï¿½ï¿½ï¿½ ï¿½È¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Û¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½
+			//     DBï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ñ´ï¿½. ï¿½×·ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+			//     ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½
+			//     CGDissectionCorpseï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½(!)ï¿½Ç°ï¿½
+			//     EffectDecayItemï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÅµÈ´ï¿½.
 
 			if (pItemInfo->isUnique())
 			{
@@ -3447,8 +3454,8 @@ saveDissectionItem(Creature* pCreature, Item* pTreasure, int x, int y)
 				filelog("uniqueItem.txt", "[CGDissectionCorpse] %s %s", pCreature->getName().c_str(), pTreasure->toString().c_str());
 			}
 
-			// ±âÁ¸ÀÇ ItemID¸¦ ±×´ë·Î À¯ÁöÇÑ´Ù.
-			// ItemID°¡ 0ÀÌ¸é.. create()ÇÒ¶§ ´Ù½Ã ItemID¸¦ ¹Þ´Â´Ù.
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ItemIDï¿½ï¿½ ï¿½×´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+			// ItemIDï¿½ï¿½ 0ï¿½Ì¸ï¿½.. create()ï¿½Ò¶ï¿½ ï¿½Ù½ï¿½ ItemIDï¿½ï¿½ ï¿½Þ´Â´ï¿½.
 			// by sigi. 2002.10.28
 			pTreasure->create("", STORAGE_ZONE, pCreature->getZone()->getZoneID(), x, y, pTreasure->getItemID() );
 		}
@@ -3474,7 +3481,7 @@ bool canDecreaseDurability( Item* pItem )
 		case Item::ITEM_CLASS_VAMPIRE_AMULET:
 		case Item::ITEM_CLASS_COUPLE_RING:
 		case Item::ITEM_CLASS_VAMPIRE_COUPLE_RING:
-		// 2006.05.22 °á¼ÓÀÇ ¸ñ°ÉÀÌ Ãß°¡
+		// 2006.05.22 ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
 		case Item::ITEM_CLASS_OUSTERS_HARMONIC_PENDENT:
 		case Item::ITEM_CLASS_SWEEPER:
 		case Item::ITEM_CLASS_CORE_ZAP:
@@ -3491,7 +3498,7 @@ bool canDecreaseDurability( Item* pItem )
 	__END_CATCH
 }
 
-bool canSellStore(Creature* pCreature, Item* pItem )	// °³ÀÎ»óÁ¡ ÆÇ¸Å °¡ºÎ
+bool canSellStore(Creature* pCreature, Item* pItem )	// ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 {	
 	if ( pItem == NULL ) 
 	{
@@ -3504,8 +3511,8 @@ bool canSellStore(Creature* pCreature, Item* pItem )	// °³ÀÎ»óÁ¡ ÆÇ¸Å °¡ºÎ
 		{
 			switch(pItem->getItemType())
 			{
-				case 18 :	// Çï¹ÙÀÌÅ© Å°
-				case 19 :	// ÇÏ¹ö¹ÙÀÌÅ¬ Å°
+				case 18 :	// ï¿½ï¿½ï¿½ï¿½ï¿½Å© Å°
+				case 19 :	// ï¿½Ï¹ï¿½ï¿½ï¿½ï¿½ï¿½Å¬ Å°
 					return true;
 				default :
 					break;
@@ -3516,13 +3523,13 @@ bool canSellStore(Creature* pCreature, Item* pItem )	// °³ÀÎ»óÁ¡ ÆÇ¸Å °¡ºÎ
 	{
 		switch(pItem->getItemType())
 		{
-			case 41 :	// ÇÁ¸®¹Ì¾ö Ä«µå C
-			case 40 :	// ÇÁ¸®¹Ì¾ö Ä«µå A
-			case 39 :	// ÇÁ¸®¹Ì¾ö Ä«µå B
-			case 55 :	// ÇÁ¸®¹Ì¾ö Ä«µå D
-			case 56 :	// ÇÁ¸®¹Ì¾ö Ä«µå A-3
-			case 57 :	// ÇÁ¸®¹Ì¾ö Ä«µå A-7
-			case 58 :	// ÇÁ¸®¹Ì¾ö Ä«µå A-15
+			case 41 :	// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ Ä«ï¿½ï¿½ C
+			case 40 :	// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ Ä«ï¿½ï¿½ A
+			case 39 :	// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ Ä«ï¿½ï¿½ B
+			case 55 :	// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ Ä«ï¿½ï¿½ D
+			case 56 :	// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ Ä«ï¿½ï¿½ A-3
+			case 57 :	// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ Ä«ï¿½ï¿½ A-7
+			case 58 :	// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ Ä«ï¿½ï¿½ A-15
 				return true;
 		}
 	}
@@ -3566,7 +3573,7 @@ bool canSellStore(Creature* pCreature, Item* pItem )	// °³ÀÎ»óÁ¡ ÆÇ¸Å °¡ºÎ
 		return false;
 	}
 	
-	// Å¬·Î¹ö °³ÀÎ »óÁ¡ µî·Ï ºÒ°¡
+	// Å¬ï¿½Î¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½
 	if ( itemClass == Item::ITEM_CLASS_MOON_CARD && pItem->getItemType() == 3 ) 
 	{
 		return false;
@@ -3583,7 +3590,7 @@ bool canSell( Item* pItem )
 	if ( isCoupleRing( pItem ) ) return false;
 	if ( pItem->isQuestItem() ) return false;
 	if ( pItem->isFlagItem() ) return false;
-	// Äù½ºÆ® ¾ÆÀÌÅÛÀº 50¿ø¿¡ ÆÈ ¼ö ÀÖ´Ù.
+	// ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 50ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
 	//if ( pItem->isTimeLimitItem() ) return false;
 
 	Item::ItemClass itemClass = pItem->getItemClass();
@@ -3601,7 +3608,7 @@ bool canSell( Item* pItem )
 	}
 
 	if ( itemClass == Item::ITEM_CLASS_SWEEPER ) return false;
-	// 2007 01 24 »ý¸íÀÇ ³ª¼±µµ ÆÈ¸®°Ô ÇÑ´Ù
+	// 2007 01 24 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È¸ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½
 	if ( itemClass==Item::ITEM_CLASS_EVENT_ITEM && pItem->getItemType() == 31 || pItem->getItemType() == 28 ) return true;
 	if ( itemClass==Item::ITEM_CLASS_EVENT_ITEM ) return false;
 	if ( itemClass == Item::ITEM_CLASS_EVENT_GIFT_BOX && pItem->getItemType() == 1 )
@@ -3620,14 +3627,14 @@ bool canSell( Item* pItem )
 	
 	if ( (itemClass == Item::ITEM_CLASS_RING && pItem->getItemType() == 14) ||
 		(itemClass == Item::ITEM_CLASS_VAMPIRE_RING && pItem->getItemType() == 14) ||
-		(itemClass == Item::ITEM_CLASS_OUSTERS_RING && pItem->getItemType() == 14) )	// Çï°¡µçÀÇ ¹ÝÁö
+		(itemClass == Item::ITEM_CLASS_OUSTERS_RING && pItem->getItemType() == 14) )	// ï¿½ï°¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	{
 		return false;
 	}
 	
 	if ( (itemClass == Item::ITEM_CLASS_NECKLACE && pItem->getItemType() == 14) ||
 		(itemClass == Item::ITEM_CLASS_VAMPIRE_NECKLACE && pItem->getItemType() == 14) ||
-		(itemClass == Item::ITEM_CLASS_OUSTERS_PENDENT && pItem->getItemType() == 14) )	// Çï°¡µçÀÇ ¸ñ°ÉÀÌ
+		(itemClass == Item::ITEM_CLASS_OUSTERS_PENDENT && pItem->getItemType() == 14) )	// ï¿½ï°¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	{
 		return false;
 	}
@@ -3641,13 +3648,13 @@ bool canSell( Item* pItem )
 	{
 		switch(pItem->getItemType())
 		{
-			case 41 :	// ÇÁ¸®¹Ì¾ö Ä«µå C
-			case 40 :	// ÇÁ¸®¹Ì¾ö Ä«µå A
-			case 39 :	// ÇÁ¸®¹Ì¾ö Ä«µå B
-			case 55 :	// ÇÁ¸®¹Ì¾ö Ä«µå D
-			case 56 :	// ÇÁ¸®¹Ì¾ö Ä«µå A-3
-			case 57 :	// ÇÁ¸®¹Ì¾ö Ä«µå A-7
-			case 58 :	// ÇÁ¸®¹Ì¾ö Ä«µå A-15
+			case 41 :	// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ Ä«ï¿½ï¿½ C
+			case 40 :	// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ Ä«ï¿½ï¿½ A
+			case 39 :	// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ Ä«ï¿½ï¿½ B
+			case 55 :	// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ Ä«ï¿½ï¿½ D
+			case 56 :	// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ Ä«ï¿½ï¿½ A-3
+			case 57 :	// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ Ä«ï¿½ï¿½ A-7
+			case 58 :	// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ Ä«ï¿½ï¿½ A-15
 				return false;
 		}
 	}
@@ -3685,7 +3692,7 @@ bool canSell( Item* pItem )
 		return false;
 	}
 	
-	// Å¬·Î¹ö´Â »óÁ¡¿¡ ÆÈ ¼ö ¾ø´Ù.
+	// Å¬ï¿½Î¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 	if ( itemClass == Item::ITEM_CLASS_MOON_CARD && pItem->getItemType() == 3 ) return false;
 
 	return true;
@@ -3717,7 +3724,7 @@ bool canPutInStash( Item* pItem )
 
 	ItemType_t iType = pItem->getItemType();
 
-	// ÆÐ¹Ð¸® ÄÚÀÎ. ½ºÅÂ½¬¿¡ ³Ö±â ºÒ°¡
+	// ï¿½Ð¹Ð¸ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½ ï¿½Ò°ï¿½
 	if ( itemClass == Item::ITEM_CLASS_EVENT_ETC && iType == 18 )
 		return false;
 
@@ -3740,25 +3747,25 @@ bool canTrade( Item* pItem )
 		return false;
 	if ( itemClass == Item::ITEM_CLASS_SWEEPER ) return false;
 
-	if( itemClass == Item::ITEM_CLASS_ETHEREAL_CHAIN && itemType == 2 ) return false; // 20070906 ÀÌº¥Æ®¿ë ÀØÇôÁø À¯¹° °Å·¡ºÒ°¡
+	if( itemClass == Item::ITEM_CLASS_ETHEREAL_CHAIN && itemType == 2 ) return false; // 20070906 ï¿½Ìºï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Å·ï¿½ï¿½Ò°ï¿½
 //	if ( itemClass == Item::ITEM_CLASS_SLAYER_PORTAL_ITEM )
 //		return false;
 
-	// ¹Ý´Þ Ä«µå´Â Æ®·¹ÀÌµå ÇÒ ¼ö ¾ø´Ù.
+	// ï¿½Ý´ï¿½ Ä«ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 	if ( itemClass == Item::ITEM_CLASS_MOON_CARD && pItem->getItemType() == 0 ) return false;
-	// Å¬·Î¹ö´Â Æ®·¹ÀÌµå ÇÒ ¼ö ¾ø´Ù.
+	// Å¬ï¿½Î¹ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 	if ( itemClass == Item::ITEM_CLASS_MOON_CARD && pItem->getItemType() == 3 ) return false;
 
-	// ÇÁ¸®¹Ì¾ö Ã¼Çè±Ç Á¶°¢ -_-
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ Ã¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ -_-
 	if ( itemClass == Item::ITEM_CLASS_LUCKY_BAG && pItem->getItemType() == 3 ) return false;
 	if ( itemClass == Item::ITEM_CLASS_EVENT_ITEM && pItem->getItemType() == 28 ) return false;
 	if ( itemClass == Item::ITEM_CLASS_EFFECT_ITEM && pItem->getItemType() >= 4 && pItem->getItemType() <= 6 ) return false;
 
-	// ÀÌº¥Æ® ¶±±¹Àº ±³È¯ ºÒ°¡.
+	// ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½Ò°ï¿½.
 	if ( itemClass == Item::ITEM_CLASS_EVENT_STAR && ( itemType >= 17 && itemType <= 21 ) )
 		return false;
 
-	// º¹Á¶¸® ¾ÆÀÌÅÛ ±³È¯ ºÒ°¡
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½Ò°ï¿½
 	if ( itemClass == Item::ITEM_CLASS_MIXING_ITEM && itemType == 18 )
 		return false;
 
@@ -3894,7 +3901,7 @@ bool bTraceLog( Item* pItem )
 {
 	Item::ItemClass iClass = pItem->getItemClass();
 
-	// PetItem Àº ¹«Á¶°Ç ³²±ä´Ù
+	// PetItem ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	if ( iClass == Item::ITEM_CLASS_PET_ITEM
 		|| iClass == Item::ITEM_CLASS_CORE_ZAP
 		|| iClass == Item::ITEM_CLASS_SUB_INVENTORY
@@ -3902,12 +3909,12 @@ bool bTraceLog( Item* pItem )
 		)
 		return true;
 
-	// Æ÷¼ÇÀÇ ÆÄ¶õ »çÅÁÀÌ¶û Èò»ö ¶±±¹Àº ³²±ä´Ù
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¶ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	if ( iClass == Item::ITEM_CLASS_POTION &&
 			( pItem->getItemType() == 10 || pItem->getItemType() == 11 ) )
 		return true;
 
-	// Serum ¿¡ »¡°£ »çÅÁÀº ³²±ä´Ù
+	// Serum ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	if ( iClass == Item::ITEM_CLASS_SERUM && 
 			( pItem->getItemType() == 4 || pItem->getItemType() == 5 ) )
 		return true;
@@ -3963,7 +3970,7 @@ bool bTraceLog( Item* pItem )
 	const list<OptionType_t>& optionList = pItem->getOptionTypeList();
 	list<OptionType_t>::const_iterator itr;
 
-	// ÀúÇ× ¿É¼ÇÀÌ ÀÖ´Â °Ç ±â·Ï ³²±ä´Ù
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½É¼ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	for (itr=optionList.begin(); itr!=optionList.end(); itr++)
 	{
 		OptionInfo* pOptionInfo = g_pOptionInfoManager->getOptionInfo( *itr );
@@ -3977,13 +3984,13 @@ bool bTraceLog( Item* pItem )
 			 optionClass == OPTION_BLOOD ) return true;
 	}
 
-	// ºñÁê¶û Ææ´øÆ®´Â ±â·Ï ³²±ä´Ù
-	// Event Star ´Â ±â·Ï ³²±ä´Ù
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+	// Event Star ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	if ( iClass == Item::ITEM_CLASS_QUEST_ITEM ||
 		 iClass == Item::ITEM_CLASS_EVENT_STAR ||
 		 iClass == Item::ITEM_CLASS_MIXING_ITEM ) return true;
 
-	// ±× ¿ÜÀÇ ¾ÆÀÌÅÛÀÎ °æ¿ì 3´Ü ÀÌÇÏ´Â ±â·Ï ³²±âÁö ¾Ê´Â´Ù
+	// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ 3ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Â´ï¿½
 	if ( (int)(pItem->getItemType()) < 3 ) return false;
 
 	return true;
@@ -4072,13 +4079,13 @@ void remainMoneyTraceLog ( const string& preOwner, const string& owner, ItemTrac
 	__END_CATCH
 }
 
-// Web ¿¡¼­ »ê ¾ÆÀÌÅÛÀ» ¸¸µå´Â ÇÔ¼ö
+// Web ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
 Item* createItemByGoodsID( DWORD goodsID )
 {
 	GoodsInfo* pGoodsInfo = g_pGoodsInfoManager->getGoodsInfo( goodsID );
 	if ( pGoodsInfo == NULL )
 	{
-		filelog( "buyItemBug.txt", "buyID(%d) ¿¡ ÇØ´çÇÏ´Â »óÇ°ÀÌ ¾ø½À´Ï´Ù.", (int)goodsID );
+		filelog( "buyItemBug.txt", "buyID(%d) ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.", (int)goodsID );
 		return NULL;
 	}
 
@@ -4092,14 +4099,14 @@ Item* createItemByGoodsID( DWORD goodsID )
 
 	if ( !g_pItemInfoManager->isPossibleItem( ItemClass, ItemType, optionTypeList ) )
 	{
-		filelog( "buyItemBug.txt", "buyID(%d) ¿¡ ÇØ´çÇÏ´Â ¾ÆÀÌÅÛÀº ¸¸µé ¼ö ¾ø½À´Ï´Ù.", (int)goodsID );
+		filelog( "buyItemBug.txt", "buyID(%d) ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.", (int)goodsID );
 		return NULL;
 	}
 
 	Item* pItem	= g_pItemFactoryManager->createItem( ItemClass, ItemType, optionTypeList );
 	if ( pItem == NULL )
 	{
-		filelog( "buyItemBug.txt", "buyID(%d) ¿¡ ÇØ´çÇÏ´Â ¾ÆÀÌÅÛ ¸¸µé±â¿¡ ½ÇÆÐÇß½À´Ï´Ù.", (int)goodsID );
+		filelog( "buyItemBug.txt", "buyID(%d) ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.", (int)goodsID );
 		return NULL;
 	}
 
@@ -4119,7 +4126,7 @@ Item* createItemByGoodsID( DWORD goodsID )
 		PetExpInfo* pPetExpInfo = PetExpInfoManager::Instance().getPetExpInfo(0);
 		if ( pPetTypeInfo == NULL || pPetExpInfo == NULL )
 		{
-			filelog( "buyItemBug.txt", "buyID(%d) ¿¡ ÇØ´çÇÏ´Â Æê ¾ÆÀÌÅÛ Á¤º¸°¡ ÀÌ»óÇÕ´Ï´Ù.", (int)goodsID );
+			filelog( "buyItemBug.txt", "buyID(%d) ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½Õ´Ï´ï¿½.", (int)goodsID );
 			SAFE_DELETE( pItem );
 			return NULL;
 		}
@@ -4138,7 +4145,7 @@ Item* createItemByGoodsID( DWORD goodsID )
 		pPetInfo->setPetHP(1920);
 		pPetInfo->setFeedTime( VSDateTime::currentDateTime() );
 
-		// ¾ç¹æÇâ ¸µÅ©
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©
 		pPetItem->setPetInfo( pPetInfo );
 		pPetInfo->setPetItem( pPetItem );
 	}
@@ -4371,13 +4378,13 @@ ItemType_t getItemTypeByItemLimit( Item::ItemClass itemClass, ItemType_t itemTyp
 
 	ItemInfo* pItemInfo = g_pItemInfoManager->getItemInfo( itemClass, rItemType );
 
-	// ¿¹¿Ü»çÇ×. ¾ÆÀÌÅÛ ·¹º§ÀÌ ¾ø´Â ¾ÆÀÌÅÛÀÏ °æ¿ì ÆÐ½º
+	// ï¿½ï¿½ï¿½Ü»ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½
 	if ( pItemInfo->getItemLevel() == 99 || pItemInfo->getItemLevel() == 255 )
 	{
 		return true;
 	}
 
-	int counter = 0;    // ¸¸¾àÀÇ ¸¸¾àÀ» À§ÇÑ Ä«¿îÅÍ. ¹«ÇÑ·çÇÁ°¡ µÎ·Á¿ö~
+	int counter = 0;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½Ñ·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î·ï¿½ï¿½ï¿½~
 
 	//cout << "i. ItemLevel : " << pItemInfo->getItemLevel() << endl;
 
@@ -4441,7 +4448,7 @@ Item *GiveItemToInventory(string strLog, PlayerCreature *pPlayerCreature, Item::
 		    pPlayerCreature->sendTimeLimitItemInfo();
 		}
 
-		// ItemTraceLog ¸¦ ³²±ä´Ù
+		// ItemTraceLog ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 		if ( pItem->isTraceItem() )
 		{
 			remainTraceLog( pItem, strLog.c_str(), pPlayerCreature->getName(), ITEM_LOG_CREATE, DETAIL_EVENTNPC);
@@ -4452,7 +4459,7 @@ Item *GiveItemToInventory(string strLog, PlayerCreature *pPlayerCreature, Item::
 	}
 	else
 	{
-		// ¾ÆÀÌÅÛÀ» ¾ø¾Ö¾ß ÇÏ³ª..??
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö¾ï¿½ ï¿½Ï³ï¿½..??
 
 	}
 
