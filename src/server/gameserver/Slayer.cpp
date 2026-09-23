@@ -4160,6 +4160,7 @@ void Slayer::getShapeInfo (DWORD& flag, Color_t colors[PCSlayerInfo::SLAYER_COLO
 		else colors[slayerColor] = pItem->getFirstOptionType();
 
 		flag |= (weaponType << slayerBit);
+		flag |= (getWeaponArtTier(pItem) << PCSlayerInfo::SLAYER_BIT_WEAPON_TIER1);
 	}
 	else
 	{
@@ -4334,6 +4335,9 @@ Slayer::addShape(Item::ItemClass IClass, ItemType_t IType, Color_t color)
 			break;
 	}
 
+	if (bisWeapon)
+		m_SlayerInfo.setWeaponTier(getWeaponArtTier(IClass, IType));
+
 	return bisChange;
 }
 
@@ -4359,6 +4363,7 @@ Slayer::removeShape(Item::ItemClass IClass, bool bSendPacket)
 		{
 			bisWeapon = true;
 			m_SlayerInfo.setWeaponType(WEAPON_NONE);
+			m_SlayerInfo.setWeaponTier(0);
 
 			if (bSendPacket)	// by sigi. 2002.11.6
 			{
@@ -4402,6 +4407,7 @@ Slayer::removeShape(Item::ItemClass IClass, bool bSendPacket)
 		{
 			bisWeapon = true;
 			m_SlayerInfo.setWeaponType(WEAPON_NONE);
+			m_SlayerInfo.setWeaponTier(0);
 
 			if (bSendPacket)	// by sigi. 2002.11.6
 			{

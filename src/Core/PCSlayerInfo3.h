@@ -71,6 +71,8 @@ public:
 		SLAYER_BIT_SHIELD1,
 		SLAYER_BIT_SHIELD2,
 		SLAYER_BIT_SHIELD_OSIRIS,
+		SLAYER_BIT_WEAPON_TIER1,	// weapon art tier, 2 bits: 1 = advancement 11, 2 = 21, 3 = 31+
+		SLAYER_BIT_WEAPON_TIER2,
 		SLAYER_BIT_MOTORCYCLE1,
 		SLAYER_BIT_MOTORCYCLE2,
 		SLAYER_BIT_MOTORCYCLE3,
@@ -285,6 +287,11 @@ public:
 	{
 		m_Outlook &= ~bitset<SLAYER_BIT_MAX>(255 << SLAYER_BIT_WEAPON1);
 		m_Outlook |= bitset<SLAYER_BIT_MAX>(weaponType << SLAYER_BIT_WEAPON1);
+	}
+	void setWeaponTier (BYTE tier) throw ()
+	{
+		m_Outlook &= ~bitset<SLAYER_BIT_MAX>(3 << SLAYER_BIT_WEAPON_TIER1);
+		m_Outlook |= bitset<SLAYER_BIT_MAX>((tier & 3) << SLAYER_BIT_WEAPON_TIER1);
 	}
 
 	ShieldType getShieldType () const throw ()

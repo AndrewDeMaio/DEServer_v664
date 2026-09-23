@@ -860,11 +860,13 @@ void Ousters::loadItem( bool checkTimeLimit )
 				SAFE_DELETE(pStmt);
 			}
 			END_DB(pStmt)
-
-			// 주었을 경우 줬다는 플래그를 꺼준다.
-			m_pFlagSet->turnOff( FLAGSET_RECEIVE_NEWBIE_ITEM_AUTO );
-			m_pFlagSet->save( getName() );
 		}
+
+		// Outside the event branch, as in Slayer::loadItem(). Inside it, a
+		// server with NEWBIE_ITEM_EVENT off never cleared the flag, and every
+		// login re-granted the starter kit to an empty inventory or bare hand.
+		m_pFlagSet->turnOff( FLAGSET_RECEIVE_NEWBIE_ITEM_AUTO );
+		m_pFlagSet->save( getName() );
 	}
 
 	if ( checkTimeLimit )
@@ -3708,10 +3710,10 @@ void Ousters::ChangeShapeInfoWhenWear(Item *pItem)
 	}
 	else if(icIndex == Item::ITEM_CLASS_OUSTERS_CHAKRAM)
 	{
-		m_OustersInfo.setArmType( OUSTERS_ARM_CHAKRAM );
-
-		if(itIndex == 22)
-			m_OustersInfo.setArmType( OUSTERS_ARM_OSIRIS_CHAKRAM ); //오시리스 아이템 외형 변화
+		// The client draws the chakram of the item's advancement tier.
+		static const OustersArmType tierArm[] =
+			{ OUSTERS_ARM_CHAKRAM, OUSTERS_ARM_TIER1_CHAKRAM, OUSTERS_ARM_TIER2_CHAKRAM, OUSTERS_ARM_OSIRIS_CHAKRAM };
+		m_OustersInfo.setArmType( tierArm[ getWeaponArtTier( pItem ) ] );
 
 		m_OustersInfo.setArmColor( color );
 	}

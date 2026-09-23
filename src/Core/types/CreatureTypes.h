@@ -240,6 +240,8 @@ enum VampireArmType
 	VAMPIRE_ARM_NONE,
 	VAMPIRE_ARM_WEAPON,
 	VAMPIRE_ARM_OSIRIS_WEAPON,		// 1차 승직 오시리스 무기 외형
+	VAMPIRE_ARM_TIER1_WEAPON,		// weapon needing advancement 11 (client: advancedvampire*)
+	VAMPIRE_ARM_TIER2_WEAPON,		// advancement 21 (client: secondadvancedvampire*)
 	VAMPIRE_ARM_MAX
 };
 
@@ -247,6 +249,9 @@ const string VampireArmType2String[] =
 {
 	"VAMPIRE_ARM_NONE",
 	"VAMPIRE_ARM_WEAPON",
+	"VAMPIRE_ARM_OSIRIS_WEAPON",
+	"VAMPIRE_ARM_TIER1_WEAPON",
+	"VAMPIRE_ARM_TIER2_WEAPON",
 	"VAMPIRE_ARM_MAX"
 };
 
@@ -277,6 +282,8 @@ enum OustersArmType
 	OUSTERS_ARM_GAUNTLET,
 	OUSTERS_ARM_CHAKRAM,
 	OUSTERS_ARM_OSIRIS_CHAKRAM,		// 1차 승직 오시리스 무기 외형
+	OUSTERS_ARM_TIER1_CHAKRAM,		// chakram needing advancement 11 (client: advancedousters)
+	OUSTERS_ARM_TIER2_CHAKRAM,		// advancement 21 (client: secondadvancedousters)
 	OUSTERS_ARM_MAX
 };
 
@@ -285,6 +292,8 @@ const string OustersArmType2String[] =
 	"OUSTERS_ARM_GAUNTLET",
 	"OUSTERS_ARM_CHAKRAM",
 	"OUSTERS_ARM_OSIRIS_CHAKRAM",		// 1차 승직 오시리스 무기 외형
+	"OUSTERS_ARM_TIER1_CHAKRAM",
+	"OUSTERS_ARM_TIER2_CHAKRAM",
 	"OUSTERS_ARM_MAX"
 };
 

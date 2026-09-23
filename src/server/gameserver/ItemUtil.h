@@ -364,4 +364,9 @@ Item *GiveItemToInventory(string strLog,
 		list<OptionType_t> Options, 
 		DWORD LimitedTime);
 
+// Weapon art tier the client draws: 0 = none, then by required advancement
+// 1 = 11+, 2 = 21+, 3 = 31+ (the Osiris look).
+int getWeaponArtTier(Item::ItemClass itemClass, ItemType_t itemType);
+int getWeaponArtTier(Item* pItem);
+
 #endif

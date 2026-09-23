@@ -7829,7 +7829,10 @@ bool Zone::moveFastMonster(Monster* pMonster, ZoneCoord_t x1, ZoneCoord_t y1, Zo
 		if (targetX >= 0 && targetX < m_Width 
 			&& targetY >= 0 && targetY < m_Height 
 			&& !m_pTiles[targetX][targetY].isBlocked(pMonster->getMoveMode()) 
-			&& !m_pTiles[targetX][targetY].hasPortal())
+			&& !m_pTiles[targetX][targetY].hasPortal()
+			// The safe-zone test before this loop only covers the enemy's own tile;
+			// the monster lands NEXT to it, which by a safe zone edge can be inside.
+			&& !(getZoneLevel(targetX, targetY) & SAFE_ZONE))
 		{
 			x2 = targetX;
 			y2 = targetY;

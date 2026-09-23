@@ -53,7 +53,10 @@ void EffectFolletFlame::affect(Creature* pCreature)
 
 	Creature* pCastCreature = pZone->getCreature(m_UserOID);
 
-	if (!(pZone->getZoneLevel() & COMPLETE_SAFE_ZONE) && canAttack(pCastCreature, pCreature))
+	// The tile's level, not the zone's: Dracula Castle 1F is ZoneInfo.Level 0
+	// with its safe zone in the .ssi, so the zone-wide level never read as safe
+	// and the burn kept ticking after the target stepped into the safe zone.
+	if (!(pZone->getZoneLevel(pCreature->getX(), pCreature->getY()) & SAFE_ZONE) && canAttack(pCastCreature, pCreature))
 	{
 		if (pCreature->isSlayer())
 		{

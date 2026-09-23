@@ -3495,10 +3495,10 @@ void Vampire::ChangeShapeInfoWhenWear(Item *pItem)
 	}
 	else if(icIndex == Item::ITEM_CLASS_VAMPIRE_WEAPON)
 	{
-		m_VampireInfo.setArmType( VAMPIRE_ARM_WEAPON );
-
-		if(itIndex == 27)
-			m_VampireInfo.setArmType( VAMPIRE_ARM_OSIRIS_WEAPON );	//오시리스 외형
+		// The client draws the claws of the item's advancement tier.
+		static const VampireArmType tierArm[] =
+			{ VAMPIRE_ARM_WEAPON, VAMPIRE_ARM_TIER1_WEAPON, VAMPIRE_ARM_TIER2_WEAPON, VAMPIRE_ARM_OSIRIS_WEAPON };
+		m_VampireInfo.setArmType( tierArm[ getWeaponArtTier( pItem ) ] );
 
 		m_VampireInfo.setArmColor( color );
 	}

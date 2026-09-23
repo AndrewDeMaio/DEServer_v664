@@ -3267,10 +3267,10 @@ bool addNewbieItemToGear( Ousters* pOusters, bool sendPacket ) throw(Error)
 		filelog("NewbieItemError.log", "Someone request packet to addNewbieItemToInventory() function!");
 		return false;
 	}
-	//by viva
-	if( g_pVariableManager->getVariable(EVENT_NEWBIE_ITEMS_GIVE) == 0)
-		return true;
-	
+
+	// Not gated by EVENT_NEWBIE_ITEMS_GIVE. That variable switches off the
+	// 30-day event giveaway in addNewbieEventItemToInventory(); this is the
+	// permanent starter weapon, which every Ousters needs.
 	if( pOusters == NULL ) return false;
 	Zone* pZone = pOusters->getZone();
 	Assert( pZone != NULL );
@@ -4465,4 +4465,29 @@ Item *GiveItemToInventory(string strLog, PlayerCreature *pPlayerCreature, Item::
 
 	return NULL;
 
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Weapon art tier the client draws, from the item's required advancement.
+//////////////////////////////////////////////////////////////////////////////
+int getWeaponArtTier(Item::ItemClass itemClass, ItemType_t itemType)
+{
+	ItemInfo* pItemInfo = g_pItemInfoManager->getItemInfo(itemClass, itemType);
+	if (pItemInfo == NULL)
+		return 0;
+
+	Level_t advancement = pItemInfo->getReqAdvancedLevel();
+
+	if (advancement >= 31)	return 3;
+	if (advancement >= 21)	return 2;
+	if (advancement >= 11)	return 1;
+	return 0;
+}
+
+int getWeaponArtTier(Item* pItem)
+{
+	if (pItem == NULL)
+		return 0;
+
+	return getWeaponArtTier(pItem->getItemClass(), pItem->getItemType());
 }
