@@ -8,6 +8,7 @@
 
 // include files
 #include "PlayerManager.h"
+#include "Utility.h"
 #include "Assert.h"
 #include "SocketAPI.h"
 #include "Socket.h"
@@ -96,7 +97,7 @@ void PlayerManager::addPlayer ( Player * pPlayer )
 	// null check
 	if ( m_pPlayers[ fd ] != NULL )
 	{
-		ofstream file("Socket_Error.txt", ios::out | ios::app);
+		ofstream file(logPath("Socket_Error.txt").c_str(), ios::out | ios::app);
 		file << "socket descriptor duplicated" << endl;
 		file.close();
 

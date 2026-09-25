@@ -1261,13 +1261,24 @@ void MonsterManager::killCreature (Creature* pDeadCreature)
 		pDeadMonster->setHostPartyID(pTable->getHostPartyID());
 	}
 
-	// Eisen Dungeon B4F Astral crystals (BlackAstral 1077 / WhiteAstral 1078): every player in the lair gets
-	// its chest in the inventory instead of a corpse drop, whether or not they fought it (user request
-	// 2026-09-14; it used to need damage within 30 s of the kill). A full inventory drops the chest at the
+	// Bosses that hand a chest to every player in the zone instead of leaving a corpse to loot, whether or not
+	// they fought it: the Eisen Dungeon B4F Astral crystals (BlackAstral 1077 / WhiteAstral 1078, user request
+	// 2026-09-14; it used to need damage within 30 s of the kill) and Vlad II Dracul (1196, user request
+	// 2026-09-25 - he drops nothing at all, this is his whole reward). A full inventory drops the chest at the
 	// player's feet, reserved for them, the same way GQuestGiveItemElement does.
-	if ( pDeadMonster->getMonsterType() == 1077 || pDeadMonster->getMonsterType() == 1078 )
+	ItemType_t  chestType = 0;
+	const char* chestName = NULL;
+
+	switch ( pDeadMonster->getMonsterType() )
 	{
-		ItemType_t chestType = ( pDeadMonster->getMonsterType() == 1077 ) ? 42 : 43;	// Black / White Astral's Chest
+		case 1077 : chestType = 42; chestName = "Black Astral's Chest"; break;
+		case 1078 : chestType = 43; chestName = "White Astral's Chest"; break;
+		case 1196 : chestType = 57; chestName = "Dracula Box";          break;
+		default   : break;
+	}
+
+	if ( chestName != NULL )
+	{
 
 		const hash_map<ObjectID_t, Creature*>& players = m_pZone->getPCManager()->getCreatures();
 		hash_map<ObjectID_t, Creature*>::const_iterator itr = players.begin();
@@ -1294,7 +1305,7 @@ void MonsterManager::killCreature (Creature* pDeadCreature)
 				pPC->getPlayer()->sendPacket( &gcCreateItem );
 
 				GCSystemMessage gcAdded;
-				gcAdded.setMessage( chestType == 42 ? "Black Astral's Chest was added to your inventory." : "White Astral's Chest was added to your inventory." );
+				gcAdded.setMessage( string( chestName ) + " was added to your inventory." );
 				pPC->getPlayer()->sendPacket( &gcAdded );
 			}
 			else
@@ -1326,12 +1337,13 @@ void MonsterManager::killCreature (Creature* pDeadCreature)
 				pChest->create( "", STORAGE_ZONE, m_pZone->getZoneID(), pt.x, pt.y );
 
 				GCSystemMessage gcSM;
-				gcSM.setMessage( "Your inventory is full, so the Astral chest was dropped at your feet." );
+				gcSM.setMessage( string( "Your inventory is full, so the " ) + chestName + " was dropped at your feet." );
 				pPC->getPlayer()->sendPacket( &gcSM );
 			}
 		}
 
 		// The chests were handed out above; keep them out of the corpse (BlackAstral/WhiteAstral .bin).
+		// Vlad's MonsterInfo already says HasTreasure = 0 (migration 1.1.13), so this changes nothing for him.
 		pDeadMonster->setTreasure( false );
 	}
 

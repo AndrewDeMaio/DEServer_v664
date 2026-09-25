@@ -18,6 +18,7 @@
 #endif
 
 #include <list>
+#include <string>
 
 
 //////////////////////////////////////////////////////////////////////
@@ -768,7 +769,8 @@ public :
 		uint m_ErrorCode;
 	};
 
+std::string logPath(const char* szFilename);	// Utility.h; keeps packet_exception.txt in log/
 #define __BEGIN_DEBUG_EX try {
-#define __END_DEBUG_EX  } catch (ProtocolException&) { throw; } catch (Error&) { throw; } catch (Exception & e) { ofstream file("packet_exception.txt", ios::out | ios::app); file << e.toString() << endl; file.close(); cout << e.toString() << endl; } 
+#define __END_DEBUG_EX  } catch (ProtocolException&) { throw; } catch (Error&) { throw; } catch (Exception & e) { ofstream file(logPath("packet_exception.txt").c_str(), ios::out | ios::app); file << e.toString() << endl; file.close(); cout << e.toString() << endl; } 
 
 #endif

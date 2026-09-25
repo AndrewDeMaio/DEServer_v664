@@ -5869,6 +5869,10 @@ void divideAttrExp(Slayer* pSlayer, Damage_t Damage,
 	}
 
 	// 힘 경험치
+	// EXP carries over: excess beyond the current goal is applied to the next point (chain if it covers it).
+	Exp_t STROver = (STRPoint > pSlayer->getSTRGoalExp()) ? STRPoint - pSlayer->getSTRGoalExp() : 0;
+	Exp_t DEXOver = (DEXPoint > pSlayer->getDEXGoalExp()) ? DEXPoint - pSlayer->getDEXGoalExp() : 0;
+	Exp_t INTOver = (INTPoint > pSlayer->getINTGoalExp()) ? INTPoint - pSlayer->getINTGoalExp() : 0;
 	Exp_t CurSTRGoalExp = max(0, (int)(pSlayer->getSTRGoalExp() - STRPoint     ));
 	// 덱스 경험치
 	Exp_t CurDEXGoalExp = max(0, (int)(pSlayer->getDEXGoalExp() - DEXPoint     ));
@@ -5883,7 +5887,7 @@ void divideAttrExp(Slayer* pSlayer, Damage_t Damage,
 	bool bInitAll = false;
 
 	// 경험치가 누적되어 기본 능력치가 상승할 때다...
-	if ( STRMultiplier != 0 && CurSTRGoalExp == 0 && CurSTR < AttrBound )
+	while ( STRMultiplier != 0 && CurSTRGoalExp == 0 && CurSTR < AttrBound )
 	{
 		bool isUp = true;
 
@@ -5916,6 +5920,9 @@ void divideAttrExp(Slayer* pSlayer, Damage_t Damage,
 
 			// 새로운 목표 경험치를 셋팅해 줘야 한다.
 			Exp_t NewGoalExp = pNewSTRInfo->getGoalExp();
+			if (STROver >= NewGoalExp) { STROver -= NewGoalExp; NewGoalExp = 0; }
+			else                      { NewGoalExp -= STROver; STROver = 0; }
+			CurSTRGoalExp = NewGoalExp;
 			pSlayer->setSTRGoalExp(NewGoalExp);
 
 			// DB에 올라간 능력치를 저장한다.
@@ -5928,7 +5935,7 @@ void divideAttrExp(Slayer* pSlayer, Damage_t Damage,
 	}
 
 	// 경험치가 누적되어 기본 능력치가 상승할 때다...
-	if ( DEXMultiplier != 0 && CurDEXGoalExp == 0 && CurDEX < AttrBound )
+	while ( DEXMultiplier != 0 && CurDEXGoalExp == 0 && CurDEX < AttrBound )
 	{
 		bool isUp = true;
 
@@ -5961,6 +5968,9 @@ void divideAttrExp(Slayer* pSlayer, Damage_t Damage,
 
 			// 새로운 목표 경험치를 셋팅해 줘야 한다.
 			Exp_t NewGoalExp = pNewDEXInfo->getGoalExp();
+			if (DEXOver >= NewGoalExp) { DEXOver -= NewGoalExp; NewGoalExp = 0; }
+			else                      { NewGoalExp -= DEXOver; DEXOver = 0; }
+			CurDEXGoalExp = NewGoalExp;
 			pSlayer->setDEXGoalExp(NewGoalExp);
 
 			// DB에 올라간 능력치를 저장한다.
@@ -5972,7 +5982,7 @@ void divideAttrExp(Slayer* pSlayer, Damage_t Damage,
 	}
 
 	// 경험치가 누적되어 기본 능력치가 상승할 때다...
-	if ( INTMultiplier != 0 && CurINTGoalExp == 0 && CurINT < AttrBound )
+	while ( INTMultiplier != 0 && CurINTGoalExp == 0 && CurINT < AttrBound )
 	{
 		bool isUp = true;
 	
@@ -6004,6 +6014,9 @@ void divideAttrExp(Slayer* pSlayer, Damage_t Damage,
 
 			// 새로운 목표 경험치를 셋팅해 줘야 한다.
 			Exp_t NewGoalExp = pNewINTInfo->getGoalExp();
+			if (INTOver >= NewGoalExp) { INTOver -= NewGoalExp; NewGoalExp = 0; }
+			else                      { NewGoalExp -= INTOver; INTOver = 0; }
+			CurINTGoalExp = NewGoalExp;
 			pSlayer->setINTGoalExp(NewGoalExp);
 
 			// DB에 올라간 능력치를 저장한다.
@@ -6414,6 +6427,9 @@ bool increaseDomainExp(Slayer* pSlayer, SkillDomainType_t Domain, Exp_t Point, M
 		availiable = true;
 	}
 
+	// Ungated (2026-09-25): domain EXP is no longer withheld until the level's skill is learned.
+	availiable = true;
+
 	if (availiable) 
 	{
 		bool isLevelUp = false;
@@ -6434,7 +6450,10 @@ bool increaseDomainExp(Slayer* pSlayer, SkillDomainType_t Domain, Exp_t Point, M
 //		Exp_t CurrentExp = pSlayer->getSkillDomainExp(Domain);
 
 		// 새로운 목표 경험치
-		NewGoalExp = max(0, (int)(GoalExp - Point));
+		// EXP carries over into the next domain level; a domain still rises one level per grant
+		// (the next level is gated on learning its skill), so the carried amount never empties the new goal.
+		Exp_t OverExp = (Point > GoalExp) ? Point - GoalExp : 0;
+		NewGoalExp = (Point >= GoalExp) ? 0 : (GoalExp - Point);
 
 		// 누적 경험치에는 목표경험치가 줄어든 만큼 올라가야 정상이다.
 		// 새로운 누적 경험치
@@ -6457,38 +6476,32 @@ bool increaseDomainExp(Slayer* pSlayer, SkillDomainType_t Domain, Exp_t Point, M
 		//cout << "남은 경험치는 " << NewGoalExp << endl;
 
 		// 목표 경험치가 0 이라면, 레벨업을 할 수 있는 상태인가를 검사한다.
-		if (NewGoalExp == 0 && CurDomainLevel != SLAYER_MAX_DOMAIN_LEVEL) 
+		// EXP carries over: keep climbing while the excess still covers the next goal (chain level-ups).
+		// Ungated (2026-09-25): an unlearned skill no longer stops the chain; the client is told once that
+		// skills are waiting to be learned.
+		bool bSkillReady = false;
+		int  levelGuard  = 0;
+		while (NewGoalExp == 0 && CurDomainLevel != SLAYER_MAX_DOMAIN_LEVEL && ++levelGuard <= 300)
 		{
-			// 도메인 레벨을 올려주고, 그에 따른 기술을 배울 수 있다면 기술을 배울 수 있다는 것을 알려준다.
 			NewDomainLevel = CurDomainLevel + 1;
-
-			// 도메인 인포 메니져를 만들어서 목표 경험치를 셋팅하고 레벨을 재 설정 한다.
 			NewGoalExp = g_pSkillDomainInfoManager->getDomainInfo((SkillDomain)Domain, NewDomainLevel)->getGoalExp();
+			if (OverExp >= NewGoalExp) { OverExp -= NewGoalExp; NewGoalExp = 0; }
+			else                       { NewGoalExp -= OverExp; OverExp = 0; }
 
-			pSlayer->setGoalExp (Domain, NewGoalExp);
 			pSlayer->setSkillDomainLevel (Domain, NewDomainLevel);
-
-			//cout << "레벨업해서 남은 경험치는 " << NewGoalExp << endl;
+			isLevelUp      = true;
+			CurDomainLevel = NewDomainLevel;
 
 			SkillType_t NewLearnSkillType = g_pSkillInfoManager->getSkillTypeByLevel(Domain, NewDomainLevel);
+			if (NewLearnSkillType != 0 && pSlayer->hasSkill(NewLearnSkillType) == NULL) bSkillReady = true;
+		}
+		pSlayer->setGoalExp (Domain, NewGoalExp);
 
-			// 현재 레벨에서 배울 수 있는 기술이 있는지 본다.
-			if (NewLearnSkillType != 0) 
-			{
-				// 배울 수 있는 기술이 있고 이미 배우지 않은 상태라면 기술을 배울 수 있다는 패킷을 날린다.
-				if (pSlayer->hasSkill(NewLearnSkillType) == NULL) 
-				{
-					// GCLearnSkillReady의 m_SkillType에 level up된 도메인의 가장 최근
-					// 기술을 대입한다. 즉, 클라이언트 그 다음 스킬을 배울수 있다...
-					GCLearnSkillReady readyPacket;
-					readyPacket.setSkillDomainType((SkillDomainType_t)Domain);
-					// send packet
-					pSlayer->getPlayer()->sendPacket(&readyPacket);
-				}
-			}
-
-			isLevelUp = true;
-			//cout << "레벨업 할 수 있습니다." << endl;
+		if (bSkillReady)
+		{
+			GCLearnSkillReady readyPacket;
+			readyPacket.setSkillDomainType((SkillDomainType_t)Domain);
+			pSlayer->getPlayer()->sendPacket(&readyPacket);
 		}
 
 /*		if (DiffExp != 0)
@@ -6508,7 +6521,8 @@ bool increaseDomainExp(Slayer* pSlayer, SkillDomainType_t Domain, Exp_t Point, M
 
 		// 레벨업이 되었을 경우, 도메인 총합이 100을 넘는다면 현재 도메인을 제외한 
 		// 도메인 중에서 가장 높은 도메인 레벨을 떨어뜨려야 한다.
-		if (isLevelUp && DomainLevelSum > SLAYER_MAX_DOMAIN_LEVEL) 
+		int downGuard = 0;
+		while (isLevelUp && DomainLevelSum > SLAYER_MAX_DOMAIN_LEVEL && ++downGuard <= 300)
 		{
 			SDomain ds[SKILL_DOMAIN_VAMPIRE];
 
@@ -6613,6 +6627,7 @@ bool increaseDomainExp(Slayer* pSlayer, SkillDomainType_t Domain, Exp_t Point, M
 
 			// 떨어뜨린 도메인 레벨을 세이브한다.
 			pSlayer->tinysave(DownSave.toString());
+			DomainLevelSum = pSlayer->getSkillDomainLevelSum();
 		}
 
 		WORD DomainExpSaveCount = pSlayer->getDomainExpSaveCount();
@@ -6933,140 +6948,62 @@ void increaseVampExp(Vampire* pVampire, Exp_t Point, ModifyInfo& _ModifyInfo)
 
 //	Exp_t OldExp = pVampire->getExp();
 
-	Exp_t OldGoalExp = pVampire->getGoalExp();
-	Exp_t NewGoalExp = max(0, (int)(OldGoalExp - Point));
+	// EXP carries over: whatever exceeds the current goal is applied to the next level (chain level-ups).
+	// State changes happen per level; the update packet, the heal and the level-up effect go out once.
+	VAMPIRE_RECORD prev;
+	pVampire->getVampireRecord(prev);
+	Bonus_t bonus       = pVampire->getBonus();
+	Level_t startLevel  = curLevel;
+	bool    bSkillReady = false;
+	Exp_t   Remain      = Point;
 
-	// 누적 경험치에는 목표 경험치가 줄어든 만큼 플러스 하여야 한다.
-//	Exp_t DiffGoalExp = max(0, (int)(OldGoalExp - NewGoalExp));
-//	Exp_t NewExp      = OldExp + DiffGoalExp;
-
-//	pVampire->setExp(NewExp);
-	pVampire->setGoalExp(NewGoalExp);
-
-//	_ModifyInfo.addLongData(MODIFY_VAMP_GOAL_EXP, NewGoalExp);
-
-	// 목표 경험치가 0이 아니거나, 현재 레벨이 115 이상이라면 경험치만 저장하고,
-	// 레벨은 올라가지 않는다.
-/*	if (NewGoalExp > 0 || curLevel >= 115)
+	while (Remain > 0)
 	{
-		WORD ExpSaveCount = pVampire->getExpSaveCount();
+		Exp_t OldGoalExp = pVampire->getGoalExp();
+		Exp_t NewGoalExp = (Remain >= OldGoalExp) ? 0 : (OldGoalExp - Remain);
+		Remain           = (Remain >= OldGoalExp) ? (Remain - OldGoalExp) : 0;
 
-		// 경험치 세이브 카운트가 일정 수치에 다다르면 세이브하고,
-		// 카운트를 초기화시켜 준다. 
-		if (ExpSaveCount > VAMPIRE_EXP_SAVE_PERIOD)
+		pVampire->setGoalExp(NewGoalExp);
+
+		if ( NewGoalExp > 0 || curLevel == VAMPIRE_MAX_LEVEL )
 		{
-			StringStream attrsave;
-			attrsave << "Exp = " << NewExp << ", GoalExp = " << NewGoalExp;
-			pVampire->tinysave(attrsave.toString());
-
-			ExpSaveCount = 0;
+			// no (further) level-up; at max level any excess is discarded, as before
+			if ( curLevel == startLevel )
+			{
+				WORD ExpSaveCount = pVampire->getExpSaveCount();
+				if (ExpSaveCount > VAMPIRE_EXP_SAVE_PERIOD)
+				{
+					StringStream attrsave;
+					attrsave << "GoalExp = " << NewGoalExp;
+					pVampire->tinysave(attrsave.toString());
+					ExpSaveCount = 0;
+				}
+				else ExpSaveCount++;
+				pVampire->setExpSaveCount(ExpSaveCount);
+			}
+			break;
 		}
-		else ExpSaveCount++;
-
-		pVampire->setExpSaveCount(ExpSaveCount);
-	}
-	// 목표 경험치가 0 이라면 레벨 업이다.
-	else*/
-	if ( NewGoalExp > 0 || curLevel == VAMPIRE_MAX_LEVEL )
-	{
-		_ModifyInfo.addLongData(MODIFY_VAMP_GOAL_EXP, NewGoalExp);
-		WORD ExpSaveCount = pVampire->getExpSaveCount();
-
-		// 경험치 세이브 카운트가 일정 수치에 다다르면 세이브하고,
-		// 카운트를 초기화시켜 준다. 
-		if (ExpSaveCount > VAMPIRE_EXP_SAVE_PERIOD)
-		{
-			//cout << "경험치를 저장합니다." << endl;
-
-			StringStream attrsave;
-//			attrsave << "Exp = " << NewExp << ", GoalExp = " << NewGoalExp;
-			attrsave << "GoalExp = " << NewGoalExp;
-			pVampire->tinysave(attrsave.toString());
-
-			ExpSaveCount = 0;
-		}
-		else ExpSaveCount++;
-
-		pVampire->setExpSaveCount(ExpSaveCount);
-	}
-	else
-	{
-		//cout << "레벨이 올랐습니다." << endl;
-		// 레벨 업!!
-		VAMPIRE_RECORD prev;
-		pVampire->getVampireRecord(prev);
 
 		curLevel++;
-
 		pVampire->setLevel(curLevel);
-		_ModifyInfo.addShortData(MODIFY_LEVEL, curLevel);
 
-		// add bonus point
-		Bonus_t bonus = pVampire->getBonus();
+		VampEXPInfo* pNextExpInfo = g_pVampEXPInfoManager->getVampEXPInfo(curLevel);
+		pVampire->setGoalExp(pNextExpInfo->getGoalExp());
 
-//		if ((pVampire->getSTR(ATTR_BASIC) + pVampire->getDEX(ATTR_BASIC) + pVampire->getINT(ATTR_BASIC) + pVampire->getBonus() - 60) < ((pVampire->getLevel() - 1) * 3)) 
-		{
-			// 레벨에 상관치 않고, 무조건 3으로 변경되었다.
-			// 2001.12.12 김성민
-			bonus += 3;
-		}
-
+		bonus += 3;
 		pVampire->setBonus(bonus);
-		_ModifyInfo.addShortData(MODIFY_BONUS_POINT, bonus);
 
-//		VampEXPInfo* pBeforeExpInfo = g_pVampEXPInfoManager->getVampEXPInfo(curLevel-1);
-		VampEXPInfo* pNextExpInfo   = g_pVampEXPInfoManager->getVampEXPInfo(curLevel);
-		Exp_t        NextGoalExp    = pNextExpInfo->getGoalExp();
-
-		pVampire->setGoalExp(NextGoalExp);
-		_ModifyInfo.addLongData(MODIFY_VAMP_GOAL_EXP, NextGoalExp);
-		//cout << "남은 경험치는 " << NextGoalExp << " 입니다." << endl;
-
-		StringStream sav;
-		sav << "Level = " << (int)curLevel 
-//			<< ",Exp = " << (int)pBeforeExpInfo->getAccumExp() 
-			<< ",GoalExp = " << (int)NextGoalExp 
-			<< ",Bonus = " << (int)bonus;
-		pVampire->tinysave(sav.toString());
-
-		// 레벨이 올라서 새로 배울 수 있는 기술이 생겼다면 기술을 배울 수 있다고 알린다.
 		SkillType_t NewLearnSkillType = g_pSkillInfoManager->getSkillTypeByLevel(SKILL_DOMAIN_VAMPIRE, curLevel);
-		if (NewLearnSkillType != 0) 
-		{
-			// 배울 수 있는 기술이 있고 이미 배우지 않은 상태라면 기술을 배울 수 있다는 패킷을 날린다.
-			if (pVampire->hasSkill(NewLearnSkillType) == NULL) 
-			{
-				// GCLearnSkillReady의 m_SkillType에 level up된 도메인의 가장 최근
-				// 기술을 대입한다. 즉, 클라이언트 그 다음 스킬을 배울수 있다...
-				GCLearnSkillReady readyPacket;
-				readyPacket.setSkillDomainType(SKILL_DOMAIN_VAMPIRE);
-				pVampire->getPlayer()->sendPacket(&readyPacket);
-			}
-		}
+		if (NewLearnSkillType != 0 && pVampire->hasSkill(NewLearnSkillType) == NULL) bSkillReady = true;
 
-		healCreatureForLevelUp(pVampire, _ModifyInfo, &prev);
-
-		// 레벨업 이펙트도 보여준다. by sigi. 2002.11.9
-		sendEffectLevelUp( pVampire );
-
-		// by sigi. 2002.11.19
-		// 유료 사용자가 아니거나
-		// 무료 사용기간이 남아있지 않으면(혹은 능력치 over) 짜른다.
-		checkFreeLevelLimit( pVampire );
 		pVampire->whenQuestLevelUpgrade();
 
-		// GrandMaster인 경우는 Effect를 붙여준다.
-		// 100렙 넘고 아직 Effect가 안 붙어있다면..
-	    // by sigi. 2002.11.9
 		if (curLevel >= GRADE_GRAND_MASTER_LIMIT_LEVEL
 			&& !pVampire->isFlag(Effect::EFFECT_CLASS_GRAND_MASTER_VAMPIRE))
 		{
 			EffectGrandMasterVampire* pEffect = new EffectGrandMasterVampire(pVampire);
 			pEffect->setDeadline(999999);
-
 			pVampire->getEffectManager()->addEffect( pEffect );
-
-			// affect()안에서.. Flag걸어주고, 주위에 broadcast도 해준다.
 			pEffect->affect();
 		}
 		else if ( curLevel == 130 || curLevel == 150 )
@@ -7074,6 +7011,31 @@ void increaseVampExp(Vampire* pVampire, Exp_t Point, ModifyInfo& _ModifyInfo)
 			Effect* pEffect = pVampire->findEffect(Effect::EFFECT_CLASS_GRAND_MASTER_VAMPIRE);
 			if ( pEffect != NULL ) pEffect->affect();
 		}
+	}
+
+	_ModifyInfo.addLongData(MODIFY_VAMP_GOAL_EXP, pVampire->getGoalExp());
+
+	if ( curLevel != startLevel )
+	{
+		_ModifyInfo.addShortData(MODIFY_LEVEL, curLevel);
+		_ModifyInfo.addShortData(MODIFY_BONUS_POINT, bonus);
+
+		StringStream sav;
+		sav << "Level = " << (int)curLevel
+			<< ",GoalExp = " << (int)pVampire->getGoalExp()
+			<< ",Bonus = " << (int)bonus;
+		pVampire->tinysave(sav.toString());
+
+		if ( bSkillReady )
+		{
+			GCLearnSkillReady readyPacket;
+			readyPacket.setSkillDomainType(SKILL_DOMAIN_VAMPIRE);
+			pVampire->getPlayer()->sendPacket(&readyPacket);
+		}
+
+		healCreatureForLevelUp(pVampire, _ModifyInfo, &prev);
+		sendEffectLevelUp( pVampire );
+		checkFreeLevelLimit( pVampire );
 	}
 }
 
@@ -7197,114 +7159,65 @@ void increaseOustersExp(Ousters* pOusters, Exp_t Point, ModifyInfo& _ModifyInfo)
 
 	Exp_t OldExp = pOusters->getExp();
 */
-	Exp_t OldGoalExp = pOusters->getGoalExp();
-	Exp_t NewGoalExp = max(0, (int)(OldGoalExp - Point));
+	// EXP carries over: whatever exceeds the current goal is applied to the next level (chain level-ups).
+	// State changes happen per level; the update packet, the heal and the level-up effect go out once.
+	OUSTERS_RECORD prev;
+	pOusters->getOustersRecord(prev);
+	Bonus_t bonus       = pOusters->getBonus();
+	SkillBonus_t skillBonus = pOusters->getSkillBonus();
+	Level_t startLevel  = curLevel;
+	bool    bSkillReady = false;
+	Exp_t   Remain      = Point;
 
-	// 누적 경험치에는 목표 경험치가 줄어든 만큼 플러스 하여야 한다.
-//	Exp_t DiffGoalExp = max(0, (int)(OldGoalExp - NewGoalExp));
-//	Exp_t NewExp      = OldExp + DiffGoalExp;
-
-//	pOusters->setExp(NewExp);
-	pOusters->setGoalExp(NewGoalExp);
-
-//	_ModifyInfo.addLongData(MODIFY_OUSTERS_EXP, NewExp);
-
-//	if ( NewGoalExp > 0 )
-	if ( NewGoalExp > 0 || curLevel == OUSTERS_MAX_LEVEL )
+	while (Remain > 0)
 	{
-		WORD ExpSaveCount = pOusters->getExpSaveCount();
-		_ModifyInfo.addLongData(MODIFY_OUSTERS_GOAL_EXP, NewGoalExp);
+		Exp_t OldGoalExp = pOusters->getGoalExp();
+		Exp_t NewGoalExp = (Remain >= OldGoalExp) ? 0 : (OldGoalExp - Remain);
+		Remain           = (Remain >= OldGoalExp) ? (Remain - OldGoalExp) : 0;
 
-		// 경험치 세이브 카운트가 일정 수치에 다다르면 세이브하고,
-		// 카운트를 초기화시켜 준다. 
-		if (ExpSaveCount > OUSTERS_EXP_SAVE_PERIOD)
+		pOusters->setGoalExp(NewGoalExp);
+
+		if ( NewGoalExp > 0 || curLevel == OUSTERS_MAX_LEVEL )
 		{
-			StringStream attrsave;
-			attrsave << "GoalExp = " << NewGoalExp;
-			pOusters->tinysave(attrsave.toString());
-
-			ExpSaveCount = 0;
+			// no (further) level-up; at max level any excess is discarded, as before
+			if ( curLevel == startLevel )
+			{
+				WORD ExpSaveCount = pOusters->getExpSaveCount();
+				if (ExpSaveCount > OUSTERS_EXP_SAVE_PERIOD)
+				{
+					StringStream attrsave;
+					attrsave << "GoalExp = " << NewGoalExp;
+					pOusters->tinysave(attrsave.toString());
+					ExpSaveCount = 0;
+				}
+				else ExpSaveCount++;
+				pOusters->setExpSaveCount(ExpSaveCount);
+			}
+			break;
 		}
-		else ExpSaveCount++;
-
-		pOusters->setExpSaveCount(ExpSaveCount);
-	}
-	else
-	{
-		// 레벨 업!!
-		OUSTERS_RECORD prev;
-		pOusters->getOustersRecord(prev);
 
 		curLevel++;
 		pOusters->setLevel(curLevel);
 
-//		OustersEXPInfo* pBeforeExpInfo = g_pOustersEXPInfoManager->getOustersEXPInfo(curLevel-1);
-		OustersEXPInfo* pNextExpInfo   = g_pOustersEXPInfoManager->getOustersEXPInfo(curLevel);
-		Exp_t        	NextGoalExp    = pNextExpInfo->getGoalExp();
-
-		// add bonus point
-		Bonus_t bonus = pOusters->getBonus();
-		SkillBonus_t skillBonus = pOusters->getSkillBonus();
+		OustersEXPInfo* pNextExpInfo = g_pOustersEXPInfoManager->getOustersEXPInfo(curLevel);
+		pOusters->setGoalExp(pNextExpInfo->getGoalExp());
 
 		bonus += 3;
-		skillBonus += pNextExpInfo->getSkillPointBonus();
-	
 		pOusters->setBonus(bonus);
+		skillBonus += pNextExpInfo->getSkillPointBonus();
 		pOusters->setSkillBonus( skillBonus );
 
-		_ModifyInfo.addShortData(MODIFY_LEVEL, curLevel);
-		_ModifyInfo.addShortData(MODIFY_BONUS_POINT, bonus);
-		_ModifyInfo.addShortData(MODIFY_SKILL_BONUS_POINT, skillBonus);
-
-		pOusters->setGoalExp(NextGoalExp);
-		_ModifyInfo.addLongData(MODIFY_OUSTERS_GOAL_EXP, NextGoalExp);
-
-		StringStream sav;
-		sav << "Level = " << (int)curLevel 
-//			<< ",Exp = " << (int)pBeforeExpInfo->getAccumExp() 
-			<< ",GoalExp = " << (int)NextGoalExp 
-			<< ",Bonus = " << (int)bonus
-			<< ",SkillBonus = " << (int)skillBonus;
-		pOusters->tinysave(sav.toString());
-
-		// 레벨이 올라서 새로 배울 수 있는 기술이 생겼다면 기술을 배울 수 있다고 알린다.
 		SkillType_t NewLearnSkillType = g_pSkillInfoManager->getSkillTypeByLevel(SKILL_DOMAIN_OUSTERS, curLevel);
-		if (NewLearnSkillType != 0) 
-		{
-			// 배울 수 있는 기술이 있고 이미 배우지 않은 상태라면 기술을 배울 수 있다는 패킷을 날린다.
-			if (pOusters->hasSkill(NewLearnSkillType) == NULL) 
-			{
-				// GCLearnSkillReady의 m_SkillType에 level up된 도메인의 가장 최근
-				// 기술을 대입한다. 즉, 클라이언트 그 다음 스킬을 배울수 있다...
-				GCLearnSkillReady readyPacket;
-				readyPacket.setSkillDomainType(SKILL_DOMAIN_OUSTERS);
-				pOusters->getPlayer()->sendPacket(&readyPacket);
-			}
-		}
+		if (NewLearnSkillType != 0 && pOusters->hasSkill(NewLearnSkillType) == NULL) bSkillReady = true;
 
-		healCreatureForLevelUp(pOusters, _ModifyInfo, &prev);
-
-		// 레벨업 이펙트도 보여준다. by sigi. 2002.11.9
-		sendEffectLevelUp( pOusters );
-
-		// by sigi. 2002.11.19
-		// 유료 사용자가 아니거나
-		// 무료 사용기간이 남아있지 않으면(혹은 능력치 over) 짜른다.
-		checkFreeLevelLimit( pOusters );
 		pOusters->whenQuestLevelUpgrade();
 
-		// GrandMaster인 경우는 Effect를 붙여준다.
-		// 100렙 넘고 아직 Effect가 안 붙어있다면..
-	    // by sigi. 2002.11.9
 		if (curLevel >= GRADE_GRAND_MASTER_LIMIT_LEVEL
 			&& !pOusters->isFlag(Effect::EFFECT_CLASS_GRAND_MASTER_OUSTERS))
 		{
 			EffectGrandMasterOusters* pEffect = new EffectGrandMasterOusters(pOusters);
 			pEffect->setDeadline(999999);
-
 			pOusters->getEffectManager()->addEffect( pEffect );
-
-			// affect()안에서.. Flag걸어주고, 주위에 broadcast도 해준다.
 			pEffect->affect();
 		}
 		else if ( curLevel == 130 || curLevel == 150 )
@@ -7312,6 +7225,33 @@ void increaseOustersExp(Ousters* pOusters, Exp_t Point, ModifyInfo& _ModifyInfo)
 			Effect* pEffect = pOusters->findEffect(Effect::EFFECT_CLASS_GRAND_MASTER_OUSTERS);
 			if ( pEffect != NULL ) pEffect->affect();
 		}
+	}
+
+	_ModifyInfo.addLongData(MODIFY_OUSTERS_GOAL_EXP, pOusters->getGoalExp());
+
+	if ( curLevel != startLevel )
+	{
+		_ModifyInfo.addShortData(MODIFY_LEVEL, curLevel);
+		_ModifyInfo.addShortData(MODIFY_BONUS_POINT, bonus);
+		_ModifyInfo.addShortData(MODIFY_SKILL_BONUS_POINT, skillBonus);
+
+		StringStream sav;
+		sav << "Level = " << (int)curLevel
+			<< ",GoalExp = " << (int)pOusters->getGoalExp()
+			<< ",Bonus = " << (int)bonus
+			<< ",SkillBonus = " << (int)skillBonus;
+		pOusters->tinysave(sav.toString());
+
+		if ( bSkillReady )
+		{
+			GCLearnSkillReady readyPacket;
+			readyPacket.setSkillDomainType(SKILL_DOMAIN_OUSTERS);
+			pOusters->getPlayer()->sendPacket(&readyPacket);
+		}
+
+		healCreatureForLevelUp(pOusters, _ModifyInfo, &prev);
+		sendEffectLevelUp( pOusters );
+		checkFreeLevelLimit( pOusters );
 	}
 }
 

@@ -4032,7 +4032,7 @@ void CGUseItemFromInventoryHandler::executeEventGiftBox(CGUseItemFromInventory* 
 	}
 	else if ( pItem->getItemType() == 33 )
 	{
-		pResultItem = g_pEventGiftBoxRewardManager->getEventGiftBoxReward(pCreature, 4, LimitTime);
+		pResultItem = g_pEventGiftBoxRewardManager->getEventGiftBoxReward(pCreature, 33, LimitTime);
 		
 		bFullStack = false;
 	}
@@ -4151,7 +4151,7 @@ void CGUseItemFromInventoryHandler::executeEventGiftBox(CGUseItemFromInventory* 
 			pStmt->executeQuery("INSERT INTO UseGiftBoxLog (PlayerID, Name, UseDate, GiftBoxID, GiftBoxClass, GiftBoxType, ReceiveID, ReceiveClass, ReceiveType) "
 					"VALUES ('%s', '%s', now(), %u, %u, %u, %u, %u, %u)",
 					pGamePlayer->getID().c_str(), pPC->getName().c_str(), pItem->getItemID(), pItem->getItemClass(), pItem->getItemType(),
-					pResultItem->getItemID(), pResultItem->getItemClass(), pResultItem->getItemType());
+					pResultItem != NULL ? pResultItem->getItemID() : 0, pResultItem != NULL ? (int)pResultItem->getItemClass() : 0, pResultItem != NULL ? (int)pResultItem->getItemType() : 0);
 			SAFE_DELETE( pStmt );
 		}
 		END_DB(pStmt);
@@ -4175,7 +4175,7 @@ void CGUseItemFromInventoryHandler::executeEventGiftBox(CGUseItemFromInventory* 
 			pStmt->executeQuery("INSERT INTO UseGiftBoxLog (PlayerID, Name, UseDate, GiftBoxID, GiftBoxClass, GiftBoxType, ReceiveID, ReceiveClass, ReceiveType) "
 					"VALUES ('%s', '%s', now(), %u, %u, %u, %u, %u, %u)",
 					pGamePlayer->getID().c_str(), pPC->getName().c_str(), pItem->getItemID(), pItem->getItemClass(), pItem->getItemType(),
-					pResultItem->getItemID(), pResultItem->getItemClass(), pResultItem->getItemType());
+					pResultItem != NULL ? pResultItem->getItemID() : 0, pResultItem != NULL ? (int)pResultItem->getItemClass() : 0, pResultItem != NULL ? (int)pResultItem->getItemType() : 0);
 			SAFE_DELETE( pStmt );
 		}
 		END_DB(pStmt);
@@ -4253,7 +4253,7 @@ void CGUseItemFromInventoryHandler::executeEventGiftBox(CGUseItemFromInventory* 
 	        pStmt->executeQuery("INSERT INTO UseGiftBoxLog (PlayerID, Name, UseDate, GiftBoxID, GiftBoxClass, GiftBoxType, ReceiveID, ReceiveClass, ReceiveType) "
 								"VALUES ('%s', '%s', now(), %u, %u, %u, %u, %u, %u)",
 								pGamePlayer->getID().c_str(), pPC->getName().c_str(), pItem->getItemID(), pItem->getItemClass(), pItem->getItemType(),
-								pResultItem->getItemID(), pResultItem->getItemClass(), pResultItem->getItemType());
+								pResultItem != NULL ? pResultItem->getItemID() : 0, pResultItem != NULL ? (int)pResultItem->getItemClass() : 0, pResultItem != NULL ? (int)pResultItem->getItemType() : 0);
 	        SAFE_DELETE( pStmt );
 	    }
 	    END_DB(pStmt);
@@ -4330,7 +4330,7 @@ void CGUseItemFromInventoryHandler::executeEventGiftBox(CGUseItemFromInventory* 
    	        pStmt->executeQuery("INSERT INTO UseGiftBoxLog (PlayerID, Name, UseDate, GiftBoxID, GiftBoxClass, GiftBoxType, ReceiveID, ReceiveClass, ReceiveType) "
    								"VALUES ('%s', '%s', now(), %u, %u, %u, %u, %u, %u)",
    								pGamePlayer->getID().c_str(), pPC->getName().c_str(), pItem->getItemID(), pItem->getItemClass(), pItem->getItemType(),
-   								pResultItem->getItemID(), pResultItem->getItemClass(), pResultItem->getItemType());
+   								pResultItem != NULL ? pResultItem->getItemID() : 0, pResultItem != NULL ? (int)pResultItem->getItemClass() : 0, pResultItem != NULL ? (int)pResultItem->getItemType() : 0);
 
 	        SAFE_DELETE( pStmt );
 	    }
@@ -4341,6 +4341,68 @@ void CGUseItemFromInventoryHandler::executeEventGiftBox(CGUseItemFromInventory* 
 
 
 	
+	// Dracula Box, from Vlad II Dracul. Four outcomes in five are rows in EventGiftBoxRewardItemInfo group 57
+	// (migration 1.2.2), the way Morgoth's reliquary reads group 4, so that loot is edited in the database.
+	// The fifth is a level-appropriate weapon, armor or accessory: it is rolled against the opener's own
+	// attributes, which no table row can express, so it stays here and the table carries the other four
+	// fifths. He drops nothing else, so a wasted box would be the whole kill wasted.
+	else if ( pItem->getItemType() == 57 )
+	{
+		if ( rand() % 5 != 4 )
+		{
+			pResultItem = g_pEventGiftBoxRewardManager->getEventGiftBoxReward( pCreature, 57, LimitTime );
+		}
+		else
+		{
+			// A level-appropriate weapon, armor or accessory. getRandomMysteriousItem() is the gamble
+			// shop's roll: it picks from what the character's own attributes allow, so the item fits
+			// the opener rather than the boss.
+			static const Item::ItemClass slayerClasses[] = {
+				Item::ITEM_CLASS_SWORD,     Item::ITEM_CLASS_BLADE,    Item::ITEM_CLASS_MACE,
+				Item::ITEM_CLASS_COAT,      Item::ITEM_CLASS_TROUSER,  Item::ITEM_CLASS_SHOES,
+				Item::ITEM_CLASS_GLOVE,     Item::ITEM_CLASS_HELM,     Item::ITEM_CLASS_RING,
+				Item::ITEM_CLASS_NECKLACE,  Item::ITEM_CLASS_BRACELET };
+			static const Item::ItemClass vampireClasses[] = {
+				Item::ITEM_CLASS_VAMPIRE_WEAPON,   Item::ITEM_CLASS_VAMPIRE_COAT,
+				Item::ITEM_CLASS_VAMPIRE_RING,     Item::ITEM_CLASS_VAMPIRE_BRACELET,
+				Item::ITEM_CLASS_VAMPIRE_NECKLACE, Item::ITEM_CLASS_VAMPIRE_EARRING };
+			static const Item::ItemClass oustersClasses[] = {
+				Item::ITEM_CLASS_OUSTERS_CHAKRAM,  Item::ITEM_CLASS_OUSTERS_COAT,
+				Item::ITEM_CLASS_OUSTERS_BOOTS,    Item::ITEM_CLASS_OUSTERS_CIRCLET,
+				Item::ITEM_CLASS_OUSTERS_ARMSBAND, Item::ITEM_CLASS_OUSTERS_RING,
+				Item::ITEM_CLASS_OUSTERS_PENDENT };
+
+			const Item::ItemClass* classes = NULL;
+			int                    count   = 0;
+
+			if ( pPC->isSlayer() )
+			{
+				classes = slayerClasses;
+				count   = sizeof( slayerClasses ) / sizeof( slayerClasses[0] );
+			}
+			else if ( pPC->isVampire() )
+			{
+				classes = vampireClasses;
+				count   = sizeof( vampireClasses ) / sizeof( vampireClasses[0] );
+			}
+			else if ( pPC->isOusters() )
+			{
+				classes = oustersClasses;
+				count   = sizeof( oustersClasses ) / sizeof( oustersClasses[0] );
+			}
+
+			if ( count > 0 )
+				pResultItem = getRandomMysteriousItem( pCreature, classes[ rand() % count ] );
+		}
+
+		// An empty group, or a class with nothing the character can wear, comes back NULL, and NULL below
+		// means the box is eaten for nothing. Fall back to the Ethereal Chain rather than swallowing the kill.
+		if ( pResultItem == NULL )
+			pResultItem = g_pItemFactoryManager->createItem( Item::ITEM_CLASS_ETHEREAL_CHAIN, 0, list<OptionType_t>() );
+
+		bFullStack = false;
+	}
+
 	if ( pResultItem == NULL )
 	{
 		sendCannotUse( pPacket, pPlayer );

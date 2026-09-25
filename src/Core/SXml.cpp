@@ -10,6 +10,7 @@
 
 //#include "SFCPCH.h"
 #include "SXml.h"
+#include "Utility.h"
 #include <iostream>
 #include <iosfwd>
 #include <assert.h>
@@ -235,7 +236,7 @@ string XMLUtil::trim(const string& str)
 //////////////////////////////////////////////////////////////////////////////
 void XMLUtil::filelog(char* fmt, ...)
 {
-	ofstream file(XML_ERROR_FILENAME, ios::out | ios::app);
+	ofstream file(logPath(XML_ERROR_FILENAME).c_str(), ios::out | ios::app);
 	if (file.is_open())
 	{
 		va_list valist;

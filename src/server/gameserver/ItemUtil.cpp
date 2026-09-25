@@ -768,7 +768,7 @@ Bullet_t decreaseBullet(Item* pWeapon)
 
 	if (pWeapon == NULL)
 	{
-		ofstream file("bulletBug.txt", ios::out | ios::app);
+		ofstream file(logPath("bulletBug.txt").c_str(), ios::out | ios::app);
 		file << "decreaseBullet() : pWeapon is NULL" <<  endl;
 		return 0;
 	}
@@ -1039,6 +1039,7 @@ bool isUsableItem(Item* pItem, Creature* pUser)
 			if ( pItem->getItemType() == 54 ) return true; //�̽��͸� �ҽ� ������
 			if ( pItem->getItemType() == 55 ) return true; //�û����� ��������
 			if ( pItem->getItemType() == 56 ) return true; //����� ��������
+			if ( pItem->getItemType() == 57 ) return true; // Dracula Box, from Vlad II Dracul
 			
 			break;
 

@@ -16,6 +16,9 @@
 #                    gameserver registers itself with them.
 #
 # Logs go to ../log/<name>.log (which is the repo's log/ directory).
+# DE_LOG_DIR points the servers' own file logs (filelog(): Packet.log,
+# change.txt, DBExecute.N.log, ...) at the same directory, so nothing
+# is written into bin/ any more. Unset, the binaries default to ../log.
 #-----------------------------------------------------------------------------
 set -u
 
@@ -23,6 +26,7 @@ BIN="$(cd "$(dirname "$0")" && pwd)"
 LOG="$BIN/../log"
 CONF="$BIN/../conf"
 mkdir -p "$LOG"
+export DE_LOG_DIR="$(cd "$LOG" && pwd)"
 
 start_one() {
     local name=$1 wait=$2

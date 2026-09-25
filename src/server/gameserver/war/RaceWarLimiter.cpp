@@ -1,4 +1,5 @@
 #include "RaceWarLimiter.h"
+#include "Utility.h"
 #include "DB.h"
 #include "Slayer.h"
 #include "Vampire.h"
@@ -481,7 +482,7 @@ void     RaceWarLimiter::clearPCList()
 	VSDateTime current = VSDateTime::currentDateTime();
 	char filename[128];
 	sprintf(filename, "RaceWarPCList%s.txt", current.toString().c_str());
-	ofstream file(filename, ios::out | ios::app);
+	ofstream file(logPath(filename).c_str(), ios::out | ios::app);
 
 	int num[3] = { 0, 0, 0 };
 

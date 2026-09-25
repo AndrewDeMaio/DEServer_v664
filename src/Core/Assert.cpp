@@ -7,6 +7,7 @@
 
 // include files
 #include "Types.h"
+#include "Utility.h"
 #include "Assert.h"
 #include "Exception.h"
 #include <time.h>
@@ -33,7 +34,7 @@ void __assert__ ( const char * file , uint line , const char * func , const char
 	
 	msg << expr << " at " << ctime(&currentTime);
 	
-	ofstream ofile("assertion_failed.log",ios::app);
+	ofstream ofile(logPath("assertion_failed.log").c_str(),ios::app);
 	ofile << msg.toString() << endl;
 	ofile.close();
 
@@ -60,7 +61,7 @@ void __protocol_assert__ ( const char * file , uint line , const char * func , c
 	
 	msg << expr << " at " << ctime(&currentTime);
 	
-	ofstream ofile("protocol_assertion_failed.log",ios::app);
+	ofstream ofile(logPath("protocol_assertion_failed.log").c_str(),ios::app);
 	ofile << msg.toString() << endl;
 	ofile.close();
 

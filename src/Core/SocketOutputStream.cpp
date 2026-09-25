@@ -7,6 +7,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "SocketOutputStream.h"
+#include "Utility.h"
 #include "Assert.h"
 #include "Packet.h"
 #include "VSDateTime.h"
@@ -397,7 +398,7 @@ void SocketOutputStream::resize ( int size )
 	}
 	else
 	{
-		ofstream ofile("buffer_resized.log",ios::app);
+		ofstream ofile(logPath("buffer_resized.log").c_str(),ios::app);
 		ofile << "[" << current.toString().c_str() << "] " << m_Socket->getHost().c_str() << " - SocketOutputStream resized: " << orgSize << " / " << size << "/" << m_BufferLen << " bytes!" << endl;
 		ofile.close();
 	}

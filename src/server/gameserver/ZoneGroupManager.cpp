@@ -8,6 +8,7 @@
 
 // include files
 #include "ZoneGroupManager.h"
+#include "Utility.h"
 #include "ZoneGroup.h"
 #include "ZonePlayerManager.h"
 #include "ZoneInfoManager.h"
@@ -405,7 +406,7 @@ void ZoneGroupManager::outputLoadValue()
 	//------------------------------------------------------------------
 	// ZoneGroup load
 	//------------------------------------------------------------------
-	ofstream file("loadBalance.txt", ios::app);
+	ofstream file(logPath("loadBalance.txt").c_str(), ios::app);
 
 	VSDateTime current = VSDateTime::currentDateTime();
 	file << current.toString() << endl;

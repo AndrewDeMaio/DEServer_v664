@@ -11,6 +11,9 @@
 #include "Assert.h"
 #include "VSDateTime.h"
 #include <stdarg.h>	// va_start, va_list
+#include <string.h>	// strchr
+#include <sys/stat.h>	// mkdir
+#include <sys/types.h>
 //////////////////////////////////////////////////////////////////////////////
 // 사각형 클래스
 //////////////////////////////////////////////////////////////////////////////
@@ -313,6 +316,31 @@ int getPercentValueEx( int value, int percent )
 //////////////////////////////////////////////////////////////////////////////
 // 파일에다 로그하기
 //////////////////////////////////////////////////////////////////////////////
+const std::string& getLogDir()
+{
+	// Resolved once, on first use. The servers run from bin/, so the default
+	// lands in the repo's log/ directory next to gameserver.log.
+	static const std::string dir = []() -> std::string
+	{
+		const char* env = getenv("DE_LOG_DIR");
+		std::string d = (env != NULL && env[0] != '\0') ? env : "../log";
+		while (d.size() > 1 && d[d.size() - 1] == '/')
+			d.erase(d.size() - 1);
+		mkdir(d.c_str(), 0755);	// EEXIST is the normal case
+		return d;
+	}();
+	return dir;
+}
+
+std::string logPath(const char* szFilename)
+{
+	if (szFilename == NULL || szFilename[0] == '\0')
+		return getLogDir() + "/unnamed.log";
+	if (strchr(szFilename, '/') != NULL)
+		return szFilename;	// caller chose an explicit path
+	return getLogDir() + "/" + szFilename;
+}
+
 void filelog(const char* szFilename, const char* fmt, ...)
     throw()
 {
@@ -335,7 +363,7 @@ void filelog(const char* szFilename, const char* fmt, ...)
 
 	VSDateTime current = VSDateTime::currentDateTime();
 
-    ofstream file(szFilename, ios::out | ios::app);
+    ofstream file(logPath(szFilename).c_str(), ios::out | ios::app);
     file << current.toString() << " : " << buffer << endl;
     file.close();
 

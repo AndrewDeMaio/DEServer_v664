@@ -4583,14 +4583,17 @@ void Slayer::divideAttrExp(AttrKind kind, Damage_t damage, ModifyInfo& modifyInf
 	SLAYER_RECORD prev;
 	getSlayerRecord(prev);
 
-	damage = (Damage_t)getPercentValue(damage, AttrExpTimebandFactor[getZoneTimeband(m_pZone)]);
+	// Damage_t is a 16-bit WORD: with the EXP ratio applied it wrapped past 65535. Work in Exp_t.
+	Exp_t expPoint = damage;
+
+	expPoint = getPercentValue(expPoint, AttrExpTimebandFactor[getZoneTimeband(m_pZone)]);
 
 	if(g_pVariableManager->getExpRatio()>100 && g_pVariableManager->getEventActivate() == 1)
-		damage = getPercentValue(damage, g_pVariableManager->getExpRatio());
+		expPoint = getPercentValue(expPoint, g_pVariableManager->getExpRatio());
 
 	// 시간대에 따라 경험치 두배
 	if ( isAffectExp2X() )
-		damage <<= 1;
+		expPoint <<= 1;
 
 	if ( isFlag( Effect::EFFECT_CLASS_BONUS_EXP ) ) 
 	{
@@ -4598,7 +4601,7 @@ void Slayer::divideAttrExp(AttrKind kind, Damage_t damage, ModifyInfo& modifyInf
 																
 		if ( pEffect != NULL )
 		{
-			damage = (Exp_t)((float)damage * pEffect->GetBonusRate());
+			expPoint = (Exp_t)((float)expPoint * pEffect->GetBonusRate());
 		}
 	}
 	
@@ -4608,7 +4611,7 @@ void Slayer::divideAttrExp(AttrKind kind, Damage_t damage, ModifyInfo& modifyInf
 			
 		if ( pEffect != NULL )
 		{
-			damage = (Exp_t)((float)damage * pEffect->GetBonusRate());
+			expPoint = (Exp_t)((float)expPoint * pEffect->GetBonusRate());
 		}
 	}
 	
@@ -4618,7 +4621,7 @@ void Slayer::divideAttrExp(AttrKind kind, Damage_t damage, ModifyInfo& modifyInf
 			
 		if ( pEffect != NULL )
 		{
-			damage = (Exp_t)((float)damage * pEffect->GetBonusRate());
+			expPoint = (Exp_t)((float)expPoint * pEffect->GetBonusRate());
 		}
 	}
 	
@@ -4628,7 +4631,7 @@ void Slayer::divideAttrExp(AttrKind kind, Damage_t damage, ModifyInfo& modifyInf
 			
 		if ( pEffect != NULL )
 		{
-			damage = (Exp_t)((float)damage * pEffect->GetBonusRate());
+			expPoint = (Exp_t)((float)expPoint * pEffect->GetBonusRate());
 		}
 	}
 	
@@ -4636,7 +4639,7 @@ void Slayer::divideAttrExp(AttrKind kind, Damage_t damage, ModifyInfo& modifyInf
 
 #ifdef __CONTRIBUTION_SYSTEM__
 	if( g_pLevelWarZoneInfoManager->isCreatureBonusZone(dynamic_cast<Creature*>(this), getZoneID() ) )
-		damage = damage + (damage * 0.5 * getZone()->expLevelWarBonusTimeCheck(getRace()));
+		expPoint = expPoint + (expPoint * 0.5 * getZone()->expLevelWarBonusTimeCheck(getRace()));
 #endif
 
 	// 20080502 도메인 경험치 보너스 추가
@@ -4647,14 +4650,14 @@ void Slayer::divideAttrExp(AttrKind kind, Damage_t damage, ModifyInfo& modifyInf
 		{
 			Monster* pMonster = dynamic_cast<Monster*>(pTargetCreature);
 			if(pMonster->getEnhanceHP() < 100)
-				damage = (int)((float)damage * (1.0 + (float)pMonster->getMonsterAddExp()/100.0 * 0.5));
+				expPoint = (int)((float)expPoint * (1.0 + (float)pMonster->getMonsterAddExp()/100.0 * 0.5));
 			else
-				damage = (int)((float)damage * (1.0 + (float)pMonster->getMonsterAddExp()/(float)pMonster->getEnhanceHP() * 0.5));
+				expPoint = (int)((float)expPoint * (1.0 + (float)pMonster->getMonsterAddExp()/(float)pMonster->getEnhanceHP() * 0.5));
 		}
 	}
 
-	Exp_t MainPoint = max( 1, damage * 8 / 10 );
-	Exp_t SubPoint = max( 1, damage / 10 );
+	Exp_t MainPoint = max( (Exp_t)1, expPoint * 8 / 10 );
+	Exp_t SubPoint = max( (Exp_t)1, expPoint / 10 );
 
 #ifdef __CHINA_SERVER__
 
@@ -4722,26 +4725,53 @@ void Slayer::divideAttrExp(AttrKind kind, Damage_t damage, ModifyInfo& modifyInf
 
 	bool downOtherLevel = TotalAttr >= TotalAttrBound;
 	bool upOtherLevel = TotalAttr < OneAttrExpBound;
-	bool canLevelUp = pMainAttr->getLevel() < AttrBound;
-	bool levelUpMainAttr = pMainAttr->increaseExp( MainPoint, canLevelUp );
-
-	if ( levelUpMainAttr && downOtherLevel )
+	// EXP carries over: the main attribute keeps rising while the grant still covers its goal (chain).
+	bool levelUpMainAttr  = false;
+	int  mainLevelsGained = 0;
 	{
-		pSubAttrs[0]->levelDown();
+		Exp_t rest  = MainPoint;
+		int   guard = 0;
+		while ( rest > 0 && ++guard < 1000 )
+		{
+			bool  canLevelUp = pMainAttr->getLevel() < AttrBound;
+			Exp_t goal       = pMainAttr->getGoalExp();
+			if ( canLevelUp && rest >= goal )
+			{
+				if ( !pMainAttr->increaseExp( goal, true ) ) break;   // table max level
+				levelUpMainAttr = true;
+				++mainLevelsGained;
+				rest -= goal;
+			}
+			else
+			{
+				pMainAttr->increaseExp( rest, canLevelUp );
+				rest = 0;
+			}
+		}
+	}
+
+	// the attribute sum may not grow past its bound: shed one sub level for every main level over it
+	int overBound = (int)TotalAttr + mainLevelsGained - (int)TotalAttrBound;
+	if ( levelUpMainAttr && ( downOtherLevel || overBound > 0 ) )
+	{
+		for ( int i = 0; i < overBound; ++i )
+		{
+			if ( !pSubAttrs[0]->levelDown() ) break;
+		}
 		levelUpSubAttrs[0] = true;
 	}
 
 	if ( upOtherLevel )
 	{
-		levelUpSubAttrs[0] = pSubAttrs[0]->increaseExp( SubPoint ) || levelUpSubAttrs[0];
-		levelUpSubAttrs[1] = pSubAttrs[1]->increaseExp( SubPoint );
+		levelUpSubAttrs[0] = pSubAttrs[0]->increaseExp( SubPoint, true, true ) || levelUpSubAttrs[0];
+		levelUpSubAttrs[1] = pSubAttrs[1]->increaseExp( SubPoint, true, true );
 	}
 	else
 	{
 		if ( pSubAttrs[0]->getLevel() < SubAttrMax )
-			levelUpSubAttrs[0] = pSubAttrs[0]->increaseExp( SubPoint ) || levelUpSubAttrs[0];
+			levelUpSubAttrs[0] = pSubAttrs[0]->increaseExp( SubPoint, true, true ) || levelUpSubAttrs[0];
 		if ( pSubAttrs[1]->getLevel() < SubAttrMax )
-			levelUpSubAttrs[1] = pSubAttrs[1]->increaseExp( SubPoint ) || levelUpSubAttrs[1];
+			levelUpSubAttrs[1] = pSubAttrs[1]->increaseExp( SubPoint, true, true ) || levelUpSubAttrs[1];
 	}
 
 	if ( ++m_AttrExpSaveCount > ATTR_EXP_SAVE_PERIOD )

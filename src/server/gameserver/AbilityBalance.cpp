@@ -93,7 +93,7 @@ HP_t computeHP(Creature::CreatureClass CClass, BASIC_ATTR* pAttr, int enhance)
 
 	if ( g_pConfig->hasKey("Hardcore") && g_pConfig->getPropertyInt("Hardcore")!=0 )
 	{
-		maxHP *= 3;
+		maxHP = (HP_t)min(65535, (int)maxHP * 3);
 	}
 
 	return maxHP;
@@ -200,7 +200,7 @@ HP_t computeTestModeHP(Creature* pCreature, BASIC_ATTR* pAttr, int enhance)
 
 	if ( g_pConfig->hasKey("Hardcore") && g_pConfig->getPropertyInt("Hardcore")!=0 )
 	{
-		maxHP *= 3;
+		maxHP = (HP_t)min(65535, (int)maxHP * 3);
 	}
 
 	return maxHP;

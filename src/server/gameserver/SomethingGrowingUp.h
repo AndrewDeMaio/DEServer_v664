@@ -127,7 +127,7 @@ bool SomethingGrowingUp<ExpTableClass>::increaseExp( GoalExpType exp, bool canLe
 			GoalExpType remainExp = exp - m_GoalExp;
 			if ( levelUp() )
 			{
-				if ( giveRemainExp ) increaseExp( remainExp, true, true );
+				if ( giveRemainExp ) increaseExp( remainExp, canLevelUp, giveRemainExp );
 				return true;
 			}
 		}

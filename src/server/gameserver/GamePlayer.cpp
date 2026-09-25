@@ -5,6 +5,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #include "GamePlayer.h"
+#include "Utility.h"
 #include <cmath>
 #include "Assert.h"
 #include "Creature.h"
@@ -1946,12 +1947,12 @@ void GamePlayer::logLoginoutDateTime()
 	VSDateTime logoutDateTime = VSDateTime::currentDateTime();
 
 	// filename
-	char filename[20];
-	sprintf( filename, "log/%s.txt", logoutDateTime.toStringforWeb().c_str() );
+	// one file per day under log/ (this used to target bin/log/, which does not exist)
+	string filename = logPath(("logout_" + logoutDateTime.toStringforWeb() + ".txt").c_str());
 
 	try
 	{
-		ofstream file( filename, ios::out | ios::app );
+		ofstream file( filename.c_str(), ios::out | ios::app );
 		file << dimensionID << "\t" << worldID << "\t" << m_ID << "\t"
 			 << m_pCreature->getName() << "\t" << racecode << "\t"
 			 << level << "\t" << str << "\t" << dex << "\t" << inte << "\t"

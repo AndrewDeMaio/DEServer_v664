@@ -10,20 +10,20 @@
 
 #include "Creature.h"
 
-#define SLAYER_MAX_HP          10000
+#define SLAYER_MAX_HP          60000
 #define SLAYER_MAX_MP          10000
 #define SLAYER_MAX_TOHIT       10000
 #define SLAYER_MAX_DEFENSE     10000
 #define SLAYER_MAX_PROTECTION  10000
 #define SLAYER_MAX_DAMAGE      10000
 
-#define VAMPIRE_MAX_HP         10000
+#define VAMPIRE_MAX_HP         60000
 #define VAMPIRE_MAX_TOHIT      10000
 #define VAMPIRE_MAX_DEFENSE    10000
 #define VAMPIRE_MAX_PROTECTION 10000
 #define VAMPIRE_MAX_DAMAGE     10000
 
-#define OUSTERS_MAX_HP         10000
+#define OUSTERS_MAX_HP         60000
 #define OUSTERS_MAX_MP         10000
 #define OUSTERS_MAX_TOHIT      10000
 #define OUSTERS_MAX_DEFENSE    10000

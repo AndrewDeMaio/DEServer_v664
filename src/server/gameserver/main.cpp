@@ -8,6 +8,7 @@
 
 // include files
 #include "Types.h"
+#include "Utility.h"
 #include "Exception.h"
 #include "GameServer.h"
 #include "LogClient.h"
@@ -226,7 +227,7 @@ int main (int argc , char* argv[])
 	catch (Throwable & e) 
 	{
 		// �αװ� �̷����� ���� ������ ���� ��츦 ����ؼ�
-		ofstream ofile("../log/instant.log",ios::out);
+		ofstream ofile(logPath("instant.log").c_str(),ios::out);
 		ofile << e.toString() << endl;
 		ofile.close();
 

@@ -9,6 +9,7 @@ bin/gameserver
 bin/loginserver
 bin/sharedserver
 bin/*.txt
+log/*.txt
 
 *.log
 *.out

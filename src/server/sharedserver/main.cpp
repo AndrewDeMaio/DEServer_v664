@@ -8,6 +8,7 @@
 
 // include files
 #include "Types.h"
+#include "Utility.h"
 #include "Exception.h"
 #include "SharedServer.h"
 #include "LogClient.h"
@@ -107,7 +108,7 @@ int main ( int argc , char * argv[] )
 	catch ( Throwable & e ) 
 	{
 		// 로그가 이뤄지기 전에 서버가 끝날 경우를 대비해서
-		ofstream ofile("../log/instant.log",ios::out);
+		ofstream ofile(logPath("instant.log").c_str(),ios::out);
 		ofile << e.toString() << endl;
 		ofile.close();
 

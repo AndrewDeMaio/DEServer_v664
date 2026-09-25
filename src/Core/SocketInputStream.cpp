@@ -10,6 +10,7 @@
 // include files
 //////////////////////////////////////////////////
 #include "SocketInputStream.h"
+#include "Utility.h"
 #include <errno.h>
 #include "Assert.h"
 #include "Packet.h"
@@ -587,7 +588,7 @@ void SocketInputStream::resize ( int size )
 	m_Head = 0;
 	m_Tail = len;	// m_Tail 은 들어있는 데이타의 길이와 같다.
 
-	ofstream ofile("buffer_resized.log",ios::app);
+	ofstream ofile(logPath("buffer_resized.log").c_str(),ios::app);
 	ofile << "SocketInputStream resized " << size << " bytes!" << endl;
 	ofile.close();
 

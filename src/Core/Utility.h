@@ -16,6 +16,7 @@
 #include <cstdlib>
 #include <cstdint>		// intptr_t / uintptr_t, for the pointer<->int casts
 #include <algorithm>
+#include <string>
 
 //////////////////////////////////////////////////////////////////////////////
 // ������ �����
@@ -211,6 +212,18 @@ int getPercentValueEx( int value, int percent );
 //////////////////////////////////////////////////////////////////////////////
 
 void filelog(const char* szFilename, const char* fmt, ...) throw();
+
+//////////////////////////////////////////////////////////////////////////////
+// Log directory.
+//
+// Every file log the servers write (filelog() plus the handful of direct
+// ofstream writers) goes under one directory so nothing lands in bin/.
+// Default is ../log relative to the working directory, because the servers
+// are started from bin/. DE_LOG_DIR in the environment overrides it.
+// A name that already contains a '/' is returned untouched.
+//////////////////////////////////////////////////////////////////////////////
+const std::string& getLogDir();
+std::string logPath(const char* szFilename);
 
 //////////////////////////////////////////////////////////////////////////////
 // ���⺰ �������� ���� ����ũ
